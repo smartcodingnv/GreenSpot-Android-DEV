@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/offwhite"
+    android:orientation="vertical"
+    tools:context=".fragment.HomeFragment">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayouthome"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        >
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_220sdp">
+
+
+                    <com.smarteist.autoimageslider.SliderView
+                        android:id="@+id/imageSlider"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        app:sliderAutoCycleDirection="right"
+                        app:sliderAutoCycleEnabled="true"
+                        app:sliderCircularHandlerEnabled="true"
+                        app:sliderIndicatorGravity="center_horizontal|bottom"
+                        app:sliderIndicatorMargin="20dp"
+                        app:sliderIndicatorOrientation="horizontal"
+                        app:sliderIndicatorPadding="3dp"
+                        app:sliderIndicatorRadius="2dp"
+                        app:sliderIndicatorSelectedColor="@android:color/transparent"
+                        app:sliderIndicatorUnselectedColor="@android:color/transparent"
+                        app:sliderScrollTimeInSec="1"
+                        app:sliderStartAutoCycle="true" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="end|center"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:id="@+id/lay_currency"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:background="@drawable/txt_curvblack"
+                                android:gravity="center"
+                                android:padding="@dimen/_5sdp">
+
+                                <TextView
+                                    android:id="@+id/txt_currency"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:drawableRight="@drawable/ic_downgray"
+                                    android:drawablePadding="@dimen/_5sdp"
+                                    android:fontFamily="@font/open_sans_semibold"
+                                    android:text="USD"
+                                    android:textColor="@color/green"
+                                    android:textSize="@dimen/_13ssp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/lay_language"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                android:background="@drawable/txt_curvblack"
+                                android:gravity="center"
+                                android:padding="@dimen/_5sdp">
+
+                                <TextView
+                                    android:id="@+id/txt_language"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:drawableRight="@drawable/ic_downgray"
+                                    android:drawablePadding="@dimen/_5sdp"
+                                    android:fontFamily="@font/open_sans_semibold"
+                                    android:text="En"
+                                    android:textColor="@color/green"
+                                    android:textSize="@dimen/_13ssp" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/txt_username"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:fontFamily="@font/open_sans_bold"
+                            android:text="Hey Sam, \nWhere you wanna go?"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_14ssp" />
+
+                        <LinearLayout
+                            android:id="@+id/lay_contry"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:background="@drawable/btn_fillblackgreenborder"
+
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/txt_contryhome"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableRight="@drawable/ic_downgray"
+                                android:drawablePadding="@dimen/_5sdp"
+                                android:fontFamily="@font/open_sans_semibold"
+                                android:gravity="center"
+                                android:text="Freanch Guyna"
+                                android:textColor="@color/green"
+                                android:textSize="@dimen/_13ssp" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="bottom"
+                            android:orientation="horizontal">
+
+                            <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                                xmlns:app="http://schemas.android.com/apk/res-auto"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/_5sdp"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:visibility="visible"
+                                app:cardBackgroundColor="#B3A7A7A7"
+                                app:cardCornerRadius="10dp"
+                                app:cardElevation="0dp">
+
+                                <LinearLayout
+                                    android:id="@+id/lay_vacation"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:padding="@dimen/_5sdp">
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/ic_vacation">
+
+                                    </ImageView>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/res_vacatiion"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/_12ssp" />
+                                </LinearLayout>
+
+
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                                xmlns:app="http://schemas.android.com/apk/res-auto"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/_5sdp"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:visibility="visible"
+                                app:cardBackgroundColor="#B3A7A7A7"
+                                app:cardCornerRadius="10dp"
+                                app:cardElevation="0dp">
+
+                                <LinearLayout
+                                    android:id="@+id/lay_tour"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:padding="@dimen/_5sdp">
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/ic_tour">
+
+                                    </ImageView>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/res_tour"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/_12ssp" />
+                                </LinearLayout>
+
+
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                                xmlns:app="http://schemas.android.com/apk/res-auto"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/_5sdp"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:visibility="visible"
+                                app:cardBackgroundColor="#B3A7A7A7"
+                                app:cardCornerRadius="10dp"
+                                app:cardElevation="0dp">
+
+                                <LinearLayout
+                                    android:id="@+id/lay_event"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:padding="@dimen/_5sdp">
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/ic_event">
+
+                                    </ImageView>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/res_event"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/_12ssp" />
+                                </LinearLayout>
+
+
+                            </androidx.cardview.widget.CardView>
+
+
+                            <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                                xmlns:app="http://schemas.android.com/apk/res-auto"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/_5sdp"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:visibility="visible"
+                                app:cardBackgroundColor="#B3A7A7A7"
+                                app:cardCornerRadius="10dp"
+                                app:cardElevation="0dp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:padding="@dimen/_5sdp">
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/ic_hotel">
+
+                                    </ImageView>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/res_hotel"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/_12ssp" />
+                                </LinearLayout>
+
+
+                            </androidx.cardview.widget.CardView>
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </FrameLayout>
+
+                <LinearLayout
+                    android:id="@+id/lay_vacationview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="8"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_vacation"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/open_sans_semibold"
+                            android:text="Exclusive Vacation"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_13ssp" />
+
+                        <TextView
+                            android:id="@+id/txt_vacationsub"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/open_sans_semibold"
+                            android:text="Experince meaning of awesomeness"
+                            android:textColor="@color/gray"
+                            android:textSize="@dimen/_11ssp" />
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/txt_vacationall"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:drawableRight="@drawable/ic_right"
+                        android:drawablePadding="@dimen/_2sdp"
+                        android:fontFamily="@font/open_sans_semibold"
+                        android:gravity="right"
+                        android:text="See all"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_11ssp" />
+
+                </LinearLayout>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_vationplace"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:scrollbars="vertical"
+                    app:reverseLayout="true" />
+
+
+                <LinearLayout
+                    android:id="@+id/lay_tourview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="8"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_tour"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/open_sans_semibold"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_13ssp"
+                            tools:text="Popular Tour" />
+
+                        <TextView
+                            android:id="@+id/txt_toursub"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/open_sans_semibold"
+                            android:textColor="@color/gray"
+                            android:textSize="@dimen/_11ssp"
+                            tools:text="Experince meaning of awesomeness" />
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/txt_tourall"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:drawableRight="@drawable/ic_right"
+                        android:drawablePadding="@dimen/_2sdp"
+                        android:fontFamily="@font/open_sans_semibold"
+                        android:gravity="right"
+                        android:text="See all"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_11ssp" />
+
+                </LinearLayout>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_tour"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:scrollbars="horizontal"
+                    app:reverseLayout="true" />
+
+                <LinearLayout
+                    android:id="@+id/lay_evenview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="8"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_event"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/open_sans_semibold"
+                            android:text="Nearby Event"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_13ssp" />
+
+                        <TextView
+                            android:id="@+id/txt_eventsub"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/open_sans_semibold"
+                            android:text="Experince meaning of awesomeness"
+                            android:textColor="@color/gray"
+                            android:textSize="@dimen/_11ssp" />
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/txt_eventall"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:drawableRight="@drawable/ic_right"
+                        android:drawablePadding="@dimen/_2sdp"
+                        android:fontFamily="@font/open_sans_semibold"
+                        android:gravity="right"
+                        android:text="See all"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_11ssp" />
+
+                </LinearLayout>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_event"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:scrollbars="horizontal"
+                    android:visibility="visible"
+                    app:reverseLayout="true" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="8"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/open_sans_semibold"
+                            android:text="Exclusive Hotels"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_13ssp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/open_sans_semibold"
+                            android:text="Experince meaning of awesomeness"
+                            android:textColor="@color/gray"
+                            android:textSize="@dimen/_11ssp" />
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/txt_hotelall"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:drawableRight="@drawable/ic_right"
+                        android:drawablePadding="@dimen/_2sdp"
+                        android:fontFamily="@font/open_sans_semibold"
+                        android:gravity="right"
+                        android:text="See all"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_11ssp" />
+
+                </LinearLayout>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_hotel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:scrollbars="horizontal"
+                    android:visibility="gone"
+                    app:reverseLayout="true" />
+
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</LinearLayout>

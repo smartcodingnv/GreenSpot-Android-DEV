@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/_5sdp">
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_200sdp"
+        android:layout_gravity="center">
+
+        <ImageView
+            android:id="@+id/img_itinearary"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/travel">
+
+        </ImageView>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <LinearLayout
+                android:id="@+id/lay_prev"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_gravity="center"
+                android:layout_weight="0.7"
+                android:background="@color/yello"
+                android:gravity="center">
+
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ic_back"
+                    android:backgroundTint="@color/white">
+
+                </ImageButton>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="8.6">
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lay_next"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_gravity="center"
+                android:layout_weight="0.7"
+                android:background="@color/yello"
+                android:gravity="center">
+
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ic_next"
+                    android:backgroundTint="@color/white">
+
+                </ImageButton>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </FrameLayout>
+
+
+</LinearLayout>

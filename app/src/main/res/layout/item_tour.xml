@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/_260sdp"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_3sdp"
+    android:orientation="vertical"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="6dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txt_tourname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:ellipsize="end"
+            android:fontFamily="@font/open_sans_semibold"
+            android:maxLines="1"
+            android:paddingLeft="@dimen/_10sdp"
+            android:text="Paldi"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp" />
+
+        <TextView
+            android:id="@+id/txt_tourlocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/open_sans"
+            android:maxLines="1"
+            android:paddingLeft="@dimen/_10sdp"
+            android:text="Ahmedabad, Gujarat, India"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/_10ssp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:orientation="horizontal">
+
+            <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/img_tourimg"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:background="@drawable/travel"
+                android:scaleType="centerCrop"
+                app:riv_corner_radius="10dip"
+                app:riv_mutate_background="true"
+                app:riv_oval="false" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/_5sdp">
+
+                <RatingBar
+                    android:id="@+id/rt_tourrating"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:numStars="5"
+                    android:rating="3"
+                    android:theme="@style/RatingBar">
+
+                </RatingBar>
+
+
+                <TextView
+                    android:id="@+id/txt_tourprice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/open_sans"
+                    android:text="From USD 1500.00*"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_11ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/open_sans"
+                    android:maxLines="2"
+                    android:text="Per person"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_8ssp" />
+
+
+                <TextView
+                    android:id="@+id/txt_daynight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="1 Night | 2 Days"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_11ssp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

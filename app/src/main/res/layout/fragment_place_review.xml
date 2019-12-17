@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:scrollbars="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".fragment.PlaceReviewFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/_10sdp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:text="Rating &amp; Reviews"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_13ssp" />
+
+        <TextView
+            android:id="@+id/txt_rating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:fontFamily="@font/open_sans"
+            android:text="3 Reviews &amp; 4/5.0 "
+            android:textColor="@color/gray"
+            android:textSize="@dimen/_12ssp" />
+
+        <RatingBar
+            android:id="@+id/rt_placereivew"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:rating="4"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:isIndicator="true"
+            android:progressBackgroundTint="@color/raringnoraml"
+            android:theme="@style/RatingBar">
+
+        </RatingBar>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:text="Give Star Rating"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_13ssp" />
+
+        <RatingBar
+            android:id="@+id/rb_giverstar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:stepSize="1.0"
+            android:isIndicator="false"
+            android:numStars="5"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:progressBackgroundTint="@color/raringnoraml"
+            android:theme="@style/RatingBar">
+
+        </RatingBar>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:text="Your Review"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_13ssp" />
+
+        <EditText
+            android:id="@+id/et_reivew"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_margin="@dimen/_10sdp"
+            android:background="@drawable/et_address"
+            android:fontFamily="@font/open_sans"
+            android:gravity="start"
+            android:hint="Enter your review (maximum 200 characters)"
+            android:inputType="textMultiLine"
+            android:maxLines="8"
+            android:padding="@dimen/_5sdp"
+            android:scrollbars="vertical"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp" />
+
+        <Button
+            android:id="@+id/btn_submitrating"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:background="@drawable/btn_fillgreen"
+            android:fontFamily="@font/open_sans_semibold"
+            android:text="Submit Review"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/txt_guestreview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:text="Guest Review"
+            android:visibility="gone"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_13ssp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_guestreview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:scrollbars="vertical" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

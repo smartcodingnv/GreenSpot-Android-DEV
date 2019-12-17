@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_5sdp"
+    android:orientation="vertical"
+
+    app:cardCornerRadius="10dp"
+    app:cardElevation="6dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txt_tourname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:paddingLeft="@dimen/_10sdp"
+            android:text="Paldi"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp" />
+
+        <TextView
+            android:id="@+id/txt_tourlocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:fontFamily="@font/open_sans"
+            android:paddingLeft="@dimen/_10sdp"
+            android:text="Ahmedabad, Gujarat, India"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/_10ssp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/img_tour"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_80sdp"
+                android:background="@drawable/travel"
+                android:scaleType="centerCrop"
+                app:riv_corner_radius="10dip"
+                app:riv_mutate_background="true"
+                app:riv_oval="false" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/_10sdp">
+
+
+                <TextView
+                    android:id="@+id/txt_night"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="1"
+                    android:textSize="@dimen/_12ssp" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="Nights"
+                    android:textSize="@dimen/_11ssp" />
+
+
+                <View
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_margin="@dimen/_1sdp"
+                    android:background="@color/lightgray"></View>
+
+                <TextView
+                    android:id="@+id/txt_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="1"
+                    android:textSize="@dimen/_12ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="Days"
+                    android:textSize="@dimen/_11ssp" />
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="@dimen/_1sdp"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/_5sdp"
+                android:background="@color/lightgray"></View>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <RatingBar
+                    android:id="@+id/rt_tour"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:numStars="5"
+                    android:progressBackgroundTint="@color/raringnoraml"
+                    android:rating="3"
+                    android:theme="@style/RatingBar">
+
+                </RatingBar>
+
+
+                <TextView
+                    android:id="@+id/txt_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="From USD 1500.00*"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_11ssp" />
+
+                <TextView
+                    android:id="@+id/txt_noofperson"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/open_sans"
+                    android:maxLines="2"
+                    android:text="Per person"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_9ssp" />
+
+
+                <Button
+                    android:id="@+id/btn_booknow"
+                    android:layout_width="@dimen/_120sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:background="@drawable/btn_fillgreen"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:padding="@dimen/_10sdp"
+                    android:text="@string/res_book_now"
+                    android:textColor="@color/white"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/lay_flighttt"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:background="@drawable/bg_blackround"
+                android:gravity="center"
+                android:visibility="gone"
+                android:padding="@dimen/_5sdp">
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ic_otflight"
+                    android:backgroundTint="@color/black" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lay_hotelll"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:background="@drawable/bg_blackround"
+                android:gravity="center"
+                android:visibility="gone"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:padding="@dimen/_5sdp">
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ic_othotel"
+                    android:backgroundTint="@color/black" />
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/lay_sightseennn"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:background="@drawable/bg_blackround"
+                android:gravity="center"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:visibility="gone"
+                android:padding="@dimen/_5sdp">
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ic_otsightseen"
+                    android:backgroundTint="@color/black" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lay_mealsss"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:background="@drawable/bg_blackround"
+                android:gravity="center"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:visibility="gone"
+                android:padding="@dimen/_5sdp">
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ic_otmeal"
+                    android:backgroundTint="@color/black" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lay_transportaionnn"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:background="@drawable/bg_blackround"
+                android:gravity="center"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:visibility="gone"
+                android:padding="@dimen/_5sdp">
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ic_ottransportation"
+                    android:backgroundTint="@color/black" />
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/lay_wifiii"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:background="@drawable/bg_blackround"
+                android:gravity="center"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:visibility="gone"
+                android:padding="@dimen/_5sdp">
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ic_otwifi"
+                    android:backgroundTint="@color/black" />
+
+
+            </LinearLayout>
+
+<!--            <LinearLayout-->
+<!--                android:id="@+id/lay_sightseen"-->
+<!--                android:layout_width="@dimen/_25sdp"-->
+<!--                android:layout_height="@dimen/_25sdp"-->
+<!--                android:background="@drawable/bg_blackround"-->
+<!--                android:gravity="center"-->
+<!--                android:layout_marginLeft="@dimen/_5sdp"-->
+<!--                android:padding="@dimen/_5sdp">-->
+
+
+<!--                <ImageView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:background="@drawable/ic_sightseen"-->
+<!--                    android:backgroundTint="@color/black" />-->
+
+
+<!--            </LinearLayout>-->
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

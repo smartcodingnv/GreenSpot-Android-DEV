@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:scrollbars="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".fragment.PlaceDescriptionFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/_10sdp">
+
+        <TextView
+            android:id="@+id/txt_placedesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans"
+            android:scrollbars="vertical"
+            android:text="Op het eiland Anaula bevindt u zich in het hart van het Boven Surinamegebied, in de Suriname-rivier, op een steenworp afstand van de Ferulasi stroomversnelling. \n\nDe stroomversnellingen, ofwel sula’s, zijn ontstaan doordat rotspartijen zich hebben verzameld in de rivier en dus voor een lokale vernauwing zorgdragen. Als u in de sula gaat zult u heerlijk relaxen. Het voelt aan als een natuurlijke jacuzzi.
+Vanaf het eiland Anaula kunt u zelfstandig de sula’s bezoeken en daar genieten zo lang u wilt.
+
+\n\nAlleen bij erg hoge waterstand van de rivier is deze sula niet te bereiken. De Ferulasi sula, die op enkele minuten varen ligt, is standaard in het programma opgenomen en is vrijwel altijd toegankelijk. Boek een van onze tours voor een prachtige Sula ervaring"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp" />
+
+
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
+
+

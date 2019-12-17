@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:scrollbars="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".activity.EventBookingActivity"
+    tools:showIn="@layout/activity_event_booking">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/_10sdp">
+
+        <TextView
+            android:id="@+id/txt_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans_semibold"
+            android:text="India vs Bangladesh, 1st Test Match at Ahmedabad, India"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp" />
+
+        <TextView
+            android:id="@+id/txt_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans"
+            android:text="Motera stadium, Ahmedabad, India-364001."
+            android:textColor="@color/gray"
+            android:textSize="@dimen/_12ssp" />
+
+        <TextView
+            android:id="@+id/txt_eventdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans"
+            android:text="Date: 18-11-2019 To 20-11-2019"
+            android:textColor="@color/gray"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:textSize="@dimen/_12ssp" />
+
+        <TextView
+            android:id="@+id/txt_eventtime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans"
+            android:text="Time: 8:30 AM To 8:30 PM"
+            android:textColor="@color/gray"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:textSize="@dimen/_12ssp" />
+
+        <TextView
+            android:id="@+id/txt_schdule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:text="Schedule"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp" />
+
+
+        <LinearLayout
+            android:id="@+id/lay_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_weight="1"
+                android:fontFamily="@font/open_sans_semibold"
+                android:text="Date"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_14ssp" />
+
+            <TextView
+                android:id="@+id/txt_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_30sdp"
+                android:layout_weight="1"
+                android:drawableRight="@drawable/ic_down"
+                android:drawablePadding="@dimen/_10sdp"
+                android:fontFamily="@font/open_sans_semibold"
+                android:gravity="end|center"
+                android:paddingLeft="@dimen/_10sdp"
+
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_14ssp" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_weight="1"
+                android:fontFamily="@font/open_sans_semibold"
+                android:text="Pass"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_14ssp" />
+
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_30sdp"
+
+                android:layout_weight="1">
+
+                <Spinner
+                    android:id="@+id/sp_pass"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:background="@android:color/transparent"
+                    android:entries="@array/pass_arrays"
+                    android:gravity="center" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|bottom"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:src="@drawable/ic_down"
+                    android:visibility="visible" />
+            </FrameLayout>
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:text="Guest"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_weight="1"
+                android:fontFamily="@font/open_sans_semibold"
+                android:text="Adult"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_14ssp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/_30sdp"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+
+                <ImageButton
+                    android:id="@+id/ib_adultminus"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:background="@drawable/ic_collops" />
+
+                <TextView
+                    android:id="@+id/txt_adultcount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center"
+                    android:text="2"
+                    android:textColor="@color/black" />
+
+
+                <ImageButton
+                    android:id="@+id/ib_adultadd"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:background="@drawable/ic_add" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_weight="1"
+                android:fontFamily="@font/open_sans_semibold"
+                android:text="Children"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_14ssp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/_30sdp"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+
+                <ImageButton
+                    android:id="@+id/ib_childresnminus"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:background="@drawable/ic_collops" />
+
+                <TextView
+                    android:id="@+id/txt_childrencount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/black" />
+
+
+                <ImageButton
+                    android:id="@+id/ib_childrenadd"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:background="@drawable/ic_add" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:text="Contact Information"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp" />
+
+        <EditText
+            android:id="@+id/et_name"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_margin="@dimen/_10sdp"
+            android:background="@drawable/edit_text"
+            android:fontFamily="@font/open_sans"
+            android:hint="@string/res_name"
+            android:inputType="text"
+            android:padding="@dimen/_5sdp"
+            android:textSize="@dimen/_12ssp" />
+
+        <EditText
+            android:id="@+id/et_email"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_margin="@dimen/_5sdp"
+            android:background="@drawable/edit_text"
+            android:fontFamily="@font/open_sans"
+            android:hint="@string/res_email"
+            android:inputType="textEmailAddress"
+            android:padding="@dimen/_10sdp"
+            android:textSize="@dimen/_12ssp" />
+
+        <EditText
+            android:id="@+id/et_number"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_margin="@dimen/_5sdp"
+            android:background="@drawable/edit_text"
+            android:fontFamily="@font/open_sans"
+            android:hint="@string/res_mobile_no"
+            android:inputType="number"
+            android:maxLength="12"
+            android:padding="@dimen/_10sdp"
+            android:textSize="@dimen/_12ssp" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/_260sdp"
+    android:layout_height="@dimen/_140sdp"
+    android:layout_margin="@dimen/_5sdp"
+    android:orientation="vertical"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="6dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+<!--        <ImageView-->
+<!--            android:id="@+id/img_catgories"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:foreground="@color/fiftyblack"-->
+<!--            />-->
+
+<!--        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:foreground="@drawable/card_edge">
+
+            <ImageView
+                android:id="@+id/img_catgories"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                 />
+        </LinearLayout>-->
+
+
+        <!--<ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/_10sdp"
+            android:foreground="@color/fiftyblack"
+            android:background="@drawable/travel" />-->
+
+        <!-- <ImageView
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@drawable/card_edge" />-->
+
+
+         <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:id="@+id/img_event"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:scaleType="centerCrop"
+             android:foreground="@drawable/curv_edge"
+             app:riv_corner_radius="10dip"
+             app:riv_mutate_background="false"
+             app:riv_oval="false" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_eventname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:fontFamily="@font/open_sans_semibold"
+                android:paddingLeft="@dimen/_10sdp"
+                android:text="Paldi"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp" />
+
+            <TextView
+                android:id="@+id/txt_eventlocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:paddingLeft="@dimen/_10sdp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Ahmedabad, Gujarat, India"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_10ssp" />
+
+            <TextView
+                android:id="@+id/txt_eventtime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:paddingLeft="@dimen/_10sdp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Everyday"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_10ssp" />
+
+            <TextView
+                android:id="@+id/txt_eventprice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:paddingLeft="@dimen/_10sdp"
+                android:text="From USD 797.98"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/green"
+                android:textSize="@dimen/_10ssp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/_10sdp">
+
+
+                <RatingBar
+                    android:id="@+id/rt_event"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:numStars="5"
+                    android:rating="2"
+                    android:progressBackgroundTint="@color/raringnoraml"
+                    android:theme="@style/RatingBar" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </FrameLayout>
+</androidx.cardview.widget.CardView>

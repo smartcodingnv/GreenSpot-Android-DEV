@@ -1,0 +1,122 @@
+<resources>
+    <string name="app_name">GreenSpot</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="res_txtsingup">Don\'t have an account? <b>Create an account</b></string>
+    <string name="res_txtlogin">Have an account? <b>Login</b></string>
+    <string name="res_name">Name</string>
+    <string name="res_email">Email</string>
+    <string name="res_password">Password</string>
+    <string name="res_forgot_password">Forgot Password?</string>
+    <string name="res_back_to_login">Back to Login</string>
+    <string name="enter_the_name">Enter the Name</string>
+    <string name="enter_the_password">Enter the Password</string>
+    <string name="enter_the_number">Enter the Mobile Number</string>
+
+    <string name="res_validemail">Please enter valid email</string>
+    <string name="res_validnumber">Please enter valid number</string>
+    <string name="res_enteremail">Enter the email</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="res_home">Home</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="res_vacatiion">Vacation</string>
+    <string name="res_tour">Tour</string>
+    <string name="res_event">Event</string>
+    <string name="res_hotel">Hotel</string>
+    <string name="title_activity_list_place">ListPlaceActivity</string>
+    <string name="title_activity_place_details">PlaceDetailsActivity</string>
+    <string name="res_sortdesc">Op het eiland Anaula bevindt u zich in het hart van het Boven Surinamegebied, in de Suriname-rivier, op een steenworp afstand van de Ferulasi stroomve</string>
+    <string name="res_followers">Followers</string>
+    <string name="res_tours">Tours</string>
+    <string name="res_satisfaction">Satisfaction</string>
+    <string name="res_feedback">Feedback</string>
+    <string name="title_activity_visiter_place">VisiterPlaceActivity</string>
+    <string name="res_hey_welcome_back">Hey, Welcome back</string>
+    <string name="res_hey_welcome">Hey, Welcome</string>
+    <string name="res_txtforgot_password">Forgot Password</string>
+    <string name="res_login">Login</string>
+    <string name="res_loginsingup">Login / Sign Up</string>
+    <string name="res_create_an_acco_unt">Create an account</string>
+    <string name="res_bookings">Bookings</string>
+    <string name="res_account">Account</string>
+    <string name="str_selectcontry">Select Contry</string>
+    <string name="res_search">Search</string>
+    <string name="res_cancel">Cancel</string>
+    <string name="res_apply">Apply</string>
+    <string name="res_search_title">Search here...</string>
+    <string name="res_select_sort">Sort By</string>
+    <string name="title_activity_tour_list">TourListActivity</string>
+    <string name="res_book_now">Book Now</string>
+    <string name="res_book_now_na">Booking N/A</string>
+    <string name="title_activity_tour_details">TourDetailsActivity</string>
+    <string name="res_reivewvalidation">Please enter description</string>
+    <string name="res_selectrating">Please select rating</string>
+    <string name="msg_raingsucess">Rating submitted successfully</string>
+    <string name="title_activity_event_list">EventListActivity</string>
+    <string name="title_activity_event_details">EventDetailsActivity</string>
+    <string name="title_activity_place_booking">PlaceBookingActivity</string>
+    <string name="res_mobile_no">Mobile No</string>
+
+    <string-array name="pass_arrays">
+        <item>Day pass</item>
+        <item>Night Pass</item>
+
+    </string-array>
+
+
+    <string name="title_activity_edit_profile">EditProfileActivity</string>
+    <string name="title_activity_change_password">ChangePasswordActivity</string>
+    <string name="res_old_password">Current password</string>
+    <string name="res_new_password">New Password</string>
+    <string name="res_confirm_password">Confirm password</string>
+    <string name="message_denied">Permission \"%1$s\" has been denied.</string>
+    <string name="please_wait">Please Wait...</string>
+    <string name="msg_unexpected_error">Unexpected Error, Please Contact Customer Care.</string>
+    <string name="msg_internet_conn">Check Internet Connection.</string>
+    <string name="default_language">en</string>
+    <string name="res_first_name">First Name</string>
+    <string name="res_last_name">Last Name</string>
+    <string name="res_phone_no">Mobile No</string>
+    <string name="res_enterfname">Enter the First Name</string>
+    <string name="res_enterlname">Enter the Last Name</string>
+    <string name="res_enterphonno">Enter the Mobile No</string>
+    <string name="title_activity_tour_booking">TourBookingActivity</string>
+    <string name="title_activity_event_booking">EventBookingActivity</string>
+    <string name="title_activity_booking_details">BookingDetailsActivity</string>
+    <string name="res_full_name">Full Name</string>
+    <string name="res_age">Age</string>
+    <string name="str_choosecurrency">Select Currency</string>
+    <string name="str_selectsort">Select Sort</string>
+    <string name="str_language">Select Language</string>
+    <string name="res_price_range">Price Range</string>
+    <string name="res_clear">Clear</string>
+    <string name="str_reviews">RIVIEWS</string>
+    <string name="res_continue_as_guest">Continue As Guest</string>
+    <string name="str_everyday">Every Day</string>
+    <string name="str_startingform">Starting From</string>
+    <string name="str_pricenotavaible">Price Not Available</string>
+    <string name="res_firstname">First Name</string>
+
+    <string name="res_gender">Gender</string>
+    <string name="res_date_of_birth">Date of Birth</string>
+    <string name="res_contact_number">Contact Number</string>
+    <string name="title_activity_payment">PaymentActivity</string>
+    <string name="title_activity_paymnet_j">PaymnetJActivity</string>
+    <string name="res_select_your_bank">Select your bank</string>
+    <string name="res_pay_now">Pay Now</string>
+    <string name="title_activity_place_tab">PlaceTabActivity</string>
+    <string name="title_activity_tour_tab">TourTabActivity</string>
+    <string name="tab_description">DESCRIPTION</string>
+    <string name="tab_availability">AVAILABILITY</string>
+    <string name="tab_amenities">AMENITIES</string>
+    <string name="tab_stay">STAY</string>
+    <string name="tab_others">OTHER</string>
+    <string name="tab_paymnet">PAYMENT</string>
+    <string name="tab_write_a_review">WRITE A REVIEW</string>
+    <string name="tab_contact_us">CONTACT US</string>
+    <string name="tab_overview">OVERVIEW</string>
+    <string name="title_activity_event_tab">EventTabActivity</string>
+    <string name="res_itinerary">ITINERARY</string>
+
+</resources>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".activity.EventTabActivity"
+    android:orientation="vertical"
+    tools:showIn="@layout/activity_event_tab">
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayoutevent"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:background="@color/white"
+        android:scrollbars="vertical"
+        android:tabStripEnabled="false"
+        app:tabGravity="center"
+        app:tabIndicatorColor="@color/green"
+        app:tabMode="scrollable"
+        app:tabPaddingEnd="10dp"
+        app:tabPaddingStart="10dp"
+        app:tabSelectedTextColor="@color/green"
+        app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
+        app:tabTextColor="@color/gray">
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPagerevent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/lightgray"
+        app:swipeable="false" />
+
+
+</LinearLayout>

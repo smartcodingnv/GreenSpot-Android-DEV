@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.TourBookingActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:orientation="horizontal"
+        android:padding="@dimen/_10sdp">
+
+        <ImageButton
+            android:id="@+id/ib_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_back">
+
+        </ImageButton>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/open_sans_semibold"
+            android:paddingLeft="@dimen/_10sdp"
+            android:text="Booking"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp" />
+
+    </LinearLayout>
+
+
+    <include
+        layout="@layout/content_tour_booking"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_gravity="center"
+        android:background="@color/gray"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="7"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/_10sdp">
+
+            <TextView
+                android:id="@+id/txt_startprice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_semibold"
+                tools:text="USD 18.00"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_13ssp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:text="Per person"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_11ssp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_continue"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:background="@drawable/btn_fillgreen"
+            android:fontFamily="@font/open_sans_semibold"
+            android:text="Continue"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

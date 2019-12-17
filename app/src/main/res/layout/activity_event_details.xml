@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/offwhite"
+    android:orientation="vertical"
+    tools:context=".activity.EventDetailsActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="@dimen/_10sdp">
+
+        <ImageButton
+            android:id="@+id/ib_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_back"></ImageButton>
+
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/open_sans_semibold"
+            android:paddingLeft="@dimen/_10sdp"
+            tools:text="Exclusive Event"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp" />
+
+    </LinearLayout>
+
+
+    <include
+        layout="@layout/content_event_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:id="@+id/lay_booknowevent"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_gravity="center"
+        android:background="@color/gray"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="7"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/_10sdp">
+
+            <TextView
+                android:id="@+id/txt_eventstartprice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_semibold"
+                tools:text="Starting from USD 10.00"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_13ssp" />
+
+            <TextView
+                android:id="@+id/txt_eventsperperson"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                tools:text="Per person"
+                android:visibility="visible"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_11ssp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_booknow"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:background="@drawable/btn_fillgreen"
+            android:fontFamily="@font/open_sans_semibold"
+            android:text="@string/res_book_now"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
+
+

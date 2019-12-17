@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/_5sdp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/img_guestprofile"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/travel"
+            android:visibility="gone"
+            app:riv_border_color="@color/gray"
+            app:riv_border_width="1dip"
+            app:riv_oval="true" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="7"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:fontFamily="@font/open_sans_semibold"
+                android:paddingLeft="@dimen/_10sdp"
+                android:text="James Bond"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp" />
+
+            <TextView
+                android:id="@+id/txt_ratingdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:paddingLeft="@dimen/_10sdp"
+                android:text="10 Nov, 2019 05:30 PM"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_10ssp" />
+
+        </LinearLayout>
+
+        <RatingBar
+            android:id="@+id/rt_reivew"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:numStars="5"
+            android:rating="3"
+            android:progressBackgroundTint="@color/raringnoraml"
+            android:theme="@style/RatingBar">
+
+        </RatingBar>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/txt_reivew"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="@font/open_sans"
+        android:maxLines="3"
+        android:paddingLeft="@dimen/_10sdp"
+        android:text="@string/res_sortdesc"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_10ssp" />
+
+
+</LinearLayout>
