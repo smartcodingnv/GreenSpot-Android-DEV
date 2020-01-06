@@ -28,11 +28,18 @@
 
     </com.google.android.material.tabs.TabLayout>
 
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true" >
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:swipeable="false" />
+         />
 
+    </HorizontalScrollView>
 
 </LinearLayout>

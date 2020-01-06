@@ -17,6 +17,7 @@ import com.greenspot.app.utils.AppConfig
 import com.greenspot.app.utils.PreferenceHelper
 import com.greenspot.app.utils.Progress
 import com.greenspot.app.utils.Utils
+import hk.ids.gws.android.sclick.SClick
 import kotlinx.android.synthetic.main.item_place.view.*
 import java.util.*
 
@@ -44,7 +45,7 @@ class VisiterPlaceAdapter(val context: FragmentActivity?) :
         holder.bind(data[position], context)
 
         holder.itemView.setOnClickListener(View.OnClickListener {
-
+            if (!SClick.check(SClick.BUTTON_CLICK)) return@OnClickListener;
             helper!!.initPref()
             helper!!.SaveStringPref(AppConfig.PREFERENCE.PLACEID, data[position].master_id!!)
             helper!!.ApplyPref()
@@ -74,13 +75,18 @@ class VisiterPlaceAdapter(val context: FragmentActivity?) :
 
             Glide.with(itemView)
                 .load(item.main_image)
+                .placeholder(R.drawable.travel)
                 .centerCrop()
                 .into(itemView.imageView1)
             itemView.findViewById<TextView>(R.id.txt_place).text = item.place_name
             itemView.findViewById<TextView>(R.id.txt_location).text =
                 item.city + ", " + item.district + ", " + item.country
 
-            if (item.is_booking == 0) {
+            if (item.min_price_range.equals("0") ) {
+                itemView.findViewById<TextView>(R.id.txt_price).text =
+                    "From " + currency + " " + item.min_price_range
+                itemView.findViewById<TextView>(R.id.txt_price).visibility = View.GONE
+            }else if (item.min_price_range!!.isEmpty()) {
                 itemView.findViewById<TextView>(R.id.txt_price).text =
                     "From " + currency + " " + item.min_price_range
                 itemView.findViewById<TextView>(R.id.txt_price).visibility = View.GONE

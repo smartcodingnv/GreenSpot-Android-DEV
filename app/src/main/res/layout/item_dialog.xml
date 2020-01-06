@@ -19,6 +19,7 @@
         android:padding="@dimen/_5sdp"
         android:checked="false"
         android:textColor="@color/gray"
+        android:buttonTint="@color/green"
         android:textSize="@dimen/_12ssp"
         tools:text="best seller" />
 

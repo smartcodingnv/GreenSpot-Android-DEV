@@ -3,7 +3,9 @@ package com.greenspot.app.activity
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
+import android.util.Patterns
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
@@ -21,6 +23,7 @@ import com.greenspot.app.responce.ResponceForgotpwd
 import com.greenspot.app.responce.ResponceLocation
 import com.greenspot.app.responce.login.LoginResponce
 import com.greenspot.app.utils.*
+import hk.ids.gws.android.sclick.SClick
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.content_login.*
 import kotlinx.android.synthetic.main.dialog_contry.*
@@ -47,6 +50,8 @@ class LoginActivity : AppCompatActivity(), ItemClickListener {
     private lateinit var dialog: Dialog
     private var languageData: List<LanguagesItem>? = null
 
+    private var langCode: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.greenspot.app.R.layout.activity_login)
@@ -60,8 +65,13 @@ class LoginActivity : AppCompatActivity(), ItemClickListener {
         helperlang = PreferenceHelper(this, AppConfig.PREFERENCE.PREF_FILE_LANG)
         val intent = getIntent();
         checkLogin = intent.getIntExtra(AppConfig.EXTRA.CHECKLOGINSIGNUP, 0)
+        langCode = helperlang!!.LoadStringPref(AppConfig.PREFERENCE.SELECTLANGCODE, "")
+        if(langCode!!.isEmpty()){
+            getLocationDate(langCode!!)
+        }else{
+            getLocationDate(getString(R.string.default_language))
+        }
 
-        getLocationDate(getString(R.string.default_language))
 
         if (checkLogin == 1) {
 
@@ -119,6 +129,7 @@ class LoginActivity : AppCompatActivity(), ItemClickListener {
         })
 
         lay_skipp.setOnClickListener(View.OnClickListener {
+            if (!SClick.check(SClick.BUTTON_CLICK)) return@OnClickListener;
             helper.initPref()
             helper.SaveBooleanPref(AppConfig.PREFERENCE.USER_LOGIN_CHECK, true)
             helper.SaveIntPref(AppConfig.PREFERENCE.CHECK_LOGINAS, 1)
@@ -176,7 +187,7 @@ class LoginActivity : AppCompatActivity(), ItemClickListener {
             ).show()
             return
         }
-        if (!emailValidator(email)) {
+        if (!isValidEmail(email)) {
             Toast.makeText(
                 applicationContext,
                 getString(R.string.res_validemail),
@@ -186,7 +197,7 @@ class LoginActivity : AppCompatActivity(), ItemClickListener {
             return
         }
 
-        forgotPassword(email = email, langCode = getString(R.string.default_language))
+        forgotPassword(email = email, langCode = langCode!!)
 
     }
 
@@ -246,7 +257,7 @@ class LoginActivity : AppCompatActivity(), ItemClickListener {
 
             return
         }
-        if (!emailValidator(email)) {
+        if (!isValidEmail(email)) {
             Toast.makeText(
                 applicationContext,
                 getString(R.string.res_validemail),
@@ -257,7 +268,7 @@ class LoginActivity : AppCompatActivity(), ItemClickListener {
         }
 
 
-        createAccount(fname, lname, phoneno, email, password, getString(R.string.default_language))
+        createAccount(fname, lname, phoneno, email, password, this.langCode!!)
 
     }
 
@@ -284,7 +295,7 @@ class LoginActivity : AppCompatActivity(), ItemClickListener {
 
             return
         }
-        if (!emailValidator(email)) {
+        if (!isValidEmail(email)) {
             Toast.makeText(
                 applicationContext,
                 getString(R.string.res_validemail),
@@ -302,7 +313,7 @@ class LoginActivity : AppCompatActivity(), ItemClickListener {
         loginuser(
             email = email,
             password = password,
-            langCode = getString(R.string.default_language)
+            langCode = langCode!!
         )
 
 
@@ -326,6 +337,9 @@ class LoginActivity : AppCompatActivity(), ItemClickListener {
             })
     }
 
+    fun isValidEmail(target: CharSequence?): Boolean {
+        return !TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches()
+    }
 
     fun emailValidator(email: String): Boolean {
         val pattern: Pattern
@@ -365,9 +379,22 @@ class LoginActivity : AppCompatActivity(), ItemClickListener {
                             AppConfig.PREFERENCE.AUTHTOKEN, loginResponce!!.data.token
                         )
                         helper.SaveIntPref(AppConfig.PREFERENCE.USERID, loginResponce.data.userId)
-                        helper.SaveStringPref(AppConfig.PREFERENCE.USER_FNAME, loginResponce.data.detail.firstName)
-                        helper.SaveStringPref(AppConfig.PREFERENCE.USER_LNAME, loginResponce.data.detail.lastName)
-                        helper.SaveStringPref(AppConfig.PREFERENCE.USER_EMAIL, loginResponce.data.detail.email)
+                        helper.SaveStringPref(
+                            AppConfig.PREFERENCE.USER_FNAME,
+                            loginResponce.data.detail.firstName
+                        )
+                        helper.SaveStringPref(
+                            AppConfig.PREFERENCE.USER_LNAME,
+                            loginResponce.data.detail.lastName
+                        )
+                        helper.SaveStringPref(
+                            AppConfig.PREFERENCE.USER_EMAIL,
+                            loginResponce.data.detail.email
+                        )
+                        helper.SaveStringPref(
+                            AppConfig.PREFERENCE.USER_CONTACTNO,
+                            loginResponce.data.detail.phone
+                        )
                         helper.SaveIntPref(AppConfig.PREFERENCE.CHECK_LOGINAS, 2)
                         helper.ApplyPref()
                         startActivity(Intent(applicationContext, HomeActivity::class.java))
@@ -504,9 +531,22 @@ class LoginActivity : AppCompatActivity(), ItemClickListener {
                             loginResponce!!.data.token
                         )
                         helper.SaveIntPref(AppConfig.PREFERENCE.USERID, loginResponce.data.userId)
-                        helper.SaveStringPref(AppConfig.PREFERENCE.USER_FNAME, loginResponce.data.detail.firstName)
-                        helper.SaveStringPref(AppConfig.PREFERENCE.USER_LNAME, loginResponce.data.detail.lastName)
-                        helper.SaveStringPref(AppConfig.PREFERENCE.USER_EMAIL, loginResponce.data.detail.email)
+                        helper.SaveStringPref(
+                            AppConfig.PREFERENCE.USER_FNAME,
+                            loginResponce.data.detail.firstName
+                        )
+                        helper.SaveStringPref(
+                            AppConfig.PREFERENCE.USER_LNAME,
+                            loginResponce.data.detail.lastName
+                        )
+                        helper.SaveStringPref(
+                            AppConfig.PREFERENCE.USER_EMAIL,
+                            loginResponce.data.detail.email
+                        )
+                        helper.SaveStringPref(
+                            AppConfig.PREFERENCE.USER_CONTACTNO,
+                            loginResponce.data.detail.phone
+                        )
                         helper.SaveIntPref(AppConfig.PREFERENCE.CHECK_LOGINAS, 2)
                         helper.ApplyPref()
                         startActivity(Intent(applicationContext, HomeActivity::class.java))
@@ -574,6 +614,19 @@ class LoginActivity : AppCompatActivity(), ItemClickListener {
                             helperlang.LoadStringPref(AppConfig.PREFERENCE.SELECTLANGNAME, "")
                         if (selectLanguageName.isNullOrEmpty()) {
                             txt_languagelogin.setText(languageData!!.get(0).languageName)
+                            if (helperlang.LoadStringPref(AppConfig.PREFERENCE.SELECTLANGCODE, "")!!.isEmpty()) {
+                                helperlang.initPref()
+                                helperlang.SaveStringPref(
+                                    AppConfig.PREFERENCE.SELECTLANGNAME,
+                                    languageData!!.get(0).languageName
+                                )
+
+                                helperlang.SaveStringPref(
+                                    AppConfig.PREFERENCE.SELECTLANGCODE,
+                                    languageData!!.get(0).languageCode
+                                )
+                                helperlang.ApplyPref()
+                            }
                         } else {
                             txt_languagelogin.setText(selectLanguageName)
                         }
@@ -632,6 +685,14 @@ class LoginActivity : AppCompatActivity(), ItemClickListener {
             txt_languagelogin.setText(languageData!!.get(position).languageName)
         }
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        if (viewdialog != null) {
+            viewdialog.hideDialog();
+        }
     }
 
 

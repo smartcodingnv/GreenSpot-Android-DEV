@@ -3,15 +3,14 @@ package com.greenspot.app.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.greenspot.app.R
 import com.greenspot.app.interfaces.ItemClickListener
-import com.greenspot.app.model.ItineraryTitle
 import com.greenspot.app.responce.tourdetail.ItinerariesItem
+import hk.ids.gws.android.sclick.SClick
 import java.util.*
 
 class ItineraryTitleAdapter(
@@ -42,16 +41,19 @@ class ItineraryTitleAdapter(
 
 
         holder.itemView.setOnClickListener {
+
             row_index = position;
             notifyDataSetChanged()
-            itemClickListener.recyclerViewListClicked(it, position,0)
+            itemClickListener.recyclerViewListClicked(it, position, 0)
         }
 
         if (row_index == position) {
 
-            holder.title!!.setTextColor(ContextCompat.getColor(this.mContext!!, R.color.green));
-        } else {
 
+            holder.title!!.setTextColor(ContextCompat.getColor(this.mContext!!, R.color.white));
+            holder.title!!.setBackgroundColor(ContextCompat.getColor(this.mContext!!, R.color.green));
+        } else {
+            holder.title!!.setBackgroundColor(ContextCompat.getColor(this.mContext!!, R.color.tansparnt));
             holder.title!!.setTextColor(ContextCompat.getColor(this.mContext!!, R.color.gray));
         }
 
@@ -64,7 +66,7 @@ class ItineraryTitleAdapter(
         notifyDataSetChanged()
     }
 
-     class FeatureViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class FeatureViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         public var title: TextView? = null
 
@@ -74,8 +76,8 @@ class ItineraryTitleAdapter(
         ) = with(itemView) {
 
 
-
-            itemView.findViewById<TextView>(R.id.txt_listitem).text = item.day
+            itemView.findViewById<TextView>(R.id.txt_listitem).text =
+                context!!.getString(R.string.res_day) + item.day
 
             title = itemView.findViewById<TextView>(R.id.txt_listitem)
 

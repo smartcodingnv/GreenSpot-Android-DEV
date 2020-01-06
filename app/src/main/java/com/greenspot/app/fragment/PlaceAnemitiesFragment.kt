@@ -8,9 +8,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.gson.Gson
 import com.greenspot.app.R
-import com.greenspot.app.adapter.EventAminitesTitleAdapter
-import com.greenspot.app.adapter.PlaceAminitesTitleAdapter
-import com.greenspot.app.adapter.TourAminitesTitleAdapter
+import com.greenspot.app.adapter.*
+import com.greenspot.app.responce.bookinginfo.ResponceBookinginfo
+import com.greenspot.app.responce.bookinginfo.TourAmenitiesItem
+import com.greenspot.app.responce.bookinginfoevent.EventAmenitiesItem
+import com.greenspot.app.responce.bookinginfoevent.ResponceBookinginfoEvent
+import com.greenspot.app.responce.bookinginforecreation.ResponceBookinginfoRecreation
 import com.greenspot.app.responce.eventdetails.AmenitiesItem
 import com.greenspot.app.responce.eventdetails.EvnetDetailsResponce
 import com.greenspot.app.responce.recreationdetails.AmenitiesRecordsItem
@@ -24,6 +27,11 @@ import kotlinx.android.synthetic.main.fragment_place_availabality.view.*
 
 
 class PlaceAnemitiesFragment : Fragment() {
+    private var bookingrecreationAmenities: ArrayList<com.greenspot.app.responce.bookinginforecreation.AmenitiesItem>? =
+        ArrayList()
+
+    private var bookingeventAmintes: ArrayList<EventAmenitiesItem>? = ArrayList()
+    private var bookingTourAmintes: ArrayList<TourAmenitiesItem>? = ArrayList()
     private var otherActivity: String = ""
     private var amenitiesRecordsMy: ArrayList<AmenitiesRecordsItem>? = ArrayList()
     private var eventamenitiesRecordsMy: ArrayList<AmenitiesItem>? = ArrayList()
@@ -137,7 +145,73 @@ class PlaceAnemitiesFragment : Fragment() {
 
             }
 
+        } else if (checkAnimatities == 4) {
+            //booking info included facilites
+
+            val gson = Gson()
+            val bookinginfo = gson.fromJson(
+                helper!!.LoadStringPref(AppConfig.PREFERENCE.BOOKINGINFO, ""),
+                ResponceBookinginfo::class.java
+            )
+
+            bookingTourAmintes!!.clear()
+
+            for (aminate in bookinginfo.data.tourAmenities!!) {
+                if (aminate.value != "") {
+                    bookingTourAmintes!!.add(aminate)
+                }
+
+            }
+
+
+        } else if (checkAnimatities == 5) {
+            //booking info included facilites
+
+            val gson = Gson()
+            val bookinginfo = gson.fromJson(
+                helper!!.LoadStringPref(AppConfig.PREFERENCE.EVENTBOOKINGINFO, ""),
+                ResponceBookinginfoEvent::class.java
+            )
+
+            bookingeventAmintes!!.clear()
+
+            for (aminate in bookinginfo.data.eventAmenities!!) {
+                if (aminate.value != "") {
+                    bookingeventAmintes!!.add(aminate)
+                }
+
+            }
+
+
+        } else if (checkAnimatities == 6) {
+
+            val gson = Gson()
+            val bookinginfoo = gson.fromJson(
+                helper!!.LoadStringPref(AppConfig.PREFERENCE.VACATIONBOOKINGINFO, ""),
+                ResponceBookinginfoRecreation::class.java
+            )
+
+
+            otherActivity = bookinginfoo.data.otherActivities
+            bookingrecreationAmenities!!.clear()
+
+            for (aminate in bookinginfoo.data.amenities!!) {
+                val amenitiessubRecordsMy: ArrayList<com.greenspot.app.responce.bookinginforecreation.RecordsItem>? =
+                    ArrayList()
+                for (temp1 in aminate.records!!) {
+                    if (temp1.value != "") {
+                        amenitiessubRecordsMy!!.add(temp1)
+                    }
+                }
+                if (amenitiessubRecordsMy!!.size > 0) {
+                    val temp2 = aminate
+                    temp2.records = amenitiessubRecordsMy
+                    bookingrecreationAmenities!!.add(temp2)
+                }
+            }
+
         }
+
 
         initView()
 
@@ -156,7 +230,7 @@ class PlaceAnemitiesFragment : Fragment() {
             } else {
                 txt_otheractivity.visibility = View.VISIBLE
                 txt_labelother.visibility = View.VISIBLE
-                txt_labelother.text = otherActivity
+                txt_otheractivity.text = otherActivity
             }
 
 
@@ -189,6 +263,46 @@ class PlaceAnemitiesFragment : Fragment() {
             Common.setVerticalRecyclerView(context!!, mView.rv_placemenu)
             eventAminitesTitleAdapter.swapData(this.eventamenitiesRecordsMy!!)
             rv_placemenu.adapter = eventAminitesTitleAdapter
+        } else if (checkAnimatities == 4) {
+
+            txt_otheractivity.visibility = View.GONE
+            txt_labelother.visibility = View.GONE
+
+
+            val bookingTourAminitesTitleAdapter = BookingTourAminitesTitleAdapter(activity)
+
+            Common.setVerticalRecyclerView(context!!, mView.rv_placemenu)
+            bookingTourAminitesTitleAdapter.swapData(this.bookingTourAmintes!!)
+            rv_placemenu.adapter = bookingTourAminitesTitleAdapter
+        } else if (checkAnimatities == 5) {
+
+            txt_otheractivity.visibility = View.GONE
+            txt_labelother.visibility = View.GONE
+
+
+            val bookingTourAminitesTitleAdapter = BookingEventAminitesTitleAdapter(activity)
+
+            Common.setVerticalRecyclerView(context!!, mView.rv_placemenu)
+            bookingTourAminitesTitleAdapter.swapData(this.bookingeventAmintes!!)
+            rv_placemenu.adapter = bookingTourAminitesTitleAdapter
+        } else if (checkAnimatities == 6) {
+
+            if (otherActivity.isNullOrEmpty()) {
+                txt_otheractivity.visibility = View.GONE
+                txt_labelother.visibility = View.GONE
+            } else {
+                txt_otheractivity.visibility = View.VISIBLE
+                txt_labelother.visibility = View.VISIBLE
+                txt_otheractivity.text = otherActivity
+            }
+
+
+            val visiterPlaceAdapter = BookingVacationAminitesTitleAdapter(activity)
+
+            Common.setVerticalRecyclerView(context!!, mView.rv_placemenu)
+            visiterPlaceAdapter.swapData(this.bookingrecreationAmenities!!)
+            rv_placemenu.adapter = visiterPlaceAdapter
+
         }
 
 
@@ -206,6 +320,5 @@ class PlaceAnemitiesFragment : Fragment() {
         super.onDetach()
 
     }
-
 
 }

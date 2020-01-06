@@ -6,15 +6,14 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnLongClickListener
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.ContextCompat
-import androidx.core.view.get
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.greenspot.app.R
 import com.greenspot.app.model.ListBookingDetails
-import kotlinx.android.synthetic.main.content_edit_profile.view.*
 import java.util.*
 
 
@@ -64,7 +63,6 @@ class BookDetailsAdapter(val context: FragmentActivity?) :
         ) = with(itemView) {
 
 
-
             val laydetails: LinearLayout
             val etfname: EditText
             val etlname: EditText
@@ -85,8 +83,6 @@ class BookDetailsAdapter(val context: FragmentActivity?) :
             spGender = itemView.findViewById(R.id.sp_gender)
             laydetails = itemView.findViewById(R.id.lay_details)
             rbGender = itemView.findViewById(R.id.rg_gender)
-
-
 
 
             val expanded = item.isExpanded()
@@ -173,7 +169,7 @@ class BookDetailsAdapter(val context: FragmentActivity?) :
                     i2: Int
                 ) {
 
-                    spGender.visibility = View.GONE
+
                     item.email = email.text.toString()
 //                    editModelArrayList?.get(this@MyViewHolder.adapterPosition)!!.name = editText.text.toString()
                 }
@@ -196,7 +192,7 @@ class BookDetailsAdapter(val context: FragmentActivity?) :
                     i1: Int,
                     i2: Int
                 ) {
-                    spGender.visibility = View.GONE
+
                     item.contact_number = contactno.text.toString()
 //                    editModelArrayList?.get(this@MyViewHolder.adapterPosition)!!.name = editText.text.toString()
                 }
@@ -205,8 +201,13 @@ class BookDetailsAdapter(val context: FragmentActivity?) :
             })
 
 
-
             val c = Calendar.getInstance()
+
+            val year = c.get(Calendar.YEAR);
+            val month = c.get(Calendar.MONTH);
+            val day = c.get(Calendar.DAY_OF_MONTH);
+
+
             val dialog = DatePickerDialog(
                 context,
                 DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
@@ -217,18 +218,27 @@ class BookDetailsAdapter(val context: FragmentActivity?) :
                     Log.e("PickedDate: ", "Date: $_pickedDate") //
                     dob.setText(_pickedDate)// 2019-02-12
                     item.dob = _pickedDate
-                }, c[Calendar.YEAR], c[Calendar.MONTH], c[Calendar.MONTH]
+                },year, month, day
             )
-                dialog.datePicker.maxDate = System.currentTimeMillis() - 1000
+
+            dialog.datePicker.maxDate = System.currentTimeMillis() - 1000
 
 
 
             dob.setOnClickListener(View.OnClickListener {
-                spGender.visibility = View.GONE
+
 
                 dialog.show()
             })
 
+            dob.setOnLongClickListener(OnLongClickListener {
+                //  Do Something or Don't
+                true
+            })
+            gender.setOnLongClickListener(OnLongClickListener {
+                //  Do Something or Don't
+                true
+            })
             gender.setOnClickListener(View.OnClickListener {
                 spGender.visibility = View.VISIBLE
                 spGender.performClick()
@@ -241,22 +251,29 @@ class BookDetailsAdapter(val context: FragmentActivity?) :
             spGender.setAdapter(adapter);
 
 
+
             spGender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    (parent.getChildAt(0) as TextView).visibility = View.GONE
                     print("onItemSelected position = $position id = $id")
                     val selectedItem = parent.getItemAtPosition(position).toString()
 
-                    Log.e("bookingdetails","selectitem " + selectedItem)
+                    Log.e("bookingdetails", "selectitem " + selectedItem)
 
                     spGender.visibility = View.GONE
 
-                    if(selectedItem.equals("Male")){
+                    if (selectedItem.equals("Male")) {
 
                         item.gender = "M"
 
                     }
 
-                    if(selectedItem.equals("Female")){
+                    if (selectedItem.equals("Female")) {
 
                         item.gender = "F"
 
@@ -273,22 +290,24 @@ class BookDetailsAdapter(val context: FragmentActivity?) :
 
             }
 
+            item.title = "Mr"
+
             rbGender.setOnCheckedChangeListener(
                 RadioGroup.OnCheckedChangeListener { group, checkedId ->
                     val radio: RadioButton = findViewById(checkedId)
-                    Log.e("bookingdetails","radio " + radio.text)
+                    Log.e("bookingdetails", "radio " + radio.text)
 
-                    if(radio.text.equals("Mr.")) {
+                    if (radio.text.equals("Mr.")) {
 
-                        item.title ="Mr"
-
-                    }
-                    if(radio.text.equals("Mrs.")){
-                        item.title ="Mrs"
+                        item.title = "Mr"
 
                     }
-                    if(radio.text.equals("Miss")){
-                        item.title ="Miss"
+                    if (radio.text.equals("Mrs.")) {
+                        item.title = "Mrs"
+
+                    }
+                    if (radio.text.equals("Miss")) {
+                        item.title = "Miss"
                     }
 
 
@@ -297,19 +316,17 @@ class BookDetailsAdapter(val context: FragmentActivity?) :
                 })
 
 
-
-
 //            editModelArrayList?.get(this@MyViewHolder.adapterPosition)!!.name = editText.text.toString()
 
 
-
-        //https://demonuts.com/android-recyclerview-with-edittext/
+            //https://demonuts.com/android-recyclerview-with-edittext/
 
 
             title.setText(item.person)
             etfname.setText(item.first_name)
             etlname.setText(item.last_name)
             email.setText(item.email)
+            contactno.setText(item.contact_number)
 
 
 //            val placeDetailsAdapter = PlaceDetailsAdapter(context)
@@ -318,12 +335,10 @@ class BookDetailsAdapter(val context: FragmentActivity?) :
 //            rvPlacedetails.adapter = placeDetailsAdapter
 
 
-
         }
 
 
     }
-
 
 
 }

@@ -1,5 +1,6 @@
 package com.greenspot.app.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -147,7 +148,11 @@ class ChangePasswordActivity : AppCompatActivity() {
                         ).show()
 
                     }
-                } else {
+                } else if (response.code() == AppConfig.URL.TOKEN_EXPIRE) {
+
+                    login()
+
+                }else {
                     Toast.makeText(
                         applicationContext,
                         getString(R.string.msg_unexpected_error),
@@ -166,6 +171,15 @@ class ChangePasswordActivity : AppCompatActivity() {
             }
         })
 
+    }
+    private fun login() {
+
+        helper.clearAllPrefs()
+        startActivity(
+            Intent(this, MainActivity::class.java)
+                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        )
+        finish()
     }
 
 }

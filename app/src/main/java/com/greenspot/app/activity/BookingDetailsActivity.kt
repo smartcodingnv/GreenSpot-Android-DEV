@@ -4,7 +4,9 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
+import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.NonNull
@@ -22,29 +24,28 @@ import com.greenspot.app.network.ApiInterface
 import com.greenspot.app.responce.ComanResponce
 import com.greenspot.app.responce.currencyconvert.CurrencyConvert
 import com.greenspot.app.responce.idealpayment.ResponceIdealPayment
+import com.greenspot.app.responce.paymentmollie.ResponcePaymentMollie
 import com.greenspot.app.utils.*
+import hk.ids.gws.android.sclick.SClick
 import kotlinx.android.synthetic.main.activity_booking_details.*
-import kotlinx.android.synthetic.main.activity_place_booking.ib_back
 import kotlinx.android.synthetic.main.content_booking_details.*
 import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.regex.Matcher
-import java.util.regex.Pattern
 
 
 class BookingDetailsActivity : AppCompatActivity() {
 
+    private var paymnetID: String = ""
     private var final_eur_price: String = ""
     private var transcationID: String = ""
     private lateinit var editModel: ListBookingDetails
-    private var guestIndex: Int = 0
+
     private var totalguest: Int = 0
-    private var recyclerView: RecyclerView? = null
-    private var customAdapter: CustomAdapter? = null
-    var editModelArrayList: ArrayList<ListBookingDetails>? = null
+    private var bookingType: String = ""
+
     var placeTitle: ArrayList<ListBookingDetails> = ArrayList()
 
     private var progress: Progress? = null
@@ -57,11 +58,41 @@ class BookingDetailsActivity : AppCompatActivity() {
     private var langCode: String? = ""
     private var final_price: String? = ""
     private var token: String = ""
-    private var tourID: String = ""
+    private var itemID: String = ""
     private var single_price: String? = ""
     private var persons: String = ""
     private var formDate: String? = ""
     private var no_of_person: String? = ""
+
+
+    private var mid_week_day_pass_adult_price: String? = ""
+    private var mid_week_day_pass_adult_nop: String? = ""
+
+    private var mid_week_day_pass_child_price: String? = ""
+    private var mid_week_day_pass_child_nop: String? = ""
+
+
+    private var mid_week_night_pass_adult_price: String? = ""
+    private var mid_week_night_pass_adult_nop: String? = ""
+
+    private var mid_week_night_pass_child_price: String? = ""
+    private var mid_week_night_pass_child_nop: String? = ""
+
+
+    private var weekend_day_pass_adult_price: String? = ""
+    private var weekend_day_pass_adult_nop: String? = ""
+
+    private var weekend_day_pass_child_price: String? = ""
+    private var weekend_day_pass_child_nop: String? = ""
+
+
+    private var weekend_night_pass_adult_price: String? = ""
+    private var weekend_night_pass_adult_nop: String? = ""
+
+    private var weekend_night_pass_child_price: String? = ""
+    private var weekend_night_pass_child_nop: String? = ""
+
+
 
     private lateinit var jsonOBject: JSONObject
 
@@ -78,74 +109,68 @@ class BookingDetailsActivity : AppCompatActivity() {
         langCode = helperlang!!.LoadStringPref(AppConfig.PREFERENCE.SELECTLANGCODE, "")
         currncyCode = helperlang!!.LoadStringPref(AppConfig.PREFERENCE.SELECTCURRENCYNAME, "")
         countryID = helperlang!!.LoadStringPref(AppConfig.PREFERENCE.SELECTCONTRYID, "")
-        final_price = helper!!.LoadStringPref(AppConfig.PREFERENCE.FINAL_PRICE, "")
-        single_price = helper!!.LoadStringPref(AppConfig.PREFERENCE.START_PRICE, "")
-        formDate = helper!!.LoadStringPref(AppConfig.PREFERENCE.FROM_DATE, "")
-        no_of_person = helper!!.LoadStringPref(AppConfig.PREFERENCE.NO_OF_PERSON, "")
-        tourID = helper!!.LoadStringPref(AppConfig.PREFERENCE.PLACEID, "")!!  //tourid
-
-
         token = "Bearer " + helper!!.LoadStringPref(AppConfig.PREFERENCE.AUTHTOKEN, "")
-
-
-//
-//        val first = params[0] // "status"
-//
-//        val second = params[1]
-
-//
-
-//        val data: Uri? = intent?.data
-//
-//        Log.e("tag", "oncreate " + action)
-//        Log.e("tag", "oncreate " + scheme)
-//        Log.e("tag", " tag" + intent.extras!!.get("checkkk"))
-
-        Log.e("oncrate ", "   checkkk")
-        Log.e(
-            "oncrate ", "   checkkk" + helper!!.LoadIntPref(AppConfig.PREFERENCE.CHECKPAYMENT, 0)
-        )
-
-        /*   if (helper!!.LoadIntPref(AppConfig.PREFERENCE.CHECKPAYMENT, 0) == 1) {
-
-               helper!!.initPref()
-               helper!!.SaveIntPref(AppConfig.PREFERENCE.CHECKPAYMENT, 0)
-               helper!!.ApplyPref()
-
-               sendPaymnetData(
-                   contryID = this.countryID!!,
-                   langCode = this.langCode!!,
-                   selectCurrency = this.currncyCode!!
-               )
-
-               Toast.makeText(
-                   this@BookingDetailsActivity,
-                   "Payment successful",
-                   Toast.LENGTH_SHORT
-               ).show()
-
-               return
-           }*/
-
+        itemID = helper!!.LoadStringPref(AppConfig.PREFERENCE.PLACEID, "")!!  //tourid
 
         val intent = getIntent();
         totalguest = intent.getIntExtra(AppConfig.EXTRA.TOTALGUEST, 0)
+        bookingType = intent.getStringExtra(AppConfig.EXTRA.TYPE)
+
+
+        if (bookingType.equals("Tour")) {
+
+            final_price = helper!!.LoadStringPref(AppConfig.PREFERENCE.TOUR_FINAL_PRICE, "")
+            single_price = helper!!.LoadStringPref(AppConfig.PREFERENCE.TOUR_START_PRICE, "")
+            formDate = helper!!.LoadStringPref(AppConfig.PREFERENCE.TOUR_FROM_DATE, "")
+            no_of_person = helper!!.LoadStringPref(AppConfig.PREFERENCE.TOUR_NO_OF_PERSON, "")
+
+        } else if (bookingType.equals("Event")) {
+
+            final_price = helper!!.LoadStringPref(AppConfig.PREFERENCE.EVENT_FINAL_PRICE, "")
+            single_price = helper!!.LoadStringPref(AppConfig.PREFERENCE.EVENT_START_PRICE, "")
+            formDate = helper!!.LoadStringPref(AppConfig.PREFERENCE.EVENT_FROM_DATE, "")
+            no_of_person = helper!!.LoadStringPref(AppConfig.PREFERENCE.EVENT_NO_OF_PERSON, "")
+
+        }else if(bookingType.equals("Recreation")){
+
+            final_price = helper!!.LoadStringPref(AppConfig.PREFERENCE.RECREATION_FINAL_PRICE, "")
+            formDate = helper!!.LoadStringPref(AppConfig.PREFERENCE.RECREATION_FROM_DATE, "")
+
+            mid_week_day_pass_adult_price = helper!!.LoadStringPref(AppConfig.PREFERENCE.mid_week_day_pass_adult_price, "")
+            mid_week_day_pass_adult_nop = helper!!.LoadStringPref(AppConfig.PREFERENCE.mid_week_day_pass_adult_nop, "")
+
+            mid_week_day_pass_child_price = helper!!.LoadStringPref(AppConfig.PREFERENCE.mid_week_day_pass_child_price, "")
+            mid_week_day_pass_child_nop = helper!!.LoadStringPref(AppConfig.PREFERENCE.mid_week_day_pass_child_nop, "")
+
+            mid_week_night_pass_adult_price = helper!!.LoadStringPref(AppConfig.PREFERENCE.mid_week_night_pass_adult_price, "")
+            mid_week_night_pass_adult_nop = helper!!.LoadStringPref(AppConfig.PREFERENCE.mid_week_night_pass_adult_nop, "")
+
+            mid_week_night_pass_child_price = helper!!.LoadStringPref(AppConfig.PREFERENCE.mid_week_night_pass_child_price, "")
+            mid_week_night_pass_child_nop = helper!!.LoadStringPref(AppConfig.PREFERENCE.mid_week_night_pass_child_nop, "")
+
+            weekend_day_pass_adult_price = helper!!.LoadStringPref(AppConfig.PREFERENCE.weekend_day_pass_adult_price, "")
+            weekend_day_pass_adult_nop = helper!!.LoadStringPref(AppConfig.PREFERENCE.weekend_day_pass_adult_nop, "")
+
+            weekend_day_pass_child_price = helper!!.LoadStringPref(AppConfig.PREFERENCE.weekend_day_pass_child_price, "")
+            weekend_day_pass_child_nop = helper!!.LoadStringPref(AppConfig.PREFERENCE.weekend_day_pass_child_nop, "")
+
+            weekend_night_pass_adult_price = helper!!.LoadStringPref(AppConfig.PREFERENCE.weekend_night_pass_adult_price, "")
+            weekend_night_pass_adult_nop = helper!!.LoadStringPref(AppConfig.PREFERENCE.weekend_night_pass_adult_nop, "")
+
+            weekend_night_pass_child_price = helper!!.LoadStringPref(AppConfig.PREFERENCE.weekend_night_pass_child_price, "")
+            weekend_night_pass_child_nop = helper!!.LoadStringPref(AppConfig.PREFERENCE.weekend_night_pass_child_nop, "")
+
+
+
+
+        }
+
+
+
 
         ib_back.setOnClickListener(View.OnClickListener {
             onBackPressed()
         })
-
-
-//        linearLayout = findViewById(R.id.lay_details);
-//
-//        for (i in 1..2) {
-//            val textView = LinearLayout(this)
-//            textView.text = "TextView $i"
-//            linearLayout.addView(textView)
-//        }
-
-//        editModelArrayList = populateList()
-
 
         placeTitle.clear()
         val bookingDetailsAdapter = BookDetailsAdapter(this)
@@ -155,9 +180,12 @@ class BookingDetailsActivity : AppCompatActivity() {
         placeTitle[0].first_name = helper!!.LoadStringPref(AppConfig.PREFERENCE.USER_FNAME, "")!!
         placeTitle[0].last_name = helper!!.LoadStringPref(AppConfig.PREFERENCE.USER_LNAME, "")!!
         placeTitle[0].email = helper!!.LoadStringPref(AppConfig.PREFERENCE.USER_EMAIL, "")!!
+        placeTitle[0].contact_number = helper!!.LoadStringPref(AppConfig.PREFERENCE.USER_CONTACTNO, "")!!
 
         bookingDetailsAdapter.swapData(placeTitle)
         recycler.adapter = bookingDetailsAdapter
+
+
 
 
         btn_confirm.setOnClickListener(View.OnClickListener {
@@ -185,7 +213,7 @@ class BookingDetailsActivity : AppCompatActivity() {
                     if (value.first_name.isEmpty()) {
                         Toast.makeText(
                             applicationContext,
-                            "First Name required " + value.person,
+                            "Please enter first name of " + value.person,
                             Toast.LENGTH_SHORT
                         ).show()
 
@@ -195,7 +223,7 @@ class BookingDetailsActivity : AppCompatActivity() {
                     if (value.last_name.isEmpty()) {
                         Toast.makeText(
                             applicationContext,
-                            "Last Name required " + value.person,
+                            "Please enter last name of " + value.person,
                             Toast.LENGTH_SHORT
                         ).show()
                         return@OnClickListener
@@ -205,7 +233,26 @@ class BookingDetailsActivity : AppCompatActivity() {
 
                         Toast.makeText(
                             applicationContext,
-                            "Email required " + value.person,
+                            "Please enter email of " + value.person,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        return@OnClickListener
+                    }
+                    if (value.dob.isEmpty()) {
+
+                        Toast.makeText(
+                            applicationContext,
+                            "Please select date of birth of " + value.person,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        return@OnClickListener
+                    }
+
+                    if (value.gender.isEmpty()) {
+
+                        Toast.makeText(
+                            applicationContext,
+                            "Please select gender of " + value.person,
                             Toast.LENGTH_SHORT
                         ).show()
                         return@OnClickListener
@@ -215,14 +262,14 @@ class BookingDetailsActivity : AppCompatActivity() {
 
                         Toast.makeText(
                             applicationContext,
-                            "Contact no required " + value.person,
+                            "Please enter contact no of " + value.person,
                             Toast.LENGTH_SHORT
                         ).show()
                         return@OnClickListener
 
                     }
 
-                    if (!emailValidator(value.email)) {
+                    if (!isValidEmail(value.email)) {
                         Toast.makeText(
                             applicationContext,
                             getString(R.string.res_validemail),
@@ -263,34 +310,62 @@ class BookingDetailsActivity : AppCompatActivity() {
         })
 
 
-//
-//        customAdapter = CustomAdapter(this, editModelArrayList)
-//        recyclerView!!.setAdapter(customAdapter)
-//        recyclerView!!.setLayoutManager(
-//            LinearLayoutManager(
-//                applicationContext,
-//                LinearLayoutManager.VERTICAL,
-//                false
-//            )
-//        )
-
-
     }
 
     private fun alertProcessPayment(message: String) {
         val builder1 = AlertDialog.Builder(this)
         builder1.setMessage(message)
-        builder1.setCancelable(true)
+        builder1.setCancelable(false)
 
         builder1.setPositiveButton(
             "Ok",
             DialogInterface.OnClickListener { dialog, id ->
                 dialog.cancel()
-                checkBooking(
-                    contryID = this.countryID!!,
-                    selectCurrency = this.currncyCode!!,
-                    langCode = this.langCode!!
-                )
+
+                if (bookingType.equals("Tour")) {
+
+                    checkBooking(
+                        contryID = this.countryID!!,
+                        selectCurrency = this.currncyCode!!,
+                        langCode = this.langCode!!,
+                        masterTyppe = "T"
+
+                    )
+
+
+                } else if (bookingType.equals("Event")) {
+
+                    if (final_price == "") {
+
+                        eventfreesendPaymnetData(
+                            contryID = this.countryID!!,
+                            langCode = this.langCode!!,
+                            selectCurrency = this.currncyCode!!
+                        )
+
+                    } else {
+
+                        checkBooking(
+                            contryID = this.countryID!!,
+                            selectCurrency = this.currncyCode!!,
+                            langCode = this.langCode!!,
+                            masterTyppe = "E"
+                        )
+
+                    }
+
+
+                }else if(bookingType.equals("Recreation")){
+
+
+                    checkBookingRecreation(
+                        contryID = this.countryID!!,
+                        selectCurrency = this.currncyCode!!,
+                        langCode = this.langCode!!,
+                        masterTyppe = "R"
+                    )
+                }
+
 
             })
 
@@ -317,26 +392,22 @@ class BookingDetailsActivity : AppCompatActivity() {
                 last_name = "",
                 title = ""
             )
-
-
-
             placeTitle.add(editModel)
         }
 
     }
 
-    fun emailValidator(email: String): Boolean {
-        val pattern: Pattern
-        val matcher: Matcher
-        val EMAIL_PATTERN =
-            "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
-        pattern = Pattern.compile(EMAIL_PATTERN)
-        matcher = pattern.matcher(email)
-        return matcher.matches()
+    fun isValidEmail(target: CharSequence?): Boolean {
+        return !TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches()
     }
 
 
-    private fun checkBooking(contryID: String, selectCurrency: String, langCode: String) {
+    private fun checkBooking(
+        contryID: String,
+        selectCurrency: String,
+        langCode: String,
+        masterTyppe: String
+    ) {
 
 //        progress!!.createDialog(false)
 //        progress!!.DialogMessage(getString(R.string.please_wait))
@@ -347,9 +418,9 @@ class BookingDetailsActivity : AppCompatActivity() {
         val checkBookingResponce = apiService?.CALL_CHECKBEFOREPAY(
             token = token,
             langcode = langCode,
-            tourid = tourID,
+            tourid = itemID,
             selectCurrency = selectCurrency,
-            masterType = "T",
+            masterType = masterTyppe,
             singleprice = this.single_price!!
 
         )
@@ -375,7 +446,103 @@ class BookingDetailsActivity : AppCompatActivity() {
 //                        ).show()
 
                     }
-                } else {
+                } else if (response.code() == AppConfig.URL.TOKEN_EXPIRE) {
+
+                    login()
+
+                }else {
+                    Toast.makeText(
+                        this@BookingDetailsActivity,
+                        getString(R.string.msg_unexpected_error),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+            override fun onFailure(@NonNull call: Call<ComanResponce>, @NonNull t: Throwable) {
+
+                viewDialog!!.hideDialog()
+
+                Log.e("fail", " " + t.message)
+
+                Toast.makeText(
+                    this@BookingDetailsActivity,
+                    getString(R.string.msg_internet_conn),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
+
+    }
+
+    private fun login() {
+
+        helper!!.clearAllPrefs()
+        startActivity(
+            Intent(this, MainActivity::class.java)
+                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        )
+        finish()
+    }
+
+    private fun checkBookingRecreation(
+        contryID: String,
+        selectCurrency: String,
+        langCode: String,
+        masterTyppe: String
+    ) {
+
+//        progress!!.createDialog(false)
+//        progress!!.DialogMessage(getString(R.string.please_wait))
+        viewDialog!!.showDialog()
+        utils!!.hideKeyboard()
+
+        val apiService = ApiClient.client?.create(ApiInterface::class.java)
+        val checkBookingResponce = apiService?.CALL_CHECKBEFOREPAYRECREATION(
+            token = token,
+            langcode = langCode,
+            tourid = itemID,
+            selectCurrency = selectCurrency,
+            masterType = masterTyppe,
+            singleprice = this.single_price!!,
+            mid_week_day_pass_adult = this.mid_week_day_pass_adult_price!!,
+            mid_week_day_pass_child = mid_week_day_pass_child_price!!,
+            mid_week_night_pass_adult = mid_week_night_pass_adult_price!!,
+            mid_week_night_pass_child = mid_week_night_pass_child_price!!,
+            weekend_day_pass_adult = weekend_day_pass_adult_price!!,
+            weekend_day_pass_child = weekend_day_pass_child_price!!,
+            weekend_night_pass_adult = weekend_night_pass_adult_price!!,
+            weekend_night_pass_child = weekend_night_pass_child_price!!
+
+
+        )
+
+        checkBookingResponce?.enqueue(object : Callback<ComanResponce> {
+            override fun onResponse(@NonNull call: Call<ComanResponce>, @NonNull response: Response<ComanResponce>) {
+                viewDialog!!.hideDialog()
+
+                val checkbookingcall = response.body()
+                if (response.code() == AppConfig.URL.SUCCESS) {
+                    if (checkbookingcall!!.status == 1) {
+
+                        currencyData()
+
+
+                    } else {
+
+                        alertbooking(checkbookingcall.message)
+//                        Toast.makeText(
+//                            this@ListPlaceActivity,
+//                            tourDetails.message,
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+
+                    }
+                } else if (response.code() == AppConfig.URL.TOKEN_EXPIRE) {
+
+                    login()
+
+                }else {
                     Toast.makeText(
                         this@BookingDetailsActivity,
                         getString(R.string.msg_unexpected_error),
@@ -409,7 +576,7 @@ class BookingDetailsActivity : AppCompatActivity() {
     private fun alertbooking(message: String) {
         val builder1 = AlertDialog.Builder(this)
         builder1.setMessage(message)
-        builder1.setCancelable(true)
+        builder1.setCancelable(false)
 
         builder1.setPositiveButton(
             "Ok",
@@ -417,8 +584,9 @@ class BookingDetailsActivity : AppCompatActivity() {
                 dialog.cancel()
                 startActivity(
                     Intent(this, HomeActivity::class.java)
+
                 )
-                finish()
+                finishAffinity()
 
             })
 
@@ -608,7 +776,7 @@ class BookingDetailsActivity : AppCompatActivity() {
         if (Intent.ACTION_VIEW == intent.action) {
             val uri = intent.data
             val valueOne = uri!!.getQueryParameter("keyOne")
-            Log.e("onResume ", "   checkkk"+valueOne)
+            Log.e("onResume ", "   checkkk" + valueOne)
 
         }
 
@@ -621,11 +789,30 @@ class BookingDetailsActivity : AppCompatActivity() {
             helper!!.SaveIntPref(AppConfig.PREFERENCE.CHECKPAYMENT, 0)
             helper!!.ApplyPref()
 
-            sendPaymnetData(
-                contryID = this.countryID!!,
-                langCode = this.langCode!!,
-                selectCurrency = this.currncyCode!!
-            )
+            if (bookingType.equals("Tour")) {
+                toursendPaymnetData(
+                    contryID = this.countryID!!,
+                    langCode = this.langCode!!,
+                    selectCurrency = this.currncyCode!!
+                )
+
+
+            } else if (bookingType.equals("Event")) {
+
+                eventsendPaymnetData(
+                    contryID = this.countryID!!,
+                    langCode = this.langCode!!,
+                    selectCurrency = this.currncyCode!!
+                )
+
+            }else if(bookingType.equals("Recreation")){
+                recreationsendPaymnetData(
+                    contryID = this.countryID!!,
+                    langCode = this.langCode!!,
+                    selectCurrency = this.currncyCode!!
+                )
+
+            }
 
 
         }
@@ -643,7 +830,7 @@ class BookingDetailsActivity : AppCompatActivity() {
     }
 
 
-    private fun sendPaymnetData(contryID: String, selectCurrency: String, langCode: String) {
+    private fun toursendPaymnetData(contryID: String, selectCurrency: String, langCode: String) {
 
 //        progress!!.createDialog(false)
 //        progress!!.DialogMessage(getString(R.string.please_wait))
@@ -652,13 +839,13 @@ class BookingDetailsActivity : AppCompatActivity() {
         utils!!.hideKeyboard()
         val jsonArray = JSONArray(helper!!.LoadStringPref(AppConfig.PREFERENCE.PERSONDETAILS, ""))
         val apiService = ApiClient.client?.create(ApiInterface::class.java)
-        val responcePlaceReview = apiService?.PAYMENTMOLIE_CALL(
+        val responcePlaceReview = apiService?.TOURPAYMENTMOLIE_CALL(
             token = token,
             contryID = contryID,
             selectCurrency = "EUR",
             langcode = langCode,
             person = jsonArray,
-            tourid = tourID,
+            tourid = itemID,
             formDate = this.formDate!!,
             noofperson = this.no_of_person!!,
             singlePrice = helper!!.LoadStringPref(AppConfig.PREFERENCE.FINALEURPRICE, "")!!,
@@ -674,7 +861,7 @@ class BookingDetailsActivity : AppCompatActivity() {
         Log.e("selectCurrency", selectCurrency)
         Log.e("langcode", langCode)
         Log.e("person", jsonArray.toString())
-        Log.e("tourid", tourID)
+        Log.e("tourid", itemID)
         Log.e("finalPrice", this.final_price!!)
         Log.e("formDate", this.formDate!!)
         Log.e("noofperson", this.no_of_person!!)
@@ -682,9 +869,9 @@ class BookingDetailsActivity : AppCompatActivity() {
         Log.e("tanstationID", helper!!.LoadStringPref(AppConfig.PREFERENCE.TRANSACTIONID, "")!!)
 
 
-        responcePlaceReview?.enqueue(object : Callback<ComanResponce> {
+        responcePlaceReview?.enqueue(object : Callback<ResponcePaymentMollie> {
 
-            override fun onResponse(@NonNull call: Call<ComanResponce>, @NonNull response: Response<ComanResponce>) {
+            override fun onResponse(@NonNull call: Call<ResponcePaymentMollie>, @NonNull response: Response<ResponcePaymentMollie>) {
                 viewDialog!!.hideDialog()
 
                 val postreivewData = response.body()
@@ -692,6 +879,7 @@ class BookingDetailsActivity : AppCompatActivity() {
 
                     if (postreivewData!!.status == 1) {
 
+                        paymnetID = postreivewData.data.id
                         alertsuccessbooking(postreivewData.message)
 
 //                        Toast.makeText(
@@ -713,6 +901,10 @@ class BookingDetailsActivity : AppCompatActivity() {
                         ).show()
 
                     }
+                }else if (response.code() == AppConfig.URL.TOKEN_EXPIRE) {
+
+                    login()
+
                 } else {
 
                     Log.e("postreivewData", " error" + response.errorBody())
@@ -727,7 +919,331 @@ class BookingDetailsActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onFailure(@NonNull call: Call<ComanResponce>, @NonNull t: Throwable) {
+            override fun onFailure(@NonNull call: Call<ResponcePaymentMollie>, @NonNull t: Throwable) {
+
+                viewDialog!!.hideDialog()
+                Log.e("fail", " " + t.message)
+                Toast.makeText(
+                    this@BookingDetailsActivity,
+                    getString(R.string.msg_internet_conn),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
+
+    }
+
+
+    private fun eventfreesendPaymnetData(
+        contryID: String,
+        selectCurrency: String,
+        langCode: String
+    ) {
+
+//        progress!!.createDialog(false)
+//        progress!!.DialogMessage(getString(R.string.please_wait))
+        viewDialog!!.showDialog()
+
+        utils!!.hideKeyboard()
+        val jsonArray = JSONArray(persons)
+        val apiService = ApiClient.client?.create(ApiInterface::class.java)
+        val responcePlaceReview = apiService?.EVENTPAYMENTMOLIE_CALL(
+            token = token,
+            contryID = contryID,
+            selectCurrency = "",
+            langcode = langCode,
+            person = jsonArray,
+            tourid = itemID,
+            formDate = this.formDate!!,
+            noofperson = this.no_of_person!!,
+            singlePrice = "",
+            tanstationID = "",
+            originalPaymentcurrency = "",
+            originalPaymentprice = "",
+            originalsingleprice = ""
+
+        )
+
+        Log.e("token", token)
+        Log.e("contryID", contryID)
+        Log.e("selectCurrency", selectCurrency)
+        Log.e("langcode", langCode)
+        Log.e("person", jsonArray.toString())
+        Log.e("eventid", itemID)
+        Log.e("finalPrice", this.final_price!!)
+        Log.e("formDate", this.formDate!!)
+        Log.e("noofperson", this.no_of_person!!)
+        Log.e("singlePrice", this.single_price!!)
+        Log.e("tanstationID", helper!!.LoadStringPref(AppConfig.PREFERENCE.TRANSACTIONID, "")!!)
+
+
+        responcePlaceReview?.enqueue(object : Callback<ResponcePaymentMollie> {
+
+            override fun onResponse(@NonNull call: Call<ResponcePaymentMollie>, @NonNull response: Response<ResponcePaymentMollie>) {
+                viewDialog!!.hideDialog()
+
+                val postreivewData = response.body()
+                if (response.code() == AppConfig.URL.SUCCESS) {
+
+                    if (postreivewData!!.status == 1) {
+
+                        paymnetID = postreivewData.data.id
+                        alertsuccessbooking(postreivewData.message)
+
+//                        Toast.makeText(
+//                            this@BookingDetailsActivity,
+//                            postreivewData.message,
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+//
+//                        startActivity(Intent(this@BookingDetailsActivity, HomeActivity::class.java))
+//                        finish()
+
+
+                    } else {
+
+                        Toast.makeText(
+                            this@BookingDetailsActivity,
+                            postreivewData.message,
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                    }
+                }else if (response.code() == AppConfig.URL.TOKEN_EXPIRE) {
+
+                    login()
+
+                } else {
+
+                    Log.e("postreivewData", " error" + response.errorBody())
+                    Log.e("postreivewData", " error" + response.body().toString())
+                    Log.e("postreivewData", " error" + response.code())
+
+                    Toast.makeText(
+                        this@BookingDetailsActivity,
+                        getString(R.string.msg_unexpected_error),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+            override fun onFailure(@NonNull call: Call<ResponcePaymentMollie>, @NonNull t: Throwable) {
+
+                viewDialog!!.hideDialog()
+                Log.e("fail", " " + t.message)
+                Toast.makeText(
+                    this@BookingDetailsActivity,
+                    getString(R.string.msg_internet_conn),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
+
+    }
+
+
+    private fun eventsendPaymnetData(contryID: String, selectCurrency: String, langCode: String) {
+
+//        progress!!.createDialog(false)
+//        progress!!.DialogMessage(getString(R.string.please_wait))
+        viewDialog!!.showDialog()
+
+        utils!!.hideKeyboard()
+        val jsonArray = JSONArray(helper!!.LoadStringPref(AppConfig.PREFERENCE.PERSONDETAILS, ""))
+        val apiService = ApiClient.client?.create(ApiInterface::class.java)
+        val responcePlaceReview = apiService?.EVENTPAYMENTMOLIE_CALL(
+            token = token,
+            contryID = contryID,
+            selectCurrency = "EUR",
+            langcode = langCode,
+            person = jsonArray,
+            tourid = itemID,
+            formDate = this.formDate!!,
+            noofperson = this.no_of_person!!,
+            singlePrice = helper!!.LoadStringPref(AppConfig.PREFERENCE.FINALEURPRICE, "")!!,
+            tanstationID = helper!!.LoadStringPref(AppConfig.PREFERENCE.TRANSACTIONID, "")!!,
+            originalPaymentcurrency = selectCurrency,
+            originalPaymentprice = this.final_price!!,
+            originalsingleprice = this.single_price!!
+
+        )
+
+        Log.e("token", token)
+        Log.e("contryID", contryID)
+        Log.e("selectCurrency", selectCurrency)
+        Log.e("langcode", langCode)
+        Log.e("person", jsonArray.toString())
+        Log.e("eventid", itemID)
+        Log.e("finalPrice", this.final_price!!)
+        Log.e("formDate", this.formDate!!)
+        Log.e("noofperson", this.no_of_person!!)
+        Log.e("singlePrice", this.single_price!!)
+        Log.e("tanstationID", helper!!.LoadStringPref(AppConfig.PREFERENCE.TRANSACTIONID, "")!!)
+
+
+        responcePlaceReview?.enqueue(object : Callback<ResponcePaymentMollie> {
+
+            override fun onResponse(@NonNull call: Call<ResponcePaymentMollie>, @NonNull response: Response<ResponcePaymentMollie>) {
+                viewDialog!!.hideDialog()
+
+                val postreivewData = response.body()
+                if (response.code() == AppConfig.URL.SUCCESS) {
+
+                    if (postreivewData!!.status == 1) {
+
+                        paymnetID = postreivewData.data.id
+                        alertsuccessbooking(postreivewData.message)
+
+//                        Toast.makeText(
+//                            this@BookingDetailsActivity,
+//                            postreivewData.message,
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+//
+//                        startActivity(Intent(this@BookingDetailsActivity, HomeActivity::class.java))
+//                        finish()
+
+
+                    } else {
+
+                        Toast.makeText(
+                            this@BookingDetailsActivity,
+                            postreivewData.message,
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                    }
+                } else if (response.code() == AppConfig.URL.TOKEN_EXPIRE) {
+
+                    login()
+
+                }else {
+
+                    Log.e("postreivewData", " error" + response.errorBody())
+                    Log.e("postreivewData", " error" + response.body().toString())
+                    Log.e("postreivewData", " error" + response.code())
+
+                    Toast.makeText(
+                        this@BookingDetailsActivity,
+                        getString(R.string.msg_unexpected_error),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+            override fun onFailure(@NonNull call: Call<ResponcePaymentMollie>, @NonNull t: Throwable) {
+
+                viewDialog!!.hideDialog()
+                Log.e("fail", " " + t.message)
+                Toast.makeText(
+                    this@BookingDetailsActivity,
+                    getString(R.string.msg_internet_conn),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
+
+    }
+
+
+    private fun recreationsendPaymnetData(contryID: String, selectCurrency: String, langCode: String) {
+
+//        progress!!.createDialog(false)
+//        progress!!.DialogMessage(getString(R.string.please_wait))
+        viewDialog!!.showDialog()
+
+        utils!!.hideKeyboard()
+        val jsonArray = JSONArray(helper!!.LoadStringPref(AppConfig.PREFERENCE.PERSONDETAILS, ""))
+        val apiService = ApiClient.client?.create(ApiInterface::class.java)
+        val responcePlaceReview = apiService?.RECREATIONPAYMENTMOLIE_CALL(
+            token = token,
+            contryID = contryID,
+            selectCurrency = "EUR",
+            originalPaymentcurrency = selectCurrency,
+            langcode = langCode,
+            person = jsonArray,
+            tourid = itemID,
+            formDate = this.formDate!!,
+            tanstationID = helper!!.LoadStringPref(AppConfig.PREFERENCE.TRANSACTIONID, "")!!,
+            midweekdayadultpass = mid_week_day_pass_adult_price!!,
+            midweekdayadultpassnop = mid_week_day_pass_adult_nop!!,
+            midweekdaychildpass = mid_week_day_pass_child_price!!,
+            midweekdaychildpassnop = mid_week_day_pass_child_nop!!,
+            midweekNightadultpass = mid_week_night_pass_adult_price!!,
+            midweekNightadultpassnop = mid_week_night_pass_adult_nop!!,
+            midweekNightchildpass = mid_week_night_pass_child_price!!,
+            midweekNightchildpassnop = mid_week_night_pass_child_nop!!,
+            weekenddayadultpass = weekend_day_pass_adult_price!!,
+            weekenddayadultpassnop = weekend_day_pass_adult_nop!!,
+            weekenddaychildpass = weekend_day_pass_child_price!!,
+            weekenddaychildpassnop = weekend_day_pass_child_nop!!,
+            weekendNightadultpass = weekend_night_pass_adult_price!!,
+            weekendNightadultpassnop = weekend_night_pass_adult_nop!!,
+            weekendNightchildpass = weekend_night_pass_child_price!!,
+            weekendNightchildpassnop = weekend_night_pass_child_nop!!
+        )
+
+        Log.e("token", token)
+        Log.e("contryID", contryID)
+        Log.e("selectCurrency", selectCurrency)
+        Log.e("langcode", langCode)
+        Log.e("person", jsonArray.toString())
+        Log.e("eventid", itemID)
+        Log.e("formDate", this.formDate!!)
+        Log.e("tanstationID", helper!!.LoadStringPref(AppConfig.PREFERENCE.TRANSACTIONID, "")!!)
+
+
+        responcePlaceReview?.enqueue(object : Callback<ResponcePaymentMollie> {
+
+            override fun onResponse(@NonNull call: Call<ResponcePaymentMollie>, @NonNull response: Response<ResponcePaymentMollie>) {
+                viewDialog!!.hideDialog()
+
+                val postreivewData = response.body()
+                if (response.code() == AppConfig.URL.SUCCESS) {
+
+                    if (postreivewData!!.status == 1) {
+
+                        paymnetID = postreivewData.data.id
+                        alertsuccessbooking(postreivewData.message)
+
+//                        Toast.makeText(
+//                            this@BookingDetailsActivity,
+//                            postreivewData.message,
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+//
+//                        startActivity(Intent(this@BookingDetailsActivity, HomeActivity::class.java))
+//                        finish()
+
+
+                    } else {
+
+                        Toast.makeText(
+                            this@BookingDetailsActivity,
+                            postreivewData.message,
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                    }
+                }else if (response.code() == AppConfig.URL.TOKEN_EXPIRE) {
+
+                    login()
+
+                } else {
+
+                    Log.e("postreivewData", " error" + response.errorBody())
+                    Log.e("postreivewData", " error" + response.body().toString())
+                    Log.e("postreivewData", " error" + response.code())
+
+                    Toast.makeText(
+                        this@BookingDetailsActivity,
+                        getString(R.string.msg_unexpected_error),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+            override fun onFailure(@NonNull call: Call<ResponcePaymentMollie>, @NonNull t: Throwable) {
 
                 viewDialog!!.hideDialog()
                 Log.e("fail", " " + t.message)
@@ -744,16 +1260,43 @@ class BookingDetailsActivity : AppCompatActivity() {
     private fun alertsuccessbooking(message: String) {
         val builder1 = AlertDialog.Builder(this)
         builder1.setMessage(message)
-        builder1.setCancelable(true)
+        builder1.setCancelable(false)
 
         builder1.setPositiveButton(
             "Ok",
             DialogInterface.OnClickListener { dialog, id ->
                 dialog.cancel()
-                startActivity(
-                    Intent(this, HomeActivity::class.java)
-                )
-                finish()
+                if (bookingType.equals("Tour")) {
+
+                    startActivity(
+                        Intent(this, BookingInfoActvity::class.java)
+                            .putExtra(AppConfig.EXTRA.BOOKINGID, paymnetID)
+                            .putExtra(AppConfig.EXTRA.BOOKINGTYPE, bookingType)
+                            .putExtra(AppConfig.EXTRA.CHECKBOOKINGINFO, 1)
+                    )
+                    finishAffinity()
+
+                } else if (bookingType.equals("Event")) {
+
+                    startActivity(
+                        Intent(this, BookingInfoActvity::class.java)
+                            .putExtra(AppConfig.EXTRA.BOOKINGID, paymnetID)
+                            .putExtra(AppConfig.EXTRA.BOOKINGTYPE, bookingType)
+                            .putExtra(AppConfig.EXTRA.CHECKBOOKINGINFO, 1)
+                    )
+                    finishAffinity()
+                }else if(bookingType.equals("Recreation")){
+
+                    startActivity(
+                        Intent(this, BookingInfoActvity::class.java)
+                            .putExtra(AppConfig.EXTRA.BOOKINGID, paymnetID)
+                            .putExtra(AppConfig.EXTRA.BOOKINGTYPE, bookingType)
+                            .putExtra(AppConfig.EXTRA.CHECKBOOKINGINFO, 1)
+                    )
+                    finishAffinity()
+
+                }
+
 
             })
 

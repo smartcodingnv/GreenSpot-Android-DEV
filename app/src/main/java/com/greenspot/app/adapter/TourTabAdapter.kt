@@ -21,7 +21,7 @@ class TourTabAdapter(
                 return PlaceDescriptionFragment().newInstance(2)
             }
             1 -> {
-                return TourIteneraryFragment().newInstance()
+                return TourIteneraryFragment().newInstance()  // tour details
             }
             2 -> {
                 // val movieFragment = MovieFragment()

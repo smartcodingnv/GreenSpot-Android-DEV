@@ -8,27 +8,36 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.gson.Gson
 import com.greenspot.app.R
+import com.greenspot.app.adapter.PlaceDetailsAdapter
+import com.greenspot.app.model.PlaceSubItem
+import com.greenspot.app.responce.bookinginforecreation.ResponceBookinginfoRecreation
 import com.greenspot.app.responce.recreationdetails.ResponceRecDetails
-import com.greenspot.app.utils.AppConfig
-import com.greenspot.app.utils.PreferenceHelper
-import com.greenspot.app.utils.Progress
-import com.greenspot.app.utils.Utils
+import com.greenspot.app.utils.*
+import kotlinx.android.synthetic.main.fragment_place_availabality.*
+import kotlinx.android.synthetic.main.fragment_place_availabality.view.*
 import kotlinx.android.synthetic.main.fragment_place_contactus_fragmenet.*
+import java.util.ArrayList
 
 
 class PlaceContactusFragmenet : Fragment() {
+    private var checkother: Int =0
     private lateinit var mView: View
 
     private var progress: Progress? = null
     private var utils: Utils? = null
     private var helper: PreferenceHelper? = null
+    private var addrss: String = ""
+    private var phone: String = ""
+    private var email: String = ""
+    var eventcontactusdata: ArrayList<PlaceSubItem> = ArrayList()
 
-    fun newInstance(): PlaceContactusFragmenet {
 
-        val args = Bundle()
+    fun newInstance(checkflag: Int): PlaceContactusFragmenet {
 
+        arguments = Bundle()
         val fragment = PlaceContactusFragmenet()
-        fragment.setArguments(args)
+        arguments!!.putInt(AppConfig.BUNDLE.CHECKANIMATIES, checkflag)
+        fragment.setArguments(arguments)
         return fragment
     }
 
@@ -45,7 +54,7 @@ class PlaceContactusFragmenet : Fragment() {
         progress = Progress(this.activity!!)
         utils = Utils(this.activity!!)
         helper = PreferenceHelper(this.activity!!, AppConfig.PREFERENCE.PREF_FILE)
-        return inflater.inflate(R.layout.fragment_place_contactus_fragmenet, container, false)
+        return inflater.inflate(R.layout.fragment_place_anemities, container, false)
     }
 
 
@@ -53,28 +62,93 @@ class PlaceContactusFragmenet : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         mView = view
 
-        val gson = Gson()
-        val respncedetails =
-            gson.fromJson(
-                helper!!.LoadStringPref(AppConfig.PREFERENCE.PLACEDETAILSRESPONCE, ""),
-                ResponceRecDetails::class.java
+        if(checkother==1){
+
+            val gson = Gson()
+            val respncedetails =
+                gson.fromJson(
+                    helper!!.LoadStringPref(AppConfig.PREFERENCE.PLACEDETAILSRESPONCE, ""),
+                    ResponceRecDetails::class.java
+                )
+
+            addrss = respncedetails.data.contactUs.address
+            phone = respncedetails.data.contactUs.phone
+            email = respncedetails.data.contactUs.email
+
+            eventcontactusdata.clear()
+            setUpEventContactusData()
+
+            val placedetailsAdapter = PlaceDetailsAdapter(activity)
+            Common.setVerticalRecyclerView(context!!, mView.rv_placemenu)
+            placedetailsAdapter.swapData(eventcontactusdata)
+            rv_placemenu.adapter = placedetailsAdapter
+
+        }else if(checkother==2){
+            val gson = Gson()
+            val bookinginfoo = gson.fromJson(
+                helper!!.LoadStringPref(AppConfig.PREFERENCE.VACATIONBOOKINGINFO, ""),
+                ResponceBookinginfoRecreation::class.java
             )
 
-        
+            addrss = bookinginfoo.data.recreationData.spAddress
+            phone = bookinginfoo.data.recreationData.spPhone
+            email = bookinginfoo.data.recreationData.spEmail
 
-        txt_address.text = respncedetails.data.contactUs.address
-        txt_contactno.text = respncedetails.data.contactUs.phone
-        txt_email.text = respncedetails.data.contactUs.email
+            eventcontactusdata.clear()
+            setUpEventContactusData()
+
+            val placedetailsAdapter = PlaceDetailsAdapter(activity)
+            Common.setVerticalRecyclerView(context!!, mView.rv_placemenu)
+            placedetailsAdapter.swapData(eventcontactusdata)
+            rv_placemenu.adapter = placedetailsAdapter
+
+        }
 
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
+        arguments?.getInt(AppConfig.BUNDLE.CHECKANIMATIES)?.let {
+            checkother = it
+        }
     }
 
     override fun onDetach() {
         super.onDetach()
+
+    }
+
+    private fun setUpEventContactusData() {
+
+        if (addrss.isNotEmpty()) {
+            eventcontactusdata.add(
+                PlaceSubItem(
+                    "1",
+                    "Address :",
+                    addrss
+                )
+            )
+        }
+
+        if (phone.isNotEmpty()) {
+            eventcontactusdata.add(
+                PlaceSubItem(
+                    "4",
+                    "Phone :",
+                    phone
+                )
+            )
+        }
+        if (email.isNotEmpty()) {
+            eventcontactusdata.add(
+                PlaceSubItem(
+                    "4",
+                    "Email :",
+                    email
+                )
+            )
+        }
+
 
     }
 

@@ -13,11 +13,13 @@ import com.greenspot.app.R
 import com.greenspot.app.activity.ChangePasswordActivity
 import com.greenspot.app.activity.EditProfileActivity
 import com.greenspot.app.activity.LoginActivity
+import com.greenspot.app.activity.MainActivity
 import com.greenspot.app.utils.AppConfig
 import com.greenspot.app.utils.PreferenceHelper
 import com.greenspot.app.utils.Progress
 import com.greenspot.app.utils.Utils
 import kotlinx.android.synthetic.main.fragment_setting.*
+import kotlinx.android.synthetic.main.fragment_setting.view.*
 
 class AccountFragment : Fragment() {
 
@@ -63,6 +65,10 @@ class AccountFragment : Fragment() {
             lay_settings.visibility = View.VISIBLE
             lay_logout.visibility = View.VISIBLE
             lay_login.visibility = View.GONE
+            view_editprofile.visibility = View.VISIBLE
+            view_changepwd.visibility = View.VISIBLE
+            view_setting.visibility = View.VISIBLE
+            view_login.visibility = View.VISIBLE
 
 
         }else{
@@ -73,6 +79,10 @@ class AccountFragment : Fragment() {
             lay_settings.visibility = View.VISIBLE
             lay_logout.visibility = View.GONE
             lay_login.visibility = View.VISIBLE
+            view_editprofile.visibility = View.GONE
+            view_changepwd.visibility = View.GONE
+            view_setting.visibility = View.VISIBLE
+            view_login.visibility = View.VISIBLE
 
         }
 
@@ -108,8 +118,8 @@ class AccountFragment : Fragment() {
 
         helper!!.clearAllPrefs()
         startActivity(
-            Intent(activity, LoginActivity::class.java)
-                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            Intent(activity, MainActivity::class.java)
+                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         )
         activity!!.finish()
     }
@@ -120,7 +130,7 @@ class AccountFragment : Fragment() {
         builder1.setCancelable(true)
 
         builder1.setPositiveButton(
-            "YES",
+            "OK",
             DialogInterface.OnClickListener { dialog, id ->
                 dialog.cancel()
                 helper!!.clearAllPrefs()

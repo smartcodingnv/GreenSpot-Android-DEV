@@ -37,7 +37,6 @@ import com.smarteist.autoimageslider.SliderAnimations
 import com.smarteist.autoimageslider.SliderView
 import kotlinx.android.synthetic.main.dialog_contry.*
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_home.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -48,7 +47,7 @@ import kotlin.collections.ArrayList
 class HomeFragment : Fragment(), ItemClickListener {
 
 
-    private var checkDialog: Int =0
+    private var checkDialog: Int = 0
     private lateinit var eventAdapter: EventAdapter
     private lateinit var tourPlaceAdapter: TourPlaceAdapter
     private lateinit var visiterPlaceAdapter: VisiterPlaceAdapter
@@ -76,6 +75,7 @@ class HomeFragment : Fragment(), ItemClickListener {
     private lateinit var lay_vacationview: LinearLayout
     private lateinit var lay_tourview: LinearLayout
     private lateinit var lay_evenview: LinearLayout
+    private lateinit var lay_mainhome: LinearLayout
     private lateinit var sliderView: SliderView
     private lateinit var rv_vationplace: RecyclerView
     private lateinit var rv_tour: RecyclerView
@@ -151,11 +151,16 @@ class HomeFragment : Fragment(), ItemClickListener {
         rv_vationplace = mView.findViewById(R.id.rv_vationplace)
         rv_tour = mView.findViewById(R.id.rv_tour)
         rv_event = mView.findViewById(R.id.rv_event)
+        lay_mainhome = mView.findViewById(R.id.lay_mainhome)
 
 
         val username = helper!!.LoadStringPref(AppConfig.PREFERENCE.USER_FNAME, "")
+         if(username!!.isEmpty()){
+             txt_username.text = "Hey Guest" + ", \nWhere you want to go?"
+         }else{
+             txt_username.text = "Hey " + username + ", \nWhere you want to go?"
+         }
 
-        txt_username.text = "Hey " + username + ", \nWhere you wanna go?"
 
         langCode = helperlang!!.LoadStringPref(AppConfig.PREFERENCE.SELECTLANGCODE, "")
         currncyCode = helperlang!!.LoadStringPref(AppConfig.PREFERENCE.SELECTCURRENCYNAME, "")
@@ -219,7 +224,7 @@ class HomeFragment : Fragment(), ItemClickListener {
 
 
 
-        txt_vacationall.setOnClickListener(View.OnClickListener {
+        lay_vacationview.setOnClickListener(View.OnClickListener {
             startActivity(Intent(activity, ListPlaceActivity::class.java))
 
         })
@@ -239,15 +244,18 @@ class HomeFragment : Fragment(), ItemClickListener {
 
         })
 
-        txt_tourall.setOnClickListener(View.OnClickListener {
+        lay_tourview.setOnClickListener(View.OnClickListener {
+
             startActivity(Intent(activity, TourListActivity::class.java))
 
         })
 
-        txt_eventall.setOnClickListener(View.OnClickListener {
+        lay_evenview.setOnClickListener(View.OnClickListener {
+
             startActivity(Intent(activity, EventListActivity::class.java))
 
         })
+
 //        txt_hotelall.setOnClickListener(View.OnClickListener {
 //            startActivity(Intent(activity, ListPlaceActivity::class.java))
 //
@@ -308,7 +316,7 @@ class HomeFragment : Fragment(), ItemClickListener {
 
     private fun initviews() {
 
-        getLocationDate(langCode = this.langCode!!)
+        getLocationDate(langCodee = this.langCode!!)
 
 //        setVisitorplace()
 
@@ -412,6 +420,7 @@ class HomeFragment : Fragment(), ItemClickListener {
 
 //        contryData.clear()
 //        setContryData()
+
         Common.setVerticalRecyclerView(context!!, dialog.rv_bestseller)
         languageAdapter.swapData(this.languageData!!)
 
@@ -434,7 +443,6 @@ class HomeFragment : Fragment(), ItemClickListener {
     private fun setVisitorplace() {
 
 
-
         visiterPlaceAdapter.swapData(rList)
         rv_vationplace.adapter = visiterPlaceAdapter
     }
@@ -442,14 +450,11 @@ class HomeFragment : Fragment(), ItemClickListener {
     private fun setTourplace() {
 
 
-
-
         tourPlaceAdapter.swapData(tList)
         rv_tour.adapter = tourPlaceAdapter
     }
 
     private fun setEvenetData() {
-
 
 
         eventAdapter.swapData(eList)
@@ -642,18 +647,16 @@ class HomeFragment : Fragment(), ItemClickListener {
             .toString()
     }
 
-    private fun getLocationDate(langCode: String) {
+    private fun getLocationDate(langCodee: String) {
 
 //        progress!!.createDialog(false)
 //        progress!!.DialogMessage(getString(R.string.please_wait))
 //        progress!!.showDialog()
+
         viewDialog!!.showDialog()
         utils!!.hideKeyboard()
-
         val apiService = ApiClient.client?.create(ApiInterface::class.java)
-        val getLocation = apiService?.LOCATION_CALL(langCode)
-
-
+        val getLocation = apiService?.LOCATION_CALL(langCodee)
         getLocation?.enqueue(object : Callback<ResponceLocation> {
             override fun onResponse(@NonNull call: Call<ResponceLocation>, @NonNull response: Response<ResponceLocation>) {
 
@@ -728,7 +731,7 @@ class HomeFragment : Fragment(), ItemClickListener {
                         getHomeData(
                             contryID = countryID!!,
                             selectCurrency = currncyCode!!,
-                            langCode = langCode
+                            langCode = langCode!!
                         )
 
 
@@ -771,9 +774,9 @@ class HomeFragment : Fragment(), ItemClickListener {
 
     private fun getHomeData(contryID: String, selectCurrency: String, langCode: String) {
 
-        if(checkDialog==1){
+        if (checkDialog == 1) {
 
-            checkDialog=0
+            checkDialog = 0
 
             viewDialog!!.showDialog()
         }
@@ -790,6 +793,7 @@ class HomeFragment : Fragment(), ItemClickListener {
         responcelistmaster?.enqueue(object : Callback<ResponeHome> {
             override fun onResponse(@NonNull call: Call<ResponeHome>, @NonNull response: Response<ResponeHome>) {
                 viewDialog!!.hideDialog()
+                lay_mainhome.visibility = View.VISIBLE
                 swipeRefreshLayout.isRefreshing = false
                 val recreationList = response.body()
                 if (response.code() == AppConfig.URL.SUCCESS) {

@@ -1,16 +1,22 @@
 package com.greenspot.app.network
 
 import com.greenspot.app.responce.*
-import com.greenspot.app.responce.checkbeforepay.ResponceCheckPay
+import com.greenspot.app.responce.bookinginfo.ResponceBookinginfo
+import com.greenspot.app.responce.bookinginfoevent.ResponceBookinginfoEvent
+import com.greenspot.app.responce.bookinginforecreation.ResponceBookinginfoRecreation
+import com.greenspot.app.responce.bookinglist.ResponceBookingList
 import com.greenspot.app.responce.currencyconvert.CurrencyConvert
 import com.greenspot.app.responce.eventdetails.EvnetDetailsResponce
 import com.greenspot.app.responce.home.ResponeHome
 import com.greenspot.app.responce.idealpayment.ResponceIdealPayment
 import com.greenspot.app.responce.login.LoginResponce
 import com.greenspot.app.responce.payment.ResponcePayment
+import com.greenspot.app.responce.paymentmollie.ResponcePaymentMollie
 import com.greenspot.app.responce.recreationdetails.ResponceRecDetails
 import com.greenspot.app.responce.tourdetail.ResponceTourDetails
 import com.greenspot.app.responce.tourlist.ResponceTourList
+import com.greenspot.app.utils.AppConfig.URL.URL_BOOKINGDETAILS
+import com.greenspot.app.utils.AppConfig.URL.URL_BOOKINGLIST
 import com.greenspot.app.utils.AppConfig.URL.URL_CHANGEPWD
 import com.greenspot.app.utils.AppConfig.URL.URL_CHECKBEFOREPAY
 import com.greenspot.app.utils.AppConfig.URL.URL_CURRENCYCONVERT
@@ -18,6 +24,7 @@ import com.greenspot.app.utils.AppConfig.URL.URL_DETAILS
 import com.greenspot.app.utils.AppConfig.URL.URL_EDITPROFILE
 import com.greenspot.app.utils.AppConfig.URL.URL_EVENTDETAILS
 import com.greenspot.app.utils.AppConfig.URL.URL_EVENTLIIST
+import com.greenspot.app.utils.AppConfig.URL.URL_EVENTPAYMENTMOLIE
 import com.greenspot.app.utils.AppConfig.URL.URL_EVENTREVIEWLIST
 import com.greenspot.app.utils.AppConfig.URL.URL_FILTERCOUNT
 import com.greenspot.app.utils.AppConfig.URL.URL_FORGOTPWD
@@ -26,14 +33,15 @@ import com.greenspot.app.utils.AppConfig.URL.URL_LISTMASTER
 import com.greenspot.app.utils.AppConfig.URL.URL_LOCATION
 import com.greenspot.app.utils.AppConfig.URL.URL_LOGIN
 import com.greenspot.app.utils.AppConfig.URL.URL_PAYMENT
-import com.greenspot.app.utils.AppConfig.URL.URL_PAYMENTMOLIE
 import com.greenspot.app.utils.AppConfig.URL.URL_POSTREVIEW
 import com.greenspot.app.utils.AppConfig.URL.URL_RECREATIONDETAILS
 import com.greenspot.app.utils.AppConfig.URL.URL_RECREATIONLIST
+import com.greenspot.app.utils.AppConfig.URL.URL_RECREATIONPAYMENTMOLIE
 import com.greenspot.app.utils.AppConfig.URL.URL_REVIEWLIST
 import com.greenspot.app.utils.AppConfig.URL.URL_SIGNUP
 import com.greenspot.app.utils.AppConfig.URL.URL_TOURDETAILS
 import com.greenspot.app.utils.AppConfig.URL.URL_TOURLIST
+import com.greenspot.app.utils.AppConfig.URL.URL_TOURPAYMENTMOLIE
 import com.greenspot.app.utils.AppConfig.URL.URL_TOURREVIEW
 import com.greenspot.app.utils.AppConfig.URL.URL_TOURSPAYMENT
 import retrofit2.Call
@@ -242,48 +250,98 @@ interface ApiInterface {
     ): Call<ComanResponce>
 
     @FormUrlEncoded
-    @POST(URL_PAYMENTMOLIE)
-    fun PAYMENTMOLIE_CALL(
+    @POST(URL_TOURPAYMENTMOLIE)
+    fun TOURPAYMENTMOLIE_CALL(
         @Header("Authorization") token: String, @Field("global_country_id") contryID: String, @Field(
-            "lang_code") langcode: String, @Field("selected_currency") selectCurrency: String,
+            "lang_code"
+        ) langcode: String, @Field("selected_currency") selectCurrency: String,
         @Field("tour_id") tourid: String, @Field("transaction_id") tanstationID: String,
         @Field("single_price") singlePrice: String, @Field("original_single_price") originalsingleprice: String,
-        @Field("original_payment_price") originalPaymentprice: String,@Field("original_payment_currency") originalPaymentcurrency: String,
+        @Field("original_payment_price") originalPaymentprice: String, @Field("original_payment_currency") originalPaymentcurrency: String,
         @Field("from_date") formDate: String, @Field("no_of_person") noofperson: String,
         @Field("persons") person: Any
+    ): Call<ResponcePaymentMollie>
+
+    @FormUrlEncoded
+    @POST(URL_BOOKINGLIST)
+    fun CALL_BOOKINGLIST(
+        @Header("Authorization") token: String, @Field("page_number") pageNumber: String, @Field("limit") limit: String,
+        @Field("selected_currency") selectCurrency: String, @Field("lang_code") langcode: String,
+        @Field("type") type: String
+    ): Call<ResponceBookingList>
+
+
+    @FormUrlEncoded
+    @POST(URL_BOOKINGDETAILS)
+    fun CALL_BOOKINGINFO(
+        @Header("Authorization") token: String, @Field("id") bookingid: String, @Field("type") bookingtype: String,
+        @Field("lang_code") langcode: String
+    ): Call<ResponceBookinginfo>
+
+
+    @FormUrlEncoded
+    @POST(URL_BOOKINGDETAILS)
+    fun CALL_EVENTBOOKINGINFO(
+        @Header("Authorization") token: String, @Field("id") bookingid: String, @Field("type") bookingtype: String,
+        @Field("lang_code") langcode: String
+    ): Call<ResponceBookinginfoEvent>
+
+    @FormUrlEncoded
+    @POST(URL_BOOKINGDETAILS)
+    fun CALL_VACATIONBOOKINGINFO(
+        @Header("Authorization") token: String, @Field("id") bookingid: String, @Field("type") bookingtype: String,
+        @Field("lang_code") langcode: String
+    ): Call<ResponceBookinginfoRecreation>
+
+    @FormUrlEncoded
+    @POST(URL_EVENTPAYMENTMOLIE)
+    fun EVENTPAYMENTMOLIE_CALL(
+        @Header("Authorization") token: String, @Field("global_country_id") contryID: String, @Field(
+            "lang_code"
+        ) langcode: String, @Field("selected_currency") selectCurrency: String,
+        @Field("event_id") tourid: String, @Field("transaction_id") tanstationID: String,
+        @Field("single_price") singlePrice: String, @Field("original_single_price") originalsingleprice: String,
+        @Field("original_payment_price") originalPaymentprice: String, @Field("original_payment_currency") originalPaymentcurrency: String,
+        @Field("from_date") formDate: String, @Field("no_of_person") noofperson: String,
+        @Field("persons") person: Any
+    ): Call<ResponcePaymentMollie>
+
+    @FormUrlEncoded
+    @POST(URL_CHECKBEFOREPAY)
+    fun CALL_CHECKBEFOREPAYRECREATION(
+        @Header("Authorization") token: String, @Field("id") tourid: String, @Field("single_price") singleprice: String,
+        @Field("selected_currency") selectCurrency: String, @Field("master_type") masterType: String,
+        @Field("lang_code") langcode: String,
+        @Field("mid_week_day_pass_adult") mid_week_day_pass_adult: String,
+        @Field("mid_week_day_pass_child") mid_week_day_pass_child: String,
+        @Field("mid_week_night_pass_adult") mid_week_night_pass_adult: String,
+        @Field("mid_week_night_pass_child") mid_week_night_pass_child: String,
+        @Field("weekend_day_pass_adult") weekend_day_pass_adult: String,
+        @Field("weekend_day_pass_child") weekend_day_pass_child: String,
+        @Field("weekend_night_pass_adult") weekend_night_pass_adult: String,
+        @Field("weekend_night_pass_child") weekend_night_pass_child: String
+
     ): Call<ComanResponce>
 
 
+    @FormUrlEncoded
+    @POST(URL_RECREATIONPAYMENTMOLIE)
+    fun RECREATIONPAYMENTMOLIE_CALL(
+        @Header("Authorization") token: String, @Field("global_country_id") contryID: String, @Field("lang_code") langcode: String,
+        @Field("selected_currency") selectCurrency: String,  @Field("original_payment_currency") originalPaymentcurrency: String,
+        @Field("recreation_id") tourid: String, @Field("transaction_id") tanstationID: String, @Field("from_date") formDate: String,
 
-//    @FormUrlEncoded
-//    @POST(URL_PHARMACYLIST)
-//    fun PHARMACY_LIST_CALL(
-//        @Field("client_id") clientid: String, @Field("pharmacy_id") pharmacyid: String,
-//        @Field("lang_code") langcode: String
-//    ): Call<PharmacyResponce>
-//
-//
-//    @FormUrlEncoded
-//    @POST(URL_PHARMACYSEARCH)
-//    fun PHARMACY_SEARCHLIST_CALL(
-//        @Field("client_id") clientid: String, @Field("search_text") searchtxt: String,
-//        @Field("page_no") pageno: String, @Field("lang_code") langcode: String
-//    ): Call<PharmacySearchResponce>
-//
-//    @FormUrlEncoded
-//    @POST(URL_MEDICINSEARCH)
-//    fun MEDICEIN_SEARCHLIST_CALL(
-//        @Field("client_id") clientid: String, @Field("search_text") searchtxt: String,
-//        @Field("page_no") pageno: String, @Field("lang_code") langcode: String
-//    ): Call<MedicinSearchResponce>
-//
-//    @FormUrlEncoded
-//    @POST(URL_MEDICINWISEPHARMACY)
-//    fun MEDICEINWISE_PHARMACYLIST_CALL(
-//        @Field("client_id") clientid: String, @Field("medicine_id") medecinid: String,
-//        @Field("page_no") pageno: String, @Field("insurance_id") insuraceid: String,
-//        @Field("quantity") quantity: String, @Field("lang_code") langcode: String, @Field("user_id") userid: String
-//    ): Call<MedicinewisePharemacyResponce>
+        @Field("mid_week_day_pass_adult_price") midweekdayadultpass: String, @Field("mid_week_day_pass_adult_nop") midweekdayadultpassnop: String,
+        @Field("mid_week_day_pass_child_price") midweekdaychildpass: String, @Field("mid_week_day_pass_child_nop") midweekdaychildpassnop: String,
+        @Field("mid_week_night_pass_adult_price") midweekNightadultpass: String, @Field("mid_week_night_pass_adult_nop") midweekNightadultpassnop: String,
+        @Field("mid_week_night_pass_child_price") midweekNightchildpass: String, @Field("mid_week_night_pass_child_nop") midweekNightchildpassnop: String,
+
+        @Field("weekend_day_pass_adult_price") weekenddayadultpass: String, @Field("weekend_day_pass_adult_nop") weekenddayadultpassnop: String,
+        @Field("weekend_day_pass_child_price") weekenddaychildpass: String, @Field("weekend_day_pass_child_nop") weekenddaychildpassnop: String,
+        @Field("weekend_night_pass_adult_price") weekendNightadultpass: String, @Field("weekend_night_pass_adult_nop") weekendNightadultpassnop: String,
+        @Field("weekend_night_pass_child_price") weekendNightchildpass: String, @Field("weekend_night_pass_child_nop") weekendNightchildpassnop: String,
+        @Field("persons") person: Any
+    ): Call<ResponcePaymentMollie>
 
 
 }

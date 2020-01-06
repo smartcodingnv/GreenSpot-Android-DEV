@@ -17,6 +17,7 @@ import com.greenspot.app.utils.AppConfig
 import com.greenspot.app.utils.PreferenceHelper
 import com.greenspot.app.utils.Progress
 import com.greenspot.app.utils.Utils
+import hk.ids.gws.android.sclick.SClick
 import kotlinx.android.synthetic.main.item_listevent.view.*
 import java.util.*
 
@@ -43,6 +44,7 @@ class EventListAdapter(val context: FragmentActivity?) :
         holder.bind(data[position], context)
 
         holder.itemView.setOnClickListener(View.OnClickListener {
+            if (!SClick.check(SClick.BUTTON_CLICK)) return@OnClickListener;
             helper!!.initPref()
             helper!!.SaveStringPref(AppConfig.PREFERENCE.PLACEID, data[position].masterId)
             helper!!.ApplyPref()
@@ -117,8 +119,14 @@ class EventListAdapter(val context: FragmentActivity?) :
                 itemView.findViewById<TextView>(R.id.txt_eventoffer).visibility = View.GONE
 
             }else{
-                itemView.findViewById<TextView>(R.id.txt_eventoffer).visibility = View.VISIBLE
-                itemView.findViewById<TextView>(R.id.txt_eventoffer).text = item.discount
+
+                if(item.discount.isEmpty()){
+                    itemView.findViewById<TextView>(R.id.txt_eventoffer).visibility = View.GONE
+                }else{
+                    itemView.findViewById<TextView>(R.id.txt_eventoffer).text = item.discount
+                    itemView.findViewById<TextView>(R.id.txt_eventoffer).visibility = View.VISIBLE
+                }
+
                 itemView.findViewById<TextView>(R.id.txt_eventprice).text = "From " + currency + " " + item.finalPrice
             }
 

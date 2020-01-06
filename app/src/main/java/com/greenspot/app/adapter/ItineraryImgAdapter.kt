@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.greenspot.app.R
 import com.greenspot.app.model.ItineraryImg
 import com.greenspot.app.responce.tourdetail.GalleryImagesItem
+import hk.ids.gws.android.sclick.SClick
 import kotlinx.android.synthetic.main.item_itenerayimg.view.*
 import kotlinx.android.synthetic.main.item_placeimg.view.*
 import java.util.*
@@ -42,11 +43,18 @@ class ItineraryImgAdapter(
         holder.bind(data[position], context)
 
 
+
         Log.e("check size", "" + data.size)
-        Log.e("check pos", "" + position)
+        if(data.size==0||data.size==1){
+            holder.lay_nexttt!!.visibility = View.GONE
+            holder.lay_prevvv!!.visibility = View.GONE
+        }else{
+            holder.lay_nexttt!!.visibility = View.VISIBLE
+            holder.lay_prevvv!!.visibility = View.VISIBLE
+        }
+
         count = position
         holder.lay_nexttt!!.setOnClickListener(View.OnClickListener {
-
 
             if (count == data.size - 1) {
                 return@OnClickListener

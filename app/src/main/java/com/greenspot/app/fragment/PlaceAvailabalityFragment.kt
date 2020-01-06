@@ -164,7 +164,7 @@ class PlaceAvailabalityFragment : Fragment() {
             placeData.add(
                 PlaceSubItem(
                     "1",
-                    "OpenTime",
+                    "Open Time",
                     place_open_time
                 )
             )
@@ -174,7 +174,7 @@ class PlaceAvailabalityFragment : Fragment() {
             placeData.add(
                 PlaceSubItem(
                     "2",
-                    "ClostTIme",
+                    "Close Time",
                     place_close_time
                 )
             )
@@ -199,7 +199,7 @@ class PlaceAvailabalityFragment : Fragment() {
             officeData.add(
                 PlaceSubItem(
                     "1",
-                    "OpenTime",
+                    "Open Time",
                     office_open_time
                 )
             )
@@ -209,7 +209,7 @@ class PlaceAvailabalityFragment : Fragment() {
             officeData.add(
                 PlaceSubItem(
                     "2",
-                    "ClostTIme",
+                    "Close Time",
                     office_close_time
                 )
             )

@@ -9,6 +9,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.RatingBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AlertDialog
@@ -18,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.greenspot.app.R
 import com.greenspot.app.activity.LoginActivity
+import com.greenspot.app.activity.MainActivity
 import com.greenspot.app.adapter.GuestReviewAdapter
 import com.greenspot.app.network.ApiClient
 import com.greenspot.app.network.ApiInterface
@@ -35,6 +39,8 @@ import java.util.*
 
 class PlaceReviewFragment : Fragment() {
 
+    private var loading: Boolean = true
+    private var previousTotal = 0
 
     private lateinit var guestReviewAdapter: GuestReviewAdapter
     private var userRateing: Int = 0
@@ -56,6 +62,9 @@ class PlaceReviewFragment : Fragment() {
     private var countryID: String? = ""
     private var langCode: String? = ""
     private var mLayoutManager: LinearLayoutManager? = null
+    private var txt_guestreview: TextView? = null
+    private var et_reivew: EditText? = null
+    private var rbgiverstar: RatingBar? = null
 
     private val guestreviewData: LinkedList<PlaceReivewRecordsItem> =
         LinkedList<PlaceReivewRecordsItem>()
@@ -90,6 +99,10 @@ class PlaceReviewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         mView = view
 
+        txt_guestreview = mView.findViewById(R.id.txt_guestreview)
+        et_reivew = mView.findViewById(R.id.et_reivew)
+        rbgiverstar = mView.findViewById(R.id.rb_giverstar)
+
 
         placeID = helper!!.LoadStringPref(AppConfig.PREFERENCE.PLACEID, "")!!
         serviceProviderid = helper!!.LoadStringPref(AppConfig.PREFERENCE.SERVICEPROVIDERID, "")!!
@@ -110,7 +123,7 @@ class PlaceReviewFragment : Fragment() {
 
 
         val taxtrating =
-            respncedetails.data.mainRecords.totalReviews.toString() + " " + getString(R.string.str_reviews) + " & " +
+            respncedetails.data.mainRecords.totalReviews.toString() + " " + getString(R.string.str_reviews) + "  " +
                     respncedetails.data.mainRecords.avgReviews.toFloat() + "/5.0"
         txt_rating.text = taxtrating
         rt_placereivew.rating = respncedetails.data.mainRecords.avgReviews.toFloat()
@@ -119,22 +132,24 @@ class PlaceReviewFragment : Fragment() {
 
 
         rb_giverstar.setOnTouchListener(View.OnTouchListener { v, event ->
-            userRateing = rb_giverstar.numStars
-
 
             rb_giverstar.onTouchEvent(event)
         })
 
+
+
+        rb_giverstar.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
+
+            userRateing = ratingBar.rating.toInt()
+        }
+
         btn_submitrating.setOnClickListener(View.OnClickListener {
 
             if (helper!!.LoadIntPref(AppConfig.PREFERENCE.CHECK_LOGINAS, 0) == 2) {
-
                 submitRivew()
             } else {
                 alertLogin()
             }
-
-
         })
     }
 
@@ -147,7 +162,7 @@ class PlaceReviewFragment : Fragment() {
                 Toast.LENGTH_SHORT
             ).show()
             return
-        } else if (et_reivew.text.isNullOrEmpty()) {
+        } else if (et_reivew!!.text.isNullOrEmpty()) {
             Toast.makeText(
                 activity,
                 getString(R.string.res_reivewvalidation),
@@ -168,21 +183,21 @@ class PlaceReviewFragment : Fragment() {
 
     private fun initView() {
 
-
-        mLayoutManager = LinearLayoutManager(activity)
-        rv_guestreview.setLayoutManager(mLayoutManager)
-
-        guestReviewAdapter = GuestReviewAdapter(activity)
-
-        guestReviewAdapter.swapData(guestreviewData)
-        rv_guestreview.adapter = guestReviewAdapter
-        setRecyclerViewScrollListener()
-
+        guestreviewData.clear()
         getReviewData(
             contryID = countryID!!,
             selectCurrency = currncyCode!!,
             langCode = langCode!!
         )
+
+        mLayoutManager = LinearLayoutManager(activity)
+        rv_guestreview.setLayoutManager(mLayoutManager)
+        guestReviewAdapter = GuestReviewAdapter(activity)
+        guestReviewAdapter.swapData(guestreviewData)
+        rv_guestreview.adapter = guestReviewAdapter
+        setRecyclerViewScrollListener()
+
+
     }
 
 
@@ -191,32 +206,45 @@ class PlaceReviewFragment : Fragment() {
         rv_guestreview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-            }
 
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                val visibleItemCount = mLayoutManager?.childCount
-                val totalItemCount = mLayoutManager?.itemCount
-                val firstVisibleItemPosition = mLayoutManager?.findFirstVisibleItemPosition()
-                val itemcount = visibleItemCount!! + firstVisibleItemPosition!!
+                if (dy > 0) {
 
+                    val visibleItemCount = mLayoutManager!!.childCount
+                    val totalItemCount = mLayoutManager!!.itemCount
+                    val firstVisibleItem = mLayoutManager!!.findFirstVisibleItemPosition()
+                    val itemcount = visibleItemCount + firstVisibleItem
 
-                if (isLastpage == 1) {
-                    return
-                } else if (isLastpage == 0) {
-                    if (itemcount >= totalItemCount!! && firstVisibleItemPosition >= 0) {
-                        Log.e("itemcount", " item")
+                    if (isLastpage == 1) {
+                        return
+                    }
+                    if (loading) {
+                        if (totalItemCount > previousTotal) {
+                            loading = false;
+                            previousTotal = totalItemCount;
+                        }
+                    }
+
+                    if (!loading && itemcount >= totalItemCount && firstVisibleItem >= 0) {
+                        // End has been reached
+
+                        viewDialog!!.hideDialog()
                         pageNumber++
-                        progress!!.hideDialog()
-
                         getReviewData(
                             contryID = countryID!!,
                             selectCurrency = currncyCode!!,
                             langCode = langCode!!
                         )
+
+                        loading = true;
                     }
 
                 }
+
+            }
+
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
             }
 
         })
@@ -230,7 +258,7 @@ class PlaceReviewFragment : Fragment() {
         builder1.setCancelable(true)
 
         builder1.setPositiveButton(
-            "YES",
+            "OK",
             DialogInterface.OnClickListener { dialog, id ->
                 dialog.cancel()
                 helper!!.clearAllPrefs()
@@ -270,7 +298,7 @@ class PlaceReviewFragment : Fragment() {
 
 //        progress!!.createDialog(false)
 //        progress!!.DialogMessage(getString(R.string.please_wait))
-        viewDialog!!.showDialog()
+//        viewDialog!!.showDialog()
         utils!!.hideKeyboard()
 
         val apiService = ApiClient.client?.create(ApiInterface::class.java)
@@ -293,7 +321,7 @@ class PlaceReviewFragment : Fragment() {
 
         responcePlaceReview?.enqueue(object : Callback<ResponcePlaceReview> {
             override fun onResponse(@NonNull call: Call<ResponcePlaceReview>, @NonNull response: Response<ResponcePlaceReview>) {
-                viewDialog!!.hideDialog()
+//                viewDialog!!.hideDialog()
 
                 val reivewData = response.body()
                 if (response.code() == AppConfig.URL.SUCCESS) {
@@ -303,10 +331,10 @@ class PlaceReviewFragment : Fragment() {
                         isLastpage = reivewData.data.isLastPage
 //                        Log.e("lastpage", "" + isLastpage)
                         guestreviewData.addAll(reivewData.data.records!!)
-                        if(guestreviewData.size>=0){
-                            txt_guestreview.visibility = View.VISIBLE
-                        }else{
-                            txt_guestreview.visibility = View.GONE
+                        if (guestreviewData.size >= 0) {
+                            txt_guestreview!!.visibility = View.VISIBLE
+                        } else {
+                            txt_guestreview!!.visibility = View.GONE
                         }
                         guestReviewAdapter.notifyDataSetChanged()
 
@@ -314,13 +342,15 @@ class PlaceReviewFragment : Fragment() {
 
 
 //
+//                        if(guestreviewData ==null || guestreviewData.isEmpty()){
+//                            Toast.makeText(
+//                                activity,
+//                                reivewData.message,
+//                                Toast.LENGTH_SHORT
+//                            ).show()
+//
+//                        }
 
-
-//                        Toast.makeText(
-//                            activity,
-//                            reivewData.message,
-//                            Toast.LENGTH_SHORT
-//                        ).show()
 
                     }
                 } else {
@@ -339,7 +369,7 @@ class PlaceReviewFragment : Fragment() {
 
             override fun onFailure(@NonNull call: Call<ResponcePlaceReview>, @NonNull t: Throwable) {
 
-                viewDialog!!.hideDialog()
+//                viewDialog!!.hideDialog()
 
                 Log.e("fail", " " + t.message)
                 Toast.makeText(
@@ -370,7 +400,7 @@ class PlaceReviewFragment : Fragment() {
             serviceproiver = serviceProviderid,
             type = "R",
             applystar = userRateing.toString(),
-            reviwdesc = et_reivew.text.toString()
+            reviwdesc = et_reivew!!.text.toString()
 
         )
 
@@ -389,9 +419,8 @@ class PlaceReviewFragment : Fragment() {
                 if (response.code() == AppConfig.URL.SUCCESS) {
                     if (postreivewData!!.status == 1) {
 
-                        et_reivew.setText("")
-
-
+                        et_reivew!!.setText("")
+                        rb_giverstar.rating = 0.0F
                         Toast.makeText(
                             activity,
                             postreivewData.message,
@@ -411,6 +440,10 @@ class PlaceReviewFragment : Fragment() {
                         ).show()
 
                     }
+                } else if (response.code() == AppConfig.URL.TOKEN_EXPIRE) {
+
+                    login()
+
                 } else {
 
 
@@ -437,5 +470,14 @@ class PlaceReviewFragment : Fragment() {
 
     }
 
+    private fun login() {
+
+        helper!!.clearAllPrefs()
+        startActivity(
+            Intent(activity, MainActivity::class.java)
+                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        )
+        activity!!.finish()
+    }
 
 }

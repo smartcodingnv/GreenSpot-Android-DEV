@@ -2,11 +2,10 @@ package com.greenspot.app.adapter
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
@@ -14,10 +13,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.greenspot.app.R
 import com.greenspot.app.activity.TourDetailsActivity
+import com.greenspot.app.model.ItineraryImg
 import com.greenspot.app.responce.tourlist.IncludedInTourPackageItem
 import com.greenspot.app.responce.tourlist.RecordsItem
 import com.greenspot.app.utils.AppConfig
+import com.greenspot.app.utils.Common
 import com.greenspot.app.utils.PreferenceHelper
+import hk.ids.gws.android.sclick.SClick
 import kotlinx.android.synthetic.main.item_tourlist.view.*
 import java.util.*
 
@@ -27,6 +29,7 @@ class TourListAdapter(val context: FragmentActivity?) :
 
     private var data: List<RecordsItem> = ArrayList()
     private val mContext: Context? = context
+
     private var helper: PreferenceHelper? =
         PreferenceHelper(this.context!!, AppConfig.PREFERENCE.PREF_FILE)
 
@@ -44,46 +47,12 @@ class TourListAdapter(val context: FragmentActivity?) :
         holder.bind(data[position], context)
 
 
-        for (name in data[position].includedInTourPackage!!) {
 
-            Log.e("List", " tour " + name.masterId + "   " + name.value)
-
-
-            if (name.masterId.equals("1")) {
-
-                holder.layFlight.visibility = View.VISIBLE
-}
-            if (name.masterId.equals("2")) {
-
-                holder.layhotel.visibility = View.VISIBLE
-
-            }
-
-            if (name.masterId.equals("3")) {
-
-                holder.laysightseen.visibility = View.VISIBLE
-            }
-            if (name.masterId.equals("4")) {
-
-                holder.laymeals.visibility = View.VISIBLE
-            }
-            if (name.masterId.equals("5")) {
-
-                holder.laytransportaion.visibility = View.VISIBLE
-
-            }
-            if (name.masterId.equals("6")) {
-
-                holder.laywifi.visibility = View.VISIBLE
-
-            }
-
-        }
 
 
 
         holder.itemView.setOnClickListener(View.OnClickListener {
-
+            if (!SClick.check(SClick.BUTTON_CLICK)) return@OnClickListener;
             helper!!.initPref()
             helper!!.SaveStringPref(AppConfig.PREFERENCE.PLACEID, data[position].masterId)
             helper!!.ApplyPref()
@@ -93,14 +62,6 @@ class TourListAdapter(val context: FragmentActivity?) :
             mContext!!.startActivity(intent)
 
         })
-
-//        holder.itemView.setOnClickListener(View.OnClickListener {
-//            val intent = Intent(mContext, ProductDetailsActivity::class.java);
-//            intent.putExtra(AppConfig.EXTRA.PRODTITLE, data[position].itemname)
-//            intent.putExtra(AppConfig.EXTRA.PRODCATEGORY, data[position].itemcategoruy)
-//            mContext!!.startActivity(intent)
-//
-//        })
 
     }
 
@@ -113,12 +74,9 @@ class TourListAdapter(val context: FragmentActivity?) :
 
     class FeatureViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        public lateinit var layFlight: LinearLayout
-        public lateinit var layhotel: LinearLayout
-        public lateinit var laysightseen: LinearLayout
-        public lateinit var laymeals: LinearLayout
-        public lateinit var laytransportaion: LinearLayout
-        public lateinit var laywifi: LinearLayout
+
+        var itineraryImg: ArrayList<ItineraryImg> = ArrayList()
+
         fun bind(
             item: RecordsItem,
             context: FragmentActivity?
@@ -128,13 +86,6 @@ class TourListAdapter(val context: FragmentActivity?) :
 //                .load(item.itemimg)
 //
 //                .into(itemView.img_itemm)
-
-            layFlight = itemView.findViewById(R.id.lay_flighttt)
-            layhotel = itemView.findViewById(R.id.lay_hotelll)
-            laysightseen = itemView.findViewById(R.id.lay_sightseennn)
-            laymeals = itemView.findViewById(R.id.lay_mealsss)
-            laytransportaion = itemView.findViewById(R.id.lay_transportaionnn)
-            laywifi = itemView.findViewById(R.id.lay_wifiii)
 
 
             var helperlang: PreferenceHelper? =
@@ -157,53 +108,95 @@ class TourListAdapter(val context: FragmentActivity?) :
             itemView.findViewById<TextView>(R.id.txt_price).text =
                 "From " + currency + " " + item.price + "*"
 
+            val imgOtherServiceAdapter = TourImgOtherServiceAdapter(context)
+            itineraryImg.clear()
+            setSubImgData(item.includedInTourPackage)
+            Common.setHorizontalRecyclerView(context, rv_otherservicetourimg)
+            imgOtherServiceAdapter.swapData(itineraryImg)
+            rv_otherservicetourimg.adapter = imgOtherServiceAdapter
 
 
+        }
 
-         /*   for (name in includePkgList) {
 
-                Log.e("List", " tour " + name.masterId + "   " + name.value)
-
+        private fun setSubImgData(includedInTourPackage: List<IncludedInTourPackageItem>?) {
+            for (name in includedInTourPackage!!) {
 
                 if (name.masterId.equals("1")) {
 
-                    layFlight.visibility = View.VISIBLE
-
+                    itineraryImg.add(
+                        ItineraryImg(
+                            "1",
+                            "Flight",
+                            getURLForResource(R.drawable.ic_otherflight)
+                        )
+                    )
                 }
+
                 if (name.masterId.equals("2")) {
 
-                    layhotel.visibility = View.VISIBLE
-
+                    itineraryImg.add(
+                        ItineraryImg(
+                            "2",
+                            "Hotel",
+                            getURLForResource(R.drawable.ic_ohterhotel)
+                        )
+                    )
                 }
 
                 if (name.masterId.equals("3")) {
 
-                    laysightseen.visibility = View.VISIBLE
+                    itineraryImg.add(
+                        ItineraryImg(
+                            "3",
+                            "Sightseeing",
+                            getURLForResource(R.drawable.ic_othersigghtsign)
+                        )
+                    )
                 }
                 if (name.masterId.equals("4")) {
 
-                    laymeals.visibility = View.VISIBLE
+                    itineraryImg.add(
+                        ItineraryImg(
+                            "4",
+                            "Meals",
+                            getURLForResource(R.drawable.ic_othermeal)
+                        )
+                    )
                 }
                 if (name.masterId.equals("5")) {
 
-                    laytransportaion.visibility = View.VISIBLE
-
+                    itineraryImg.add(
+                        ItineraryImg(
+                            "5",
+                            "Transportation",
+                            getURLForResource(R.drawable.ic_othertransport)
+                        )
+                    )
                 }
                 if (name.masterId.equals("6")) {
 
-                    laywifi.visibility = View.VISIBLE
+                    itineraryImg.add(
+                        ItineraryImg(
+                            "6",
+                            "Wifi",
+                            getURLForResource(R.drawable.ic_otherservicewifi)
+                        )
+                    )
                 }
 
             }
-*/
-
-//            val imgOtherServiceAdapter = ImgOtherServiceAdapter(context)
-//            Common.setHorizontalRecyclerView(context!!, rv_otherservice)
-//            imgOtherServiceAdapter.swapData(item.includedInTourPackage)
-//            rv_otherservice.adapter = imgOtherServiceAdapter
 
 
         }
+
+        fun getURLForResource(resourceId: Int): String {
+            //use BuildConfig.APPLICATION_ID instead of R.class.getPackage().getName() if both are not same
+            return Uri.parse("android.resource://" + com.greenspot.app.R::class.java!!.getPackage()!!.getName() + "/" + resourceId)
+                .toString()
+        }
+
+
     }
 
 

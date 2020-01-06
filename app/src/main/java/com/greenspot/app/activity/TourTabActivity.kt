@@ -13,7 +13,6 @@ import com.greenspot.app.responce.tourdetail.AmenitiesItem
 import com.greenspot.app.responce.tourdetail.ResponceTourDetails
 import com.greenspot.app.utils.*
 import kotlinx.android.synthetic.main.activity_tour_tab.*
-import kotlinx.android.synthetic.main.activity_tour_tab.ib_back
 import java.util.*
 
 class TourTabActivity : AppCompatActivity() {
@@ -53,18 +52,14 @@ class TourTabActivity : AppCompatActivity() {
 
         checkTab = intenttt.getIntExtra(AppConfig.EXTRA.TABCHECK, 0)
 
-
-
-
-        tabLayout = findViewById<TabLayout>(com.greenspot.app.R.id.tabLayout)
-        viewPager = findViewById<ViewPager>(com.greenspot.app.R.id.viewPager)
+        tabLayout = findViewById<TabLayout>(R.id.tabLayout)
+        viewPager = findViewById<ViewPager>(R.id.viewPager)
 
         val gson = Gson()
-        val tourdetails =
-            gson.fromJson(
-                helper!!.LoadStringPref(AppConfig.PREFERENCE.TOURDETAILSRESPONCE, ""),
-                ResponceTourDetails::class.java
-            )
+        val tourdetails = gson.fromJson(
+            helper!!.LoadStringPref(AppConfig.PREFERENCE.TOURDETAILSRESPONCE, ""),
+            ResponceTourDetails::class.java
+        )
 
 
         txt_tourname.text = tourdetails.data.mainRecords.packageName
@@ -84,6 +79,8 @@ class TourTabActivity : AppCompatActivity() {
         ib_back.setOnClickListener(View.OnClickListener {
             onBackPressed()
         })
+
+
     }
 
     private fun tablayout() {
@@ -92,7 +89,7 @@ class TourTabActivity : AppCompatActivity() {
         tabLayout!!.addTab(tabLayout!!.newTab().setText("OVERVIEW"))
         tabLayout!!.addTab(tabLayout!!.newTab().setText("ITINERARY"))
         tabLayout!!.addTab(tabLayout!!.newTab().setText("AMENITIES"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("OTHERS"))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText("OTHER"))
         tabLayout!!.addTab(tabLayout!!.newTab().setText("WRITE A REVIEW"))
         tabLayout!!.addTab(tabLayout!!.newTab().setText("CONTACT US"))
         tabLayout!!.tabGravity = TabLayout.GRAVITY_FILL
@@ -101,7 +98,7 @@ class TourTabActivity : AppCompatActivity() {
         if (amenitiesRecordsMy!!.size == 0) {
 
 //            (tabLayout!!.getTabAt(3)!!.view as ViewGroup).visibility = View.GONE
-            (tabLayout!!.getChildAt(0) as ViewGroup).getChildAt(1).visibility = View.GONE
+            (tabLayout!!.getChildAt(0) as ViewGroup).getChildAt(2).visibility = View.GONE
 
         }
 
@@ -116,10 +113,6 @@ class TourTabActivity : AppCompatActivity() {
 
         val adapter = TourTabAdapter(this, supportFragmentManager, tabLayout!!.tabCount)
         viewPager!!.adapter = adapter
-
-
-//        viewPager!!.currentItem = tab.position
-
 
         viewPager!!.setOnTouchListener(View.OnTouchListener { v, event -> true })
         viewPager!!.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))

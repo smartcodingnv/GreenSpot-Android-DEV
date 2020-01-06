@@ -62,7 +62,7 @@ class HomeActivity : AppCompatActivity() {
         builder1.setCancelable(true)
 
         builder1.setPositiveButton(
-            "YES",
+            "OK",
             DialogInterface.OnClickListener { dialog, id ->
                 dialog.cancel()
                 helper!!.clearAllPrefs()

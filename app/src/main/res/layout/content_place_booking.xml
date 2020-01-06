@@ -15,8 +15,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/_10sdp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="@dimen/_10sdp">
 
         <TextView
             android:id="@+id/txt_name"
@@ -42,6 +42,7 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:fontFamily="@font/open_sans_semibold"
             android:text="Schedule"
+            android:visibility="gone"
             android:textColor="@color/black"
             android:textSize="@dimen/_14ssp" />
 
@@ -85,7 +86,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
 
             <TextView
@@ -132,173 +134,18 @@
         </LinearLayout>
 
 
-        <TextView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_recreationbooking"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
-            android:fontFamily="@font/open_sans_semibold"
-            android:text="Guest"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_14ssp" />
+            android:scrollbars="vertical">
+
+        </androidx.recyclerview.widget.RecyclerView>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
 
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:layout_weight="1"
-                android:fontFamily="@font/open_sans_semibold"
-                android:text="Adult"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/_14ssp" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/_30sdp"
-                android:layout_weight="1"
-                android:gravity="end"
-                android:orientation="horizontal"
-                android:visibility="visible">
-
-
-                <ImageButton
-                    android:id="@+id/ib_adultminus"
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_20sdp"
-                    android:background="@drawable/ic_collops" />
-
-                <TextView
-                    android:id="@+id/txt_adultcount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:layout_marginRight="@dimen/_5sdp"
-                    android:fontFamily="@font/open_sans"
-                    android:gravity="center"
-                    android:text="2"
-                    android:textColor="@color/black" />
-
-
-                <ImageButton
-                    android:id="@+id/ib_adultadd"
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_20sdp"
-                    android:background="@drawable/ic_add" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:layout_weight="1"
-                android:fontFamily="@font/open_sans_semibold"
-                android:text="Children"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/_14ssp" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/_30sdp"
-                android:layout_weight="1"
-                android:gravity="end"
-                android:orientation="horizontal"
-                android:visibility="visible">
-
-
-                <ImageButton
-                    android:id="@+id/ib_childresnminus"
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_20sdp"
-                    android:background="@drawable/ic_collops" />
-
-                <TextView
-                    android:id="@+id/txt_childrencount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:layout_marginRight="@dimen/_5sdp"
-                    android:fontFamily="@font/open_sans"
-                    android:gravity="center"
-                    android:text="0"
-                    android:textColor="@color/black" />
-
-
-                <ImageButton
-                    android:id="@+id/ib_childrenadd"
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_20sdp"
-                    android:background="@drawable/ic_add" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:fontFamily="@font/open_sans_semibold"
-            android:text="Contact Information"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_14ssp" />
-
-        <EditText
-            android:id="@+id/et_name"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
-            android:layout_margin="@dimen/_10sdp"
-            android:background="@drawable/edit_text"
-            android:fontFamily="@font/open_sans"
-            android:hint="@string/res_name"
-            android:inputType="text"
-            android:padding="@dimen/_5sdp"
-            android:textSize="@dimen/_12ssp" />
-
-        <EditText
-            android:id="@+id/et_email"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
-            android:layout_margin="@dimen/_5sdp"
-            android:background="@drawable/edit_text"
-            android:fontFamily="@font/open_sans"
-            android:hint="@string/res_email"
-            android:inputType="textEmailAddress"
-            android:padding="@dimen/_10sdp"
-            android:textSize="@dimen/_12ssp" />
-
-        <EditText
-            android:id="@+id/et_number"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
-            android:layout_margin="@dimen/_5sdp"
-            android:background="@drawable/edit_text"
-            android:fontFamily="@font/open_sans"
-            android:hint="@string/res_mobile_no"
-            android:inputType="number"
-            android:maxLength="12"
-            android:padding="@dimen/_10sdp"
-            android:textSize="@dimen/_12ssp" />
 
     </LinearLayout>
+
 </androidx.core.widget.NestedScrollView>

@@ -11,9 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginLeft="@dimen/_10sdp"
+
         android:fontFamily="@font/open_sans_semibold"
-        android:text="Account"
+        android:text="@string/res_account"
         android:textColor="@color/black"
         android:textSize="@dimen/_14ssp"></TextView>
 
@@ -28,6 +28,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:background="@drawable/ic_editprofile">
 
         </ImageView>
@@ -37,16 +38,19 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/_10sdp"
-            android:fontFamily="@font/open_sans_semibold"
+            android:fontFamily="@font/open_sans"
             android:text="Edit Profile"
             android:textColor="@color/gray"
             android:textSize="@dimen/_14ssp"></TextView>
     </LinearLayout>
 
     <View
+        android:id="@+id/view_editprofile"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginLeft="@dimen/_40sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:visibility="gone"
+        android:layout_marginLeft="@dimen/_30sdp"
         android:background="@color/lightgray" />
 
     <LinearLayout
@@ -60,6 +64,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:background="@drawable/ic_changepwd">
 
         </ImageView>
@@ -69,16 +74,19 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/_10sdp"
-            android:fontFamily="@font/open_sans_semibold"
+            android:fontFamily="@font/open_sans"
             android:text="Change Password"
             android:textColor="@color/gray"
             android:textSize="@dimen/_14ssp"></TextView>
     </LinearLayout>
 
     <View
+        android:id="@+id/view_changepwd"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginLeft="@dimen/_40sdp"
+        android:layout_marginLeft="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:visibility="gone"
         android:background="@color/lightgray" />
 
     <LinearLayout
@@ -92,6 +100,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:background="@drawable/ic_setting">
 
         </ImageView>
@@ -101,16 +110,19 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/_10sdp"
-            android:fontFamily="@font/open_sans_semibold"
+            android:fontFamily="@font/open_sans"
             android:text="Settings"
             android:textColor="@color/gray"
             android:textSize="@dimen/_14ssp"></TextView>
     </LinearLayout>
 
     <View
+        android:id="@+id/view_setting"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginLeft="@dimen/_40sdp"
+        android:layout_marginLeft="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:visibility="gone"
         android:background="@color/lightgray" />
 
     <LinearLayout
@@ -124,6 +136,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:background="@drawable/ic_logout">
 
         </ImageView>
@@ -133,7 +146,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/_10sdp"
-            android:fontFamily="@font/open_sans_semibold"
+            android:fontFamily="@font/open_sans"
             android:text="Logout"
             android:textColor="@color/gray"
             android:textSize="@dimen/_14ssp"></TextView>
@@ -150,6 +163,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:background="@drawable/ic_logout">
 
         </ImageView>
@@ -159,16 +173,19 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/_10sdp"
-            android:fontFamily="@font/open_sans_semibold"
+            android:fontFamily="@font/open_sans"
             android:text="Login"
             android:textColor="@color/gray"
             android:textSize="@dimen/_14ssp"></TextView>
     </LinearLayout>
 
     <View
+        android:id="@+id/view_login"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginLeft="@dimen/_40sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:visibility="gone"
+        android:layout_marginLeft="@dimen/_30sdp"
         android:background="@color/lightgray" />
 
 

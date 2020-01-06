@@ -54,7 +54,7 @@
                         android:hint="@string/res_email"
                         android:inputType="textEmailAddress"
                         android:padding="@dimen/_10sdp"
-                        android:text="abc@xyz.com"
+                        android:text="dipen0709+u@gmail.com"
                         android:textSize="@dimen/_12ssp" />
 
                     <EditText
@@ -67,7 +67,7 @@
                         android:hint="@string/res_password"
                         android:inputType="textPassword"
                         android:padding="@dimen/_10sdp"
-                        android:text="123456"
+                        android:text="Admin@123"
                         android:textSize="@dimen/_12ssp" />
 
                     <TextView

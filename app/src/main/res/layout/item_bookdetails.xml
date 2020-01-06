@@ -151,8 +151,8 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="end"
                 android:layout_marginRight="@dimen/_10sdp"
-                android:background="@android:color/transparent"
                 android:visibility="gone"
+                android:background="@android:color/transparent"
                 android:gravity="center" />
             </FrameLayout>
 

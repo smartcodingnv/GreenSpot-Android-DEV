@@ -28,10 +28,18 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".activity.BookingInfoTabActivity"
+            android:label="@string/title_activity_booking_info_tab"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activity.BookingInfoActvity"
+            android:label="@string/title_activity_booking_info_actvity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".activity.EventTabActivity"
             android:label="@string/title_activity_event_tab"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.TourTabActivity"
             android:label="@string/title_activity_tour_tab"
@@ -40,11 +48,6 @@
         <activity
             android:name=".activity.PlaceTabActivity"
             android:label="@string/title_activity_place_tab"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".activity.PaymnetJActivity"
-            android:label="@string/title_activity_paymnet_j"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <!--
@@ -58,30 +61,24 @@
             android:name=".activity.PaymentActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.BookingDetailsActivity"
             android:exported="true"
+            android:label="@string/title_activity_booking_details"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:label="@string/title_activity_booking_details"
-            android:theme="@style/AppTheme.NoActionBar" >
-
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-
                 <data
                     android:host="post-authentication-return-url"
                     android:scheme="com.greenspot.app" />
             </intent-filter>
-
-
         </activity>
         <activity
             android:name=".activity.EventBookingActivity"
@@ -150,23 +147,20 @@
         <activity
             android:name=".activity.HomeActivity"
             android:exported="true"
-            android:screenOrientation="portrait"
-
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar" >
-
-
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.LoginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity
             android:name=".activity.SplashActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -29,7 +29,7 @@ class PlaceTabAdapter(
             }
             3 -> {
                 // val movieFragment = MovieFragment()
-                return PlaceStayFragment().newInstance()
+                return PlaceStayFragment().newInstance(1)
             }
             4 -> {
                 // val movieFragment = MovieFragment()
@@ -45,7 +45,7 @@ class PlaceTabAdapter(
             }
             7 -> {
                 // val movieFragment = MovieFragment()
-                return PlaceContactusFragmenet().newInstance()
+                return PlaceContactusFragmenet().newInstance(1)
             }
             else -> return Fragment()
         }

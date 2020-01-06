@@ -7,40 +7,29 @@ import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
 import com.greenspot.app.R
-import com.greenspot.app.adapter.ImgOtherServiceAdapter
+import com.greenspot.app.adapter.TourOtherServiceAdapter
 import com.greenspot.app.model.ItineraryImg
 import com.greenspot.app.responce.tourdetail.IncludedInTourPackageItem
 import com.greenspot.app.responce.tourdetail.ResponceTourDetails
 import com.greenspot.app.utils.*
 import kotlinx.android.synthetic.main.activity_tour_booking.*
-import kotlinx.android.synthetic.main.activity_tour_booking.ib_back
-
 import kotlinx.android.synthetic.main.content_tour_booking.*
-import kotlinx.android.synthetic.main.content_tour_booking.ib_adultadd
-import kotlinx.android.synthetic.main.content_tour_booking.ib_adultminus
-import kotlinx.android.synthetic.main.content_tour_booking.ib_childrenadd
-import kotlinx.android.synthetic.main.content_tour_booking.ib_childresnminus
-import kotlinx.android.synthetic.main.content_tour_booking.txt_adultcount
-import kotlinx.android.synthetic.main.content_tour_booking.txt_childrencount
-import kotlinx.android.synthetic.main.content_tour_booking.txt_date
-import kotlinx.android.synthetic.main.content_tour_booking.txt_name
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
+
 class TourBookingActivity : AppCompatActivity() {
 
-    private var finalPrice: String =""
-    private  var startPrice: String =""
+    private var finalPrice: String = ""
+    private var startPrice: String = ""
     private var otherServiceList: List<IncludedInTourPackageItem>? = null
     private var childcount: Int = 0
-    private var adultcount: Int = 1
+    private var adultcount: Int = 2
     var pass =
         arrayOf("10 Des, 2019", "15 Des, 2019", "20 Des, 2019", "25 Des, 2019")
 
@@ -70,7 +59,6 @@ class TourBookingActivity : AppCompatActivity() {
         countryID = helperlang!!.LoadStringPref(AppConfig.PREFERENCE.SELECTCONTRYID, "")
 
 
-
         val gson = Gson()
         val tourdetails =
             gson.fromJson(
@@ -81,18 +69,19 @@ class TourBookingActivity : AppCompatActivity() {
 
         txt_name.text = tourdetails.data.mainRecords.packageName
         txt_depature.text = "Departure: " + tourdetails.data.mainRecords.depatureCity
-        txt_tourlocation.text = "Departure: " + tourdetails.data.mainRecords.locations
-        txt_tourlocation.text = "Departure: " + tourdetails.data.mainRecords.locations
+        txt_tourlocation.text = "Locations: " + tourdetails.data.mainRecords.locations
         txt_duration.text =
-            tourdetails.data.mainRecords.days.toString() + " Days & " + tourdetails.data.mainRecords.nights.toString() + " Nights"
+            "Duration: "+ tourdetails.data.mainRecords.nights.toString() + " Nights & " + tourdetails.data.mainRecords.days.toString() + " Days"
+
+        rt_tourrating.rating = tourdetails.data.mainRecords.avgReviews.toFloat()
+        txt_riview.text = tourdetails.data.mainRecords.totalReviews.toString() +" REVIEWS"
 
         startPrice = tourdetails.data.mainRecords.price
+        val totalprice = startPrice.toFloat() * adultcount
         finalPrice = startPrice
+        txt_startprice.text = currncyCode + " " + totalprice
 
-        txt_startprice.text =
-            getString(R.string.str_startingform)+ " " + currncyCode + " " +  startPrice
-
-        Log.e("Tourbooking","  "+ tourdetails.data.mainRecords.includedInTourPackage!!.size)
+        Log.e("Tourbooking", "  " + tourdetails.data.mainRecords.includedInTourPackage!!.size)
 
         otherServiceList = tourdetails.data.mainRecords.includedInTourPackage
 
@@ -137,16 +126,14 @@ class TourBookingActivity : AppCompatActivity() {
 
             val totalprice = startPrice.toFloat() * adultcount
             finalPrice = String.format("%.2f", totalprice)
-            txt_startprice.text =
-                getString(R.string.str_startingform)+ " " + currncyCode + " " + finalPrice
+            txt_startprice.text = currncyCode + " " + finalPrice
         })
 
         ib_adultadd.setOnClickListener(View.OnClickListener {
             adultcount++
             val totalprice = startPrice.toFloat() * adultcount
             finalPrice = String.format("%.2f", totalprice)
-            txt_startprice.text =
-                getString(R.string.str_startingform)+ " " + currncyCode + " " +  finalPrice
+            txt_startprice.text = currncyCode + " " + finalPrice
 
             txt_adultcount.setText(adultcount.toString())
 
@@ -171,6 +158,7 @@ class TourBookingActivity : AppCompatActivity() {
         btn_continue.setOnClickListener(View.OnClickListener {
 
             placeBooking()
+
         })
 
     }
@@ -178,6 +166,10 @@ class TourBookingActivity : AppCompatActivity() {
     private fun selectDate() {
 
         val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR);
+        val month = c.get(Calendar.MONTH);
+        val day = c.get(Calendar.DAY_OF_MONTH);
+
         val dialog = DatePickerDialog(
             this,
             DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
@@ -189,7 +181,7 @@ class TourBookingActivity : AppCompatActivity() {
                 val _pickedDate = "$_month/$_date/$year"
                 Log.e("PickedDate: ", "Date: $_pickedDate") //
                 txt_date.setText(_pickedDate)// 2019-02-12
-            }, c[Calendar.YEAR], c[Calendar.MONTH], c[Calendar.MONTH]
+            }, year, month, day
         )
         dialog.datePicker.minDate = System.currentTimeMillis() - 1000
         dialog.show()
@@ -253,28 +245,20 @@ class TourBookingActivity : AppCompatActivity() {
         val totalguest = adultcount + childcount
 
         helper!!.initPref()
-        helper!!.SaveStringPref(AppConfig.PREFERENCE.START_PRICE,startPrice)
-        helper!!.SaveStringPref(AppConfig.PREFERENCE.FINAL_PRICE,finalPrice)
-        helper!!.SaveStringPref(AppConfig.PREFERENCE.FROM_DATE,txt_date.text.toString())
-        helper!!.SaveStringPref(AppConfig.PREFERENCE.NO_OF_PERSON,totalguest.toString())
+        helper!!.SaveStringPref(AppConfig.PREFERENCE.TOUR_START_PRICE, startPrice)
+        helper!!.SaveStringPref(AppConfig.PREFERENCE.TOUR_FINAL_PRICE, finalPrice)
+        helper!!.SaveStringPref(AppConfig.PREFERENCE.TOUR_FROM_DATE, txt_date.text.toString())
+        helper!!.SaveStringPref(AppConfig.PREFERENCE.TOUR_NO_OF_PERSON, totalguest.toString())
         helper!!.ApplyPref()
 
 
         startActivity(
             Intent(this, BookingDetailsActivity::class.java)
                 .putExtra(AppConfig.EXTRA.TOTALGUEST, totalguest)
+                .putExtra(AppConfig.EXTRA.TYPE, "Tour")
         )
     }
 
-    fun emailValidator(email: String): Boolean {
-        val pattern: Pattern
-        val matcher: Matcher
-        val EMAIL_PATTERN =
-            "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
-        pattern = Pattern.compile(EMAIL_PATTERN)
-        matcher = pattern.matcher(email)
-        return matcher.matches()
-    }
 
     private fun isValidMobile(phone: String): Boolean {
         return Patterns.PHONE.matcher(phone).matches()
@@ -283,7 +267,7 @@ class TourBookingActivity : AppCompatActivity() {
 
     private fun setTourOtherDetail() {
 
-        val imgOtherServiceAdapter = ImgOtherServiceAdapter(this)
+        val imgOtherServiceAdapter = TourOtherServiceAdapter(this)
         itineraryImg.clear()
         setSubImgData()
         Common.setGridRecyclerView(this, rv_otherservice, 2)

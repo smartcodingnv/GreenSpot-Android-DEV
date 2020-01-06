@@ -15,76 +15,149 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/img_place"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_150sdp"
-            android:scaleType="centerCrop" />
+            android:layout_height="@dimen/_180sdp">
+
+            <ImageView
+                android:id="@+id/img_place"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
+
+
+            <ImageView
+                android:id="@+id/img_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_youtube_red"
+                android:scaleType="centerCrop"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/lay_prev"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:background="@drawable/txt_curvblack"
+                    android:clickable="true"
+                    android:duplicateParentState="true"
+                    android:gravity="center">
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_back"
+                        android:backgroundTint="@color/green"
+                        android:clickable="false">
+
+                    </ImageButton>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end">
+
+                    <LinearLayout
+                        android:id="@+id/lay_next"
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_marginRight="@dimen/_5sdp"
+                        android:background="@drawable/txt_curvblack"
+                        android:clickable="true"
+                        android:duplicateParentState="true"
+                        android:gravity="center">
+
+                        <ImageButton
+                            android:id="@+id/ib_next"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ic_next"
+                            android:backgroundTint="@color/green"
+                            android:clickable="false" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </FrameLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50sdp"
             android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/lay_prev"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.7"
-                android:background="@color/yello"
-                android:gravity="center">
+            <!--   <LinearLayout
+                   android:id="@+id/lay_prev"
+                   android:layout_width="0dp"
+                   android:layout_height="match_parent"
+                   android:layout_weight="0.7"
+                   android:background="@color/yello"
+                   android:gravity="center">
 
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/ic_back"
-                    android:backgroundTint="@color/white">
+                   <ImageButton
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:background="@drawable/ic_back"
+                       android:backgroundTint="@color/white">
 
-                </ImageButton>
+                   </ImageButton>
 
-            </LinearLayout>
+               </LinearLayout>-->
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_placeimg"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/_2sdp"
-                android:layout_marginRight="@dimen/_2sdp"
-                android:layout_weight="8.6"
+                android:layout_marginLeft="@dimen/_3sdp"
+                android:layout_marginRight="@dimen/_3sdp"
                 android:scrollbars="horizontal">
 
             </androidx.recyclerview.widget.RecyclerView>
 
-            <LinearLayout
-                android:id="@+id/lay_next"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.7"
-                android:background="@color/yello"
-                android:gravity="center">
+            <!--   <LinearLayout
+                   android:id="@+id/lay_next"
+                   android:layout_width="0dp"
+                   android:layout_height="match_parent"
+                   android:layout_weight="0.7"
+                   android:background="@color/yello"
+                   android:gravity="center">
 
-                <ImageButton
-                    android:id="@+id/ib_next"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/ic_next"
-                    android:backgroundTint="@color/white" />
+                   <ImageButton
+                       android:id="@+id/ib_next"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:background="@drawable/ic_next"
+                       android:backgroundTint="@color/white" />
 
-            </LinearLayout>
+               </LinearLayout>-->
         </LinearLayout>
+
 
         <TextView
             android:id="@+id/txt_eventname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
-            android:fontFamily="@font/open_sans_semibold"
-            android:paddingLeft="@dimen/_10sdp"
-            tools:text="Ahmdebad to Goa"
-            android:maxLines="2"
             android:ellipsize="end"
+            android:fontFamily="@font/open_sans_semibold"
+            android:maxLines="2"
+            android:paddingLeft="@dimen/_10sdp"
             android:textColor="@color/black"
-            android:textSize="@dimen/_14ssp" />
+            android:textSize="@dimen/_14ssp"
+            tools:text="Ahmdebad to Goa" />
 
         <TextView
             android:id="@+id/txt_venuedate"
@@ -92,10 +165,10 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans"
             android:paddingLeft="@dimen/_10sdp"
-            tools:text="18-11-2019 To 20-11-2019"
             android:textColor="@color/gray"
             android:textSize="@dimen/_12ssp"
-            android:visibility="visible" />
+            android:visibility="visible"
+            tools:text="18-11-2019 To 20-11-2019" />
 
         <TextView
             android:id="@+id/txt_venuetime"
@@ -103,21 +176,46 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans"
             android:paddingLeft="@dimen/_10sdp"
-            tools:text="8:30 AM To 8:30 PM"
             android:textColor="@color/gray"
             android:textSize="@dimen/_12ssp"
-            android:visibility="visible" />
+            android:visibility="visible"
+            tools:text="8:30 AM To 8:30 PM" />
 
-        <TextView
-            android:id="@+id/txt_eventlocation"
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans"
-            android:paddingLeft="@dimen/_10sdp"
-            tools:text="Motera stadium, Ahmedabad, India, 364001."
-            android:textColor="@color/black"
-            android:textSize="@dimen/_12ssp"
-            android:visibility="visible" />
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/txt_eventlocation"
+                android:layout_width="@dimen/_180sdp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:paddingLeft="@dimen/_10sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp"
+                android:visibility="visible"
+                tools:text="Motera stadium, Ahmedabad, India, 364001." />
+
+
+            <TextView
+                android:id="@+id/txt_viewonmap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/drawable_place"
+                android:drawablePadding="@dimen/_3sdp"
+                android:fontFamily="@font/open_sans_semibold"
+                android:paddingLeft="@dimen/_5sdp"
+                android:text="View On Map"
+                android:textColor="@color/green"
+                android:textSize="@dimen/_12ssp"
+                android:visibility="gone" />
+
+
+        </LinearLayout>
 
 
         <!--https://stackoverflow.com/questions/5800657/how-to-create-custom-ratings-bar-in-android-->
@@ -140,28 +238,27 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans"
             android:paddingLeft="@dimen/_10sdp"
-            tools:text="Flat Off USD 2.02"
             android:textColor="@color/green"
             android:textSize="@dimen/_12ssp"
-            android:visibility="visible" />
+            android:visibility="visible"
+            tools:text="Flat Off USD 2.02" />
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/txt_baseprice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_semibold"
-                android:paddingLeft="@dimen/_10sdp"
-                tools:text="USD 797.98"
                 android:maxLines="1"
-                app:autoSizeTextType="uniform"
+                android:paddingLeft="@dimen/_10sdp"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/_12ssp"
-                android:visibility="visible" />
+                android:visibility="visible"
+                app:autoSizeTextType="uniform"
+                tools:text="USD 797.98" />
 
             <View
                 android:id="@+id/view_baseprice"
@@ -169,7 +266,7 @@
                 android:layout_height="1dp"
                 android:layout_gravity="start|center_vertical"
                 android:layout_marginLeft="@dimen/_20sdp"
-                android:background="@color/gray"/>
+                android:background="@color/gray" />
 
 
         </FrameLayout>
@@ -180,10 +277,10 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans_semibold"
             android:paddingLeft="@dimen/_10sdp"
-            tools:text="Fees: USD 797.98"
             android:textColor="@color/black"
             android:textSize="@dimen/_12ssp"
-            android:visibility="visible" />
+            android:visibility="visible"
+            tools:text="Fees: USD 797.98" />
 
         <TextView
             android:id="@+id/txt_bookingna"
@@ -202,8 +299,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_2sdp"
             android:background="@color/offwhite"
-            android:visibility="gone"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -333,10 +430,10 @@
             android:layout_marginTop="@dimen/_2sdp"
             android:fontFamily="@font/open_sans"
             android:paddingLeft="@dimen/_10sdp"
-            tools:text="Cricket"
             android:textColor="@color/black"
             android:textSize="@dimen/_12ssp"
-            android:visibility="visible" />
+            android:visibility="visible"
+            tools:text="Cricket" />
 
         <TextView
             android:id="@+id/txt_suitablefor"
@@ -344,16 +441,16 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans"
             android:paddingLeft="@dimen/_10sdp"
-            tools:text="Suitable For : Childrean, Young, Senior citizen"
             android:textColor="@color/gray"
             android:textSize="@dimen/_12ssp"
-            android:visibility="visible" />
+            android:visibility="visible"
+            tools:text="Suitable For : Childrean, Young, Senior citizen" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             android:background="@drawable/yello_corner"
             android:fontFamily="@font/open_sans"
             android:padding="@dimen/_3sdp"
@@ -371,8 +468,7 @@
             android:layout_marginRight="@dimen/_10sdp"
             android:orientation="horizontal">
 
-            <com.makeramen.roundedimageview.RoundedImageView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
+            <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/img_orglogo"
                 android:layout_width="@dimen/_100sdp"
                 android:layout_height="@dimen/_50sdp"
@@ -394,9 +490,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:fontFamily="@font/open_sans"
-                    tools:text="ICC- International Cricket Council"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_12ssp" />
+                    android:textSize="@dimen/_12ssp"
+                    tools:text="ICC- International Cricket Council" />
 
                 <TextView
                     android:id="@+id/txt_orgaddress"
@@ -406,9 +502,9 @@
                     android:drawablePadding="@dimen/_10sdp"
                     android:drawableTint="@color/gray"
                     android:fontFamily="@font/open_sans"
-                    tools:text="Ahmedabad, Gujarat, India"
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/_12ssp" />
+                    android:textSize="@dimen/_12ssp"
+                    tools:text="Ahmedabad, Gujarat, India" />
 
 
             </LinearLayout>
@@ -420,9 +516,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/_10sdp"
-            android:orientation="vertical">
-
+            android:orientation="vertical"
+            android:padding="@dimen/_10sdp">
 
 
             <TextView
@@ -430,79 +525,81 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableRight="@drawable/ic_rightgreen"
-                android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/open_sans_semibold"
-                android:textSize="@dimen/_12ssp"
+                android:text="@string/tab_overview"
+                android:layout_marginBottom="@dimen/_3sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:textColor="@color/green"
-                android:text="@string/tab_overview"/>
+                android:textSize="@dimen/_12ssp" />
 
             <View
                 android:id="@+id/view_eoverview"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/black"
-                android:layout_marginTop="@dimen/_10sdp"/>
+
+                android:background="@color/black" />
 
 
             <TextView
                 android:id="@+id/txt_eamenites"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_3sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:drawableRight="@drawable/ic_rightgreen"
-                android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/open_sans_semibold"
-                android:textSize="@dimen/_12ssp"
+                android:text="@string/tab_amenities"
                 android:textColor="@color/green"
-                android:text="@string/tab_amenities"/>
+                android:textSize="@dimen/_12ssp" />
 
             <View
                 android:id="@+id/view_eamenites"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/black"
-                android:layout_marginTop="@dimen/_10sdp"/>
+
+                android:background="@color/black" />
 
 
             <TextView
                 android:id="@+id/txt_econtactus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_3sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:drawableRight="@drawable/ic_rightgreen"
-                android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/open_sans_semibold"
-                android:textSize="@dimen/_12ssp"
+                android:text="@string/tab_contact_us"
                 android:textColor="@color/green"
-                android:text="@string/tab_contact_us"/>
+                android:textSize="@dimen/_12ssp" />
 
             <View
                 android:id="@+id/view_econtactus"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/black"
-                android:layout_marginTop="@dimen/_10sdp"/>
+
+                android:background="@color/black" />
 
             <TextView
                 android:id="@+id/txt_ereview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_3sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:drawableRight="@drawable/ic_rightgreen"
-                android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/open_sans_semibold"
-                android:textSize="@dimen/_12ssp"
+                android:text="@string/tab_write_a_review"
                 android:textColor="@color/green"
-                android:text="@string/tab_write_a_review"/>
+                android:textSize="@dimen/_12ssp" />
 
             <View
                 android:id="@+id/view_ereivew"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/black"
-                android:layout_marginTop="@dimen/_10sdp"/>
 
+                android:background="@color/black" />
 
 
         </LinearLayout>
-
 
 
         <com.google.android.material.tabs.TabLayout
@@ -513,12 +610,12 @@
             android:background="@color/white"
             android:scrollbars="vertical"
             android:tabStripEnabled="false"
+            android:visibility="gone"
             app:tabGravity="center"
             app:tabIndicatorColor="@color/green"
             app:tabMode="scrollable"
             app:tabPaddingEnd="10dp"
             app:tabPaddingStart="10dp"
-            android:visibility="gone"
             app:tabSelectedTextColor="@color/green"
             app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
             app:tabTextColor="@color/gray">
@@ -529,8 +626,8 @@
             android:id="@+id/viewPagerevent"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_200sdp"
-            android:visibility="gone"
             android:background="@color/lightgray"
+            android:visibility="gone"
             app:swipeable="false" />
 
         <TextView
@@ -546,8 +643,8 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_popuplarevent"
-            android:layout_height="match_parent"
             android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="@dimen/_5sdp"
             android:scrollbars="horizontal">
 

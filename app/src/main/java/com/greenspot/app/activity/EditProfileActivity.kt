@@ -9,7 +9,9 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.TextUtils
 import android.util.Log
+import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.NonNull
@@ -192,7 +194,7 @@ class EditProfileActivity : AppCompatActivity() {
 //
 //            return
 //        }
-        if (!emailValidator(email)) {
+        if (!isValidEmail(email)) {
             Toast.makeText(
                 applicationContext,
                 getString(R.string.res_validemail),
@@ -221,15 +223,11 @@ class EditProfileActivity : AppCompatActivity() {
 
     }
 
-    fun emailValidator(email: String): Boolean {
-        val pattern: Pattern
-        val matcher: Matcher
-        val EMAIL_PATTERN =
-            "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
-        pattern = Pattern.compile(EMAIL_PATTERN)
-        matcher = pattern.matcher(email)
-        return matcher.matches()
+    fun isValidEmail(target: CharSequence?): Boolean {
+        return !TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches()
     }
+
+
 
     private fun selectImage() {
         val items = arrayOf<CharSequence>("Take Photo", "Choose from Library", "Cancel")
@@ -387,6 +385,7 @@ class EditProfileActivity : AppCompatActivity() {
                         helper.SaveStringPref(AppConfig.PREFERENCE.USER_FNAME, userDetails.data.firstName)
                         helper.SaveStringPref(AppConfig.PREFERENCE.USER_LNAME, userDetails.data.lastName)
                         helper.SaveStringPref(AppConfig.PREFERENCE.USER_EMAIL, userDetails.data.email)
+                        helper.SaveStringPref(AppConfig.PREFERENCE.USER_CONTACTNO, userDetails.data.phone)
                         helper.ApplyPref()
 
                     } else {
@@ -398,7 +397,11 @@ class EditProfileActivity : AppCompatActivity() {
                         ).show()
 
                     }
-                } else {
+                } else if (response.code() == AppConfig.URL.TOKEN_EXPIRE) {
+
+                    login()
+
+                }else {
                     Toast.makeText(
                         applicationContext,
                         getString(R.string.msg_unexpected_error),
@@ -419,6 +422,17 @@ class EditProfileActivity : AppCompatActivity() {
         })
 
     }
+
+    private fun login() {
+
+        helper.clearAllPrefs()
+        startActivity(
+            Intent(this, MainActivity::class.java)
+                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        )
+        finish()
+    }
+
 
     private fun updateDetails(
         authToken: String,
@@ -473,6 +487,10 @@ class EditProfileActivity : AppCompatActivity() {
                         ).show()
 
                     }
+                }else if (response.code() == AppConfig.URL.TOKEN_EXPIRE) {
+
+                    login()
+
                 } else {
                     Toast.makeText(
                         applicationContext,
@@ -494,5 +512,6 @@ class EditProfileActivity : AppCompatActivity() {
         })
 
     }
+
 
 }

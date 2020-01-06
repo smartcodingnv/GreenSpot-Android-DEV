@@ -23,7 +23,8 @@ class ViewDialog //..we need the context else we can not create the dialog so ge
         dialog!!.setCancelable(false)
 
         dialog!!.setContentView(R.layout.dialog_progress)
-        dialog!!.window?.setBackgroundDrawableResource(R.color.fiftyblack)
+        dialog!!.window?.setBackgroundDrawableResource(R.color.white)
+//        dialog!!.window?.setBackgroundDrawableResource(R.color.fiftyblack)
         dialog!!.window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
         dialog!!.window?.setLayout(
             WindowManager.LayoutParams.MATCH_PARENT,

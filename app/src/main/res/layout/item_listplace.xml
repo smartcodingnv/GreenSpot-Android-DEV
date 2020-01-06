@@ -3,11 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="@dimen/_5sdp"
     android:background="@color/white"
     android:orientation="vertical"
     app:cardCornerRadius="10dp"
-    app:cardElevation="6dp">
+    app:cardElevation="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +19,6 @@
             android:id="@+id/imageView1"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_130sdp"
-            android:background="@drawable/travel"
             android:scaleType="centerCrop"
             app:riv_corner_radius="10dip"
             app:riv_mutate_background="true"
@@ -39,26 +39,26 @@
 
             <TextView
                 android:id="@+id/txt_recreationname"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:layout_weight="7"
+                android:layout_weight="1"
+                android:ellipsize="end"
                 android:fontFamily="@font/open_sans_semibold"
                 android:paddingLeft="@dimen/_10sdp"
-                android:text="Paldi"
+                tools:text="Paldifdfdfdfdfdsfdsfdsfdsfdsfdfdsfadfdfffdfadfdfdsfdsfdffdsfaf"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_14ssp" />
 
             <TextView
                 android:id="@+id/txt_price"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:paddingRight="@dimen/_5sdp"
-                android:layout_weight="4"
                 android:fontFamily="@font/open_sans"
                 android:gravity="end"
-                android:text="From USD 150.00*"
+                tools:text="From USD 150.000000000*"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/_11ssp" />
 

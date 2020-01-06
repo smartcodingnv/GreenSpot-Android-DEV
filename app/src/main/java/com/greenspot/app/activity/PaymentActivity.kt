@@ -91,10 +91,10 @@ class PaymentActivity : AppCompatActivity(), ItemClickListener {
         currncyCode = helperlang!!.LoadStringPref(AppConfig.PREFERENCE.SELECTCURRENCYNAME, "")
         countryID = helperlang!!.LoadStringPref(AppConfig.PREFERENCE.SELECTCONTRYID, "")
 
-        formDate = helper!!.LoadStringPref(AppConfig.PREFERENCE.FROM_DATE, "")
-        single_price = helper!!.LoadStringPref(AppConfig.PREFERENCE.START_PRICE, "")
-        final_price = helper!!.LoadStringPref(AppConfig.PREFERENCE.FINAL_PRICE, "")
-        no_of_person = helper!!.LoadStringPref(AppConfig.PREFERENCE.NO_OF_PERSON, "")
+        formDate = helper!!.LoadStringPref(AppConfig.PREFERENCE.TOUR_FROM_DATE, "")
+        single_price = helper!!.LoadStringPref(AppConfig.PREFERENCE.TOUR_START_PRICE, "")
+        final_price = helper!!.LoadStringPref(AppConfig.PREFERENCE.TOUR_FINAL_PRICE, "")
+        no_of_person = helper!!.LoadStringPref(AppConfig.PREFERENCE.TOUR_NO_OF_PERSON, "")
         persons = helper!!.LoadStringPref(AppConfig.PREFERENCE.PERSONDETAILS, "")
 
         tour_id = helper!!.LoadStringPref(AppConfig.PREFERENCE.PLACEID, "")
@@ -406,6 +406,10 @@ class PaymentActivity : AppCompatActivity(), ItemClickListener {
                         ).show()
 
                     }
+                }else if (response.code() == AppConfig.URL.TOKEN_EXPIRE) {
+
+                    login()
+
                 } else {
 
                     Toast.makeText(
@@ -429,6 +433,16 @@ class PaymentActivity : AppCompatActivity(), ItemClickListener {
         })
 
     }
+    private fun login() {
+
+        helper!!.clearAllPrefs()
+        startActivity(
+            Intent(this, MainActivity::class.java)
+                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        )
+        finish()
+    }
+
 
     private fun openBankDialog() {
 

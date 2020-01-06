@@ -8,6 +8,7 @@
     <color name="offwhite">#F8F8F8</color>
     <color name="green">#0AB596</color>
     <color name="gray">#707070</color>
+    <color name="redd">#FF0000</color>
     <color name="lightgray">#E5E5E5</color>
     <color name="tansparnt">#00000000</color>
     <color name="colorIdolDetailDialogBackground">#7E414141</color>
@@ -16,6 +17,7 @@
     <color name="fiftyblack">#80000000</color>
     <color name="colorEventForegroundOpacity">#33000000</color>
     <color name="raringnoraml">#C7C7C7</color>
+
 
 
 </resources>

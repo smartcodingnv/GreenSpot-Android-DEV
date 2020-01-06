@@ -1,0 +1,883 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:scrollbars="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".activity.BookingInfoActvity"
+    tools:showIn="@layout/activity_booking_info_actvity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <ImageView
+            android:id="@+id/img_booking"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_200sdp"
+            android:background="@drawable/travel"
+            android:scaleType="centerCrop" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:paddingLeft="@dimen/_15sdp"
+            android:paddingRight="@dimen/_15sdp">
+
+            <TextView
+                android:id="@+id/txt_itemanme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_semibold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_13ssp"
+                tools:text="Anaula Nature Resort Suriname" />
+
+            <TextView
+                android:id="@+id/txt_itemlocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_11ssp"
+                tools:text="SURINAME, BROKOPONDO" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@color/black" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_semibold"
+                android:text="@string/res_booking_information"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14ssp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@color/black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txt_labeldate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="@string/res_date"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_10ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center"
+                    android:text=":"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_10ssp" />
+
+
+                <TextView
+                    android:id="@+id/txt_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/open_sans"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10ssp"
+                    tools:text="Hello" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lay_noofperson"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="@string/res_no_of_person"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_10ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center"
+                    android:text=":"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_10ssp" />
+
+
+                <TextView
+                    android:id="@+id/txt_noofperson"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10ssp"
+                    tools:text="Hello" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lay_daypass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="@string/res_day_pass"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_10ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center"
+                    android:text=":"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_10ssp" />
+
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txt_daypass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:textColor="@color/black"
+                android:visibility="gone"
+                android:textSize="@dimen/_10ssp"
+                tools:text="Hello" />
+
+
+            <LinearLayout
+                android:id="@+id/lay_nightpass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="@string/res_night_pass"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_10ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center"
+                    android:text=":"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_10ssp" />
+
+
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txt_nightpass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:textColor="@color/black"
+                android:visibility="gone"
+                android:textSize="@dimen/_10ssp"
+                tools:text="Hello" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="@string/res_bookingdate"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_10ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center"
+                    android:text=":"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_10ssp" />
+
+
+                <TextView
+                    android:id="@+id/txt_bookingdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10ssp"
+                    tools:text="Hello" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="@string/res_booking_id"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_10ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center"
+                    android:text=":"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_10ssp" />
+
+
+                <TextView
+                    android:id="@+id/txt_bookingid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10ssp"
+                    tools:text="Hello" />
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@color/black" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_semibold"
+                android:text="@string/res_payment_information"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14ssp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@color/black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:orientation="horizontal">
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="@string/res_total_price"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_10ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center"
+                    android:text=":"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_10ssp" />
+
+
+                <TextView
+                    android:id="@+id/txt_totalprice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10ssp"
+                    tools:text="Hello" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:orientation="horizontal">
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="@string/res_payment_type"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_10ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center"
+                    android:text=":"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_10ssp" />
+
+
+                <TextView
+                    android:id="@+id/txt_paymenttype"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10ssp"
+                    tools:text="Hello" />
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@color/black" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_semibold"
+                android:text="@string/res_contact_person_information"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14ssp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@color/black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:orientation="horizontal">
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="@string/res_name"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_10ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center"
+                    android:text=":"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_10ssp" />
+
+
+                <TextView
+                    android:id="@+id/txt_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10ssp"
+                    tools:text="Hello" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:orientation="horizontal">
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="@string/res_date_of_birth"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_10ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center"
+                    android:text=":"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_10ssp" />
+
+
+                <TextView
+                    android:id="@+id/txt_dob"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10ssp"
+                    tools:text="Hello" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:orientation="horizontal">
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="@string/res_gender"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_10ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center"
+                    android:text=":"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_10ssp" />
+
+
+                <TextView
+                    android:id="@+id/txt_gender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10ssp"
+                    tools:text="Hello" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:orientation="horizontal">
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="@string/res_email"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_10ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center"
+                    android:text=":"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_10ssp" />
+
+
+                <TextView
+                    android:id="@+id/txt_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10ssp"
+                    tools:text="Hello" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:orientation="horizontal">
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="@string/res_contact_number"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_10ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center"
+                    android:text=":"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_10ssp" />
+
+
+                <TextView
+                    android:id="@+id/txt_contactno"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10ssp"
+                    tools:text="Hello" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lay_touttab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/_10sdp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/txt_tourdetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/ic_rightgreen"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="TOUR DETAILS"
+                    android:layout_marginBottom="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_12ssp" />
+
+                <View
+                    android:id="@+id/view_tourdetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/black" />
+
+                <TextView
+                    android:id="@+id/txt_allperson"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/ic_rightgreen"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="ALL PERSONS"
+                    android:textColor="@color/green"
+                    android:layout_marginBottom="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:textSize="@dimen/_12ssp" />
+
+                <View
+                    android:id="@+id/view_allperson"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/black" />
+
+                <TextView
+                    android:id="@+id/txt_itineary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/ic_rightgreen"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="ITINERARY"
+                    android:layout_marginBottom="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_12ssp" />
+
+                <View
+                    android:id="@+id/view_itinerary"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/black" />
+
+                <TextView
+                    android:id="@+id/txt_includefacility"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:drawableRight="@drawable/ic_rightgreen"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="INCLUDED FACILITIES"
+                    android:textColor="@color/green"
+                    android:layout_marginBottom="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:textSize="@dimen/_12ssp" />
+
+                <View
+                    android:id="@+id/view_facility"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/black" />
+
+                <TextView
+                    android:id="@+id/txt_contactus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/ic_rightgreen"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="CONTACT US"
+                    android:layout_marginBottom="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_12ssp" />
+
+                <View
+                    android:id="@+id/view_contactus"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/black" />
+
+
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/lay_eventtab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/_10sdp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/txt_eventdetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/ic_rightgreen"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="EVENT DETAILS"
+                    android:layout_marginBottom="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_12ssp" />
+
+                <View
+                    android:id="@+id/view_eventdetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/black" />
+
+
+
+                <TextView
+                    android:id="@+id/txt_eventincludefacility"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:drawableRight="@drawable/ic_rightgreen"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="INCLUDED FACILITIES"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_12ssp" />
+
+                <View
+                    android:id="@+id/view_eventfacility"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/black" />
+
+
+
+                <TextView
+                    android:id="@+id/txt_eventcontactus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/ic_rightgreen"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="CONTACT US"
+                    android:layout_marginBottom="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_12ssp" />
+
+                <View
+                    android:id="@+id/view_eventcontaus"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/black" />
+
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lay_vacationtab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/_10sdp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/txt_vacationdetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/ic_rightgreen"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="VACATION DETAILS"
+                    android:textColor="@color/green"
+                    android:layout_marginBottom="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:textSize="@dimen/_12ssp" />
+
+                <View
+                    android:id="@+id/view_vactiondetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/black" />
+
+
+                <TextView
+                    android:id="@+id/txt_vacationincludefacility"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:drawableRight="@drawable/ic_rightgreen"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="INCLUDED FACILITIES"
+                    android:textColor="@color/green"
+                    android:layout_marginBottom="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:textSize="@dimen/_12ssp" />
+
+                <View
+                    android:id="@+id/view_vacationfacility"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+
+                    android:background="@color/black" />
+
+
+                <TextView
+                    android:id="@+id/txt_vacationstay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:drawableRight="@drawable/ic_rightgreen"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="STAY"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_12ssp" />
+
+                <View
+                    android:id="@+id/view_vacationstay"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+
+                    android:background="@color/black" />
+
+                <TextView
+                    android:id="@+id/txt_vacationcontactus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:drawableRight="@drawable/ic_rightgreen"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="CONTACT US"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_12ssp" />
+
+                <View
+                    android:id="@+id/view_vacationcontactus"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+
+                    android:background="@color/black" />
+
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

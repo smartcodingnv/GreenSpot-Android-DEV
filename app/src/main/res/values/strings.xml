@@ -91,7 +91,7 @@
     <string name="str_language">Select Language</string>
     <string name="res_price_range">Price Range</string>
     <string name="res_clear">Clear</string>
-    <string name="str_reviews">RIVIEWS</string>
+    <string name="str_reviews">Reviews</string>
     <string name="res_continue_as_guest">Continue As Guest</string>
     <string name="str_everyday">Every Day</string>
     <string name="str_startingform">Starting From</string>
@@ -99,7 +99,7 @@
     <string name="res_firstname">First Name</string>
 
     <string name="res_gender">Gender</string>
-    <string name="res_date_of_birth">Date of Birth</string>
+    <string name="res_date_of_birth">Date Of Birth</string>
     <string name="res_contact_number">Contact Number</string>
     <string name="title_activity_payment">PaymentActivity</string>
     <string name="title_activity_paymnet_j">PaymnetJActivity</string>
@@ -112,11 +112,36 @@
     <string name="tab_amenities">AMENITIES</string>
     <string name="tab_stay">STAY</string>
     <string name="tab_others">OTHER</string>
-    <string name="tab_paymnet">PAYMENT</string>
+    <string name="tab_paymnet">PAYMENTS</string>
     <string name="tab_write_a_review">WRITE A REVIEW</string>
     <string name="tab_contact_us">CONTACT US</string>
     <string name="tab_overview">OVERVIEW</string>
     <string name="title_activity_event_tab">EventTabActivity</string>
     <string name="res_itinerary">ITINERARY</string>
+    <string name="title_activity_booking_info_actvity">BookingInfoActvity</string>
+    <string name="res_booking_information">Booking Information</string>
+    <string name="res_no_of_person">No Of Person</string>
+    <string name="res_date">Date</string>
+    <string name="res_bookingdate">Booking Date</string>
+    <string name="res_booking_id">Booking ID</string>
+    <string name="res_payment_information">Payment Information</string>
+    <string name="res_total_price">Total Price</string>
+    <string name="res_payment_type">Payment Type</string>
+    <string name="res_contact_person_information">Contact Person Information</string>
+    <string name="res_tour_date">Tour Date</string>
+    <string name="title_activity_booking_info_tab">BookingInfoTabActivity</string>
+    <string name="res_na">N/A</string>
+    <string name="res_day">Day </string>
+    <string name="res_change_password">Change Password</string>
+    <string name="res_per_person">Per Person</string>
+    <string name="res_free">Free</string>
+    <string name="res_everyday">Every Day</string>
+    <string name="res_day_pass">Day Pass</string>
+    <string name="res_night_pass">Night Pass</string>
+    <string name="res_near_by_recreation_places">Near By Recreation Places</string>
+    <string name="res_suggested_tours">Suggested Tours</string>
+    <string name="res_guest_reviews">Guest Reviews</string>
+    <string name="res_popular_tours">Popular Tours</string>
+
 
 </resources>

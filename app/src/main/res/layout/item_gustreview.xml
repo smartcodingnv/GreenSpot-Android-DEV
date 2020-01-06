@@ -15,7 +15,6 @@
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
             android:scaleType="centerCrop"
-            android:src="@drawable/travel"
             android:visibility="gone"
             app:riv_border_color="@color/gray"
             app:riv_border_width="1dip"

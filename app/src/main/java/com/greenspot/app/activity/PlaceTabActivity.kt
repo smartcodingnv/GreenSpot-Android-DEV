@@ -13,13 +13,11 @@ import com.greenspot.app.adapter.PlaceTabAdapter
 import com.greenspot.app.responce.recreationdetails.*
 import com.greenspot.app.utils.*
 import kotlinx.android.synthetic.main.activity_place_tab.*
-import kotlinx.android.synthetic.main.activity_place_tab.ib_back
-import kotlinx.android.synthetic.main.activity_tour_list.*
 
 
 class PlaceTabActivity : AppCompatActivity() {
 
-    private var checkTab: Int =0
+    private var checkTab: Int = 0
     var tabLayout: TabLayout? = null
     var viewPager: ViewPager? = null
 
@@ -36,8 +34,7 @@ class PlaceTabActivity : AppCompatActivity() {
     private var otherRecordsMy: java.util.ArrayList<OtherItem>? = java.util.ArrayList()
     private var stayRecordsMy: java.util.ArrayList<StayItem>? = java.util.ArrayList()
     private var paymnetRecordsMy: java.util.ArrayList<PaymentRecordsItem>? = java.util.ArrayList()
-    private var paymnetotherRecordsMy: java.util.ArrayList<OtherRecordsItem>? =
-        java.util.ArrayList()
+    private var paymnetotherRecordsMy: java.util.ArrayList<OtherRecordsItem>? = java.util.ArrayList()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,14 +54,14 @@ class PlaceTabActivity : AppCompatActivity() {
 
         val intenttt = getIntent()
 
-        checkTab = intenttt.getIntExtra(AppConfig.EXTRA.TABCHECK,0)
+        checkTab = intenttt.getIntExtra(AppConfig.EXTRA.TABCHECK, 0)
 
 
         val gson = Gson()
         val respncedetails = gson.fromJson(
-                helper!!.LoadStringPref(AppConfig.PREFERENCE.PLACEDETAILSRESPONCE, ""),
-                ResponceRecDetails::class.java
-            )
+            helper!!.LoadStringPref(AppConfig.PREFERENCE.PLACEDETAILSRESPONCE, ""),
+            ResponceRecDetails::class.java
+        )
 
         txt_placename.text = respncedetails.data.mainRecords.placeName
 
@@ -145,11 +142,11 @@ class PlaceTabActivity : AppCompatActivity() {
     private fun tablayout() {
 
         tabLayout!!.addTab(tabLayout!!.newTab().setText("DESCRIPTION"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("AVAILABILTY"))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText("AVAILABILITY"))
         tabLayout!!.addTab(tabLayout!!.newTab().setText("AMENITIES"))
         tabLayout!!.addTab(tabLayout!!.newTab().setText("STAY"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("PAYMENT"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("OTHERS"))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText("PAYMENTS"))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText("OTHER"))
         tabLayout!!.addTab(tabLayout!!.newTab().setText("WRITE A REVIEW"))
         tabLayout!!.addTab(tabLayout!!.newTab().setText("CONTACT US"))
         tabLayout!!.tabGravity = TabLayout.GRAVITY_FILL
@@ -159,36 +156,28 @@ class PlaceTabActivity : AppCompatActivity() {
 
         if (amenitiesRecordsMy!!.size == 0) {
 
-
             (tabLayout!!.getTabAt(2)!!.view as ViewGroup).visibility = View.GONE
-
-
-//            (tabLayout!!.getChildAt(0) as ViewGroup).getChildAt(2).visibility = View.GONE
 
         }
         if (stayRecordsMy!!.size == 0) {
 
 //            (tabLayout!!.getTabAt(3)!!.view as ViewGroup).visibility = View.GONE
-            (tabLayout!!.getChildAt(0) as ViewGroup).getChildAt(3).visibility = View.GONE
-
+//            (tabLayout!!.getChildAt(0) as ViewGroup).getChildAt(3).visibility = View.GONE
+            (tabLayout!!.getTabAt(3)!!.view as ViewGroup).visibility = View.GONE
         }
         if (paymnetRecordsMy!!.size == 0 && paymnetotherRecordsMy!!.size == 0) {
 
 //            (tabLayout!!.getTabAt(4)!!.view as ViewGroup).visibility = View.GONE
-            (tabLayout!!.getChildAt(0) as ViewGroup).getChildAt(4).visibility = View.GONE
-
+//            (tabLayout!!.getChildAt(0) as ViewGroup).getChildAt(4).visibility = View.GONE
+            (tabLayout!!.getTabAt(4)!!.view as ViewGroup).visibility = View.GONE
         }
         if (otherRecordsMy!!.size == 0) {
 
 
 //            (tabLayout!!.getTabAt(5)!!.view as ViewGroup).visibility = View.GONE
-            (tabLayout!!.getChildAt(0) as ViewGroup).getChildAt(5).visibility = View.GONE
-
+//            (tabLayout!!.getChildAt(0) as ViewGroup).getChildAt(5).visibility = View.GONE
+            (tabLayout!!.getTabAt(5)!!.view as ViewGroup).visibility = View.GONE
         }
-
-
-
-
 
 
 //        (tabLayout!!.getChildAt(0) as ViewGroup).getChildAt(4).visibility = View.GONE
@@ -197,6 +186,8 @@ class PlaceTabActivity : AppCompatActivity() {
 
         val adapter = PlaceTabAdapter(this, supportFragmentManager, tabLayout!!.tabCount)
         viewPager!!.adapter = adapter
+
+//        viewPager!!.setOnTouchListener(View.OnTouchListener { v, event -> true })
 
         viewPager!!.setOnTouchListener(View.OnTouchListener { v, event -> true })
         viewPager!!.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))

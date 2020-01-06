@@ -13,6 +13,7 @@ import com.greenspot.app.responce.eventdetails.AmenitiesItem
 import com.greenspot.app.responce.eventdetails.EvnetDetailsResponce
 import com.greenspot.app.utils.*
 import kotlinx.android.synthetic.main.activity_event_tab.*
+import kotlinx.android.synthetic.main.activity_tour_tab.*
 import java.util.*
 
 class EventTabActivity : AppCompatActivity() {
@@ -74,7 +75,13 @@ class EventTabActivity : AppCompatActivity() {
 
         }
 
+        ib_back_event.setOnClickListener(View.OnClickListener {
+            onBackPressed()
+        })
+
         tablayout()
+
+
 
 
 

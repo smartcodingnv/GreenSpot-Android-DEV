@@ -6,7 +6,7 @@
     android:layout_margin="@dimen/_3sdp"
     android:orientation="vertical"
     app:cardCornerRadius="10dp"
-    app:cardElevation="6dp">
+    app:cardElevation="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -48,7 +48,6 @@
                 android:id="@+id/img_tourimg"
                 android:layout_width="@dimen/_150sdp"
                 android:layout_height="@dimen/_100sdp"
-                android:background="@drawable/travel"
                 android:scaleType="centerCrop"
                 app:riv_corner_radius="10dip"
                 app:riv_mutate_background="true"

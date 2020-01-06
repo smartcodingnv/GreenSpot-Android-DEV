@@ -17,9 +17,7 @@ import com.greenspot.app.responce.LanguagesItem
 import com.greenspot.app.responce.ResponceLocation
 import com.greenspot.app.utils.*
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.lay_language
 import kotlinx.android.synthetic.main.dialog_contry.*
-import kotlinx.android.synthetic.main.fragment_home.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -58,7 +56,13 @@ class MainActivity : AppCompatActivity(), ItemClickListener {
         helper = PreferenceHelper(this, AppConfig.PREFERENCE.PREF_FILE)
         helperlang = PreferenceHelper(this, AppConfig.PREFERENCE.PREF_FILE_LANG)
 
-        getLocationDate(getString(R.string.default_language))
+        if (helperlang.LoadStringPref(AppConfig.PREFERENCE.SELECTLANGCODE, "")!!.isEmpty()) {
+            getLocationDate(helperlang.LoadStringPref(AppConfig.PREFERENCE.SELECTLANGCODE, "")!!)
+        } else {
+
+            getLocationDate(getString(R.string.default_language))
+        }
+
 
         btn_login.setOnClickListener(View.OnClickListener {
             startActivity(
@@ -128,7 +132,6 @@ class MainActivity : AppCompatActivity(), ItemClickListener {
     }
 
 
-
     private fun getLocationDate(langCode: String) {
 
 //        progress.createDialog(false)
@@ -160,6 +163,22 @@ class MainActivity : AppCompatActivity(), ItemClickListener {
                             helperlang!!.LoadStringPref(AppConfig.PREFERENCE.SELECTLANGNAME, "")
                         if (selectLanguageName.isNullOrEmpty()) {
                             txt_languagee.setText(languageData!!.get(0).languageName)
+
+                            if (helperlang.LoadStringPref(AppConfig.PREFERENCE.SELECTLANGCODE, "")!!.isEmpty()) {
+                                helperlang.initPref()
+                                helperlang.SaveStringPref(
+                                    AppConfig.PREFERENCE.SELECTLANGNAME,
+                                    languageData!!.get(0).languageName
+                                )
+
+                                helperlang.SaveStringPref(
+                                    AppConfig.PREFERENCE.SELECTLANGCODE,
+                                    languageData!!.get(0).languageCode
+                                )
+                                helperlang.ApplyPref()
+                            }
+
+
                         } else {
                             txt_languagee.setText(selectLanguageName)
                         }

@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.greenspot.app.R
 import com.greenspot.app.activity.PlaceDetailsActivity
 import com.greenspot.app.responce.RecordsItem
@@ -18,6 +19,7 @@ import com.greenspot.app.utils.AppConfig
 import com.greenspot.app.utils.PreferenceHelper
 import com.greenspot.app.utils.Progress
 import com.greenspot.app.utils.Utils
+import hk.ids.gws.android.sclick.SClick
 import kotlinx.android.synthetic.main.item_listplace.view.*
 import java.util.*
 
@@ -46,6 +48,7 @@ class VisiterListPlaceAdapter(val context: FragmentActivity?) :
 
 
         holder.itemView.setOnClickListener(View.OnClickListener {
+            if (!SClick.check(SClick.BUTTON_CLICK)) return@OnClickListener;
             helper!!.initPref()
             helper!!.SaveStringPref(AppConfig.PREFERENCE.PLACEID, data[position].masterId)
             helper!!.ApplyPref()
@@ -91,6 +94,8 @@ class VisiterListPlaceAdapter(val context: FragmentActivity?) :
             rating = itemView.findViewById(R.id.recreation_rating)
             Glide.with(itemView)
                 .load(item.mainImage)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .onlyRetrieveFromCache(true)
                 .placeholder(R.drawable.travel)
                 .into(itemView.imageView1)
 
@@ -100,7 +105,10 @@ class VisiterListPlaceAdapter(val context: FragmentActivity?) :
             itemView.findViewById<TextView>(R.id.txt_recreationname).text = item.placeName
             itemView.findViewById<TextView>(R.id.txt_location).text = item.city + ", " + item.district + ", " + item.country
 
-            if (item.isBooking == 0) {
+            if (item.minPriceRange.isEmpty()) {
+                itemView.findViewById<TextView>(R.id.txt_price).text = "From " + currency + " " + item.minPriceRange
+                itemView.findViewById<TextView>(R.id.txt_price).visibility = View.GONE
+            }else if (item.minPriceRange.equals("0")) {
                 itemView.findViewById<TextView>(R.id.txt_price).text = "From " + currency + " " + item.minPriceRange
                 itemView.findViewById<TextView>(R.id.txt_price).visibility = View.GONE
             } else {

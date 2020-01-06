@@ -24,6 +24,7 @@ class TourIteneraryFragment : Fragment(), ItemClickListener {
 
     private var itineraryData: ArrayList<ItinerariesItem> = ArrayList()
     private lateinit var mView: View
+    private var checkitinerary: Int = 0
 
 
     private var progress: Progress? = null

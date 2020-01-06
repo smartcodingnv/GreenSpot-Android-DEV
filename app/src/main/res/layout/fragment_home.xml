@@ -13,7 +13,6 @@
         android:id="@+id/swipeRefreshLayouthome"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         >
 
         <androidx.core.widget.NestedScrollView
@@ -23,12 +22,15 @@
 
 
             <LinearLayout
+                android:id="@+id/lay_mainhome"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:visibility="gone"
                 android:orientation="vertical">
 
                 <FrameLayout
                     android:layout_width="match_parent"
+                    android:background="@color/fiftyblack"
                     android:layout_height="@dimen/_220sdp">
 
 
@@ -80,7 +82,7 @@
                                     android:drawableRight="@drawable/ic_downgray"
                                     android:drawablePadding="@dimen/_5sdp"
                                     android:fontFamily="@font/open_sans_semibold"
-                                    android:text="USD"
+                                    tools:text="USD"
                                     android:textColor="@color/green"
                                     android:textSize="@dimen/_13ssp" />
                             </LinearLayout>
@@ -103,7 +105,7 @@
                                     android:drawableRight="@drawable/ic_downgray"
                                     android:drawablePadding="@dimen/_5sdp"
                                     android:fontFamily="@font/open_sans_semibold"
-                                    android:text="En"
+                                    tools:text="En"
                                     android:textColor="@color/green"
                                     android:textSize="@dimen/_13ssp" />
                             </LinearLayout>
@@ -116,7 +118,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:fontFamily="@font/open_sans_bold"
-                            android:text="Hey Sam, \nWhere you wanna go?"
+                            android:text="Hey Sam, \nWhere you want to go?"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_14ssp" />
 
@@ -125,9 +127,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_13sdp"
                             android:background="@drawable/btn_fillblackgreenborder"
-
                             android:gravity="center">
 
                             <TextView
@@ -138,7 +139,7 @@
                                 android:drawablePadding="@dimen/_5sdp"
                                 android:fontFamily="@font/open_sans_semibold"
                                 android:gravity="center"
-                                android:text="Freanch Guyna"
+                                tools:text="Freanch Guyna"
                                 android:textColor="@color/green"
                                 android:textSize="@dimen/_13ssp" />
                         </LinearLayout>
@@ -148,6 +149,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="bottom"
+                            android:layout_marginRight="@dimen/_25sdp"
+                            android:layout_marginLeft="@dimen/_25sdp"
                             android:orientation="horizontal">
 
                             <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -272,7 +275,7 @@
                                 android:layout_margin="@dimen/_5sdp"
                                 android:layout_weight="1"
                                 android:orientation="vertical"
-                                android:visibility="visible"
+                                android:visibility="gone"
                                 app:cardBackgroundColor="#B3A7A7A7"
                                 app:cardCornerRadius="10dp"
                                 app:cardElevation="0dp">

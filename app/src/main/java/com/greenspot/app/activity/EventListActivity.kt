@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import android.widget.Button
 import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
@@ -44,6 +45,9 @@ class EventListActivity : AppCompatActivity(), ItemClickListener {
 //    private var utils: Utils? = null
 //    private var helper: PreferenceHelper? = null
 //    private var helperlang: PreferenceHelper? = null
+
+    private var loading: Boolean = true
+    private var previousTotal = 0
 
     private var searchText: String = ""
     private var sortOrderby: String = ""
@@ -125,6 +129,7 @@ class EventListActivity : AppCompatActivity(), ItemClickListener {
 
         swipeRefreshLayoutevent.setOnRefreshListener {
             pageNumber = 1
+            previousTotal =0
             eventList.clear()
             evenlistAdapter!!.notifyDataSetChanged()
             getEventData(
@@ -192,7 +197,7 @@ class EventListActivity : AppCompatActivity(), ItemClickListener {
                 data.getSerializableExtra(AppConfig.EXTRA.FILTERCHECKDATA) as HashMap<String, String>
 
             pageNumber = 1
-
+            previousTotal =0
             getEventData(
                 contryID = this.countryID!!,
                 selectCurrency = this.currncyCode!!,
@@ -212,32 +217,47 @@ class EventListActivity : AppCompatActivity(), ItemClickListener {
         rv_eventlist.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-            }
-
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                val visibleItemCount = mLayoutManager?.childCount
-                val totalItemCount = mLayoutManager?.itemCount
-                val firstVisibleItemPosition = mLayoutManager?.findFirstVisibleItemPosition()
-                val itemcount = visibleItemCount!! + firstVisibleItemPosition!!
 
 
-                if (isLastpage == 1) {
-                    return
-                } else if (isLastpage == 0) {
-                    if (itemcount >= totalItemCount!! && firstVisibleItemPosition >= 0) {
-                        Log.e("itemcount", " item")
-                        pageNumber++
+                if (dy > 0) {
+
+                    val visibleItemCount = mLayoutManager!!.childCount
+                    val totalItemCount = mLayoutManager!!.itemCount
+                    val firstVisibleItem = mLayoutManager!!.findFirstVisibleItemPosition()
+                    val itemcount = visibleItemCount + firstVisibleItem
+
+                    if (isLastpage == 1) {
+                        return
+                    }
+                    if (loading) {
+                        if (totalItemCount > previousTotal) {
+                            loading = false;
+                            previousTotal = totalItemCount;
+                        }
+                    }
+
+                    if (!loading && itemcount >= totalItemCount && firstVisibleItem >= 0) {
+                        // End has been reached
+
                         viewDialog!!.hideDialog()
-
+                        pageNumber++
                         getEventData(
                             contryID = countryID!!,
                             selectCurrency = currncyCode!!,
                             langCode = langCode!!
                         )
+
+                        loading = true;
                     }
 
                 }
+
+
+            }
+
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
             }
 
         })
@@ -264,12 +284,14 @@ class EventListActivity : AppCompatActivity(), ItemClickListener {
         dialog.rv_placesort.adapter = placeSortAdapter
 
 
+
         dialog.btn_canel.setOnClickListener {
 
             helper?.initPref()
             helper?.SaveStringPref(AppConfig.PREFERENCE.SELECTSORTTITAL, "")
             helper?.ApplyPref()
             pageNumber = 1
+            previousTotal =0
             sortOrderType = ""
             sortOrderby = ""
             eventList.clear()
@@ -282,6 +304,12 @@ class EventListActivity : AppCompatActivity(), ItemClickListener {
 
             dialog.dismiss()
         }
+
+        dialog.lay_dialg.setOnClickListener {
+            dialog.dismiss()
+        }
+
+
 
         dialog.btn_btnapply.setOnClickListener {
 
@@ -299,6 +327,7 @@ class EventListActivity : AppCompatActivity(), ItemClickListener {
             helper?.SaveStringPref(AppConfig.PREFERENCE.SELECTSORTTITAL, sortOrderTitle)
             helper?.ApplyPref()
             pageNumber = 1
+            previousTotal =0
             eventList.clear()
             evenlistAdapter!!.notifyDataSetChanged()
             getEventData(
@@ -324,31 +353,47 @@ class EventListActivity : AppCompatActivity(), ItemClickListener {
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.MATCH_PARENT
         )
-
+        val cancel = dialog.findViewById<Button>(R.id.btn_scanel)
 
 //        val searchText = helper!!.LoadStringPref(AppConfig.PREFERENCE.PLACESEARCHTEXT, "")
 
+        dialog.lay_dialogsearch.setOnClickListener {
+            dialog.dismiss()
+        }
+
+
         if (searchText.isNullOrEmpty()) {
             dialog.et_search.hint = getString(R.string.res_search_title)
-
+            cancel.text = getString(R.string.res_cancel)
         } else {
             dialog.et_search.setText(searchText)
+            cancel.text = getString(R.string.res_clear)
         }
 
         dialog.btn_scanel.setOnClickListener(View.OnClickListener {
-            helper!!.initPref()
-            helper!!.SaveStringPref(AppConfig.PREFERENCE.PLACESEARCHTEXT, "")
-            helper!!.ApplyPref()
-            searchText = ""
-            pageNumber = 1
-            eventList.clear()
-            evenlistAdapter!!.notifyDataSetChanged()
-            getEventData(
-                contryID = this.countryID!!,
-                selectCurrency = this.currncyCode!!,
-                langCode = this.langCode!!
-            )
-            dialog.dismiss()
+            searchText = dialog.et_search.text.toString()
+            Log.e("searchtext"," " +searchText)
+            if(searchText.isEmpty()){
+                dialog.dismiss()
+            }else{
+
+                helper!!.initPref()
+                helper!!.SaveStringPref(AppConfig.PREFERENCE.PLACESEARCHTEXT, "")
+                helper!!.ApplyPref()
+                searchText = ""
+                pageNumber = 1
+                previousTotal =0
+                eventList.clear()
+                evenlistAdapter!!.notifyDataSetChanged()
+                getEventData(
+                    contryID = this.countryID!!,
+                    selectCurrency = this.currncyCode!!,
+                    langCode = this.langCode!!
+                )
+                dialog.dismiss()
+
+            }
+
         })
 
         dialog.btn_btnapply.setOnClickListener(View.OnClickListener {
@@ -361,6 +406,7 @@ class EventListActivity : AppCompatActivity(), ItemClickListener {
 
             searchText = dialog.et_search.text.toString()
             pageNumber = 1
+            previousTotal =0
             eventList.clear()
             evenlistAdapter!!.notifyDataSetChanged()
             getEventData(
@@ -507,11 +553,15 @@ class EventListActivity : AppCompatActivity(), ItemClickListener {
 
                     } else {
 
-                        Toast.makeText(
-                            this@EventListActivity,
-                            eventListresponce.message,
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        if(eventList==null || eventList.isEmpty()){
+                            Toast.makeText(
+                                this@EventListActivity,
+                                eventListresponce.message,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+
 
                     }
                 } else {

@@ -15,6 +15,7 @@ import com.greenspot.app.activity.TourDetailsActivity
 import com.greenspot.app.responce.home.ResponeHome
 import com.greenspot.app.utils.AppConfig
 import com.greenspot.app.utils.PreferenceHelper
+import hk.ids.gws.android.sclick.SClick
 import kotlinx.android.synthetic.main.item_tour.view.*
 import kotlinx.android.synthetic.main.item_tourlist.view.*
 import java.util.*
@@ -42,7 +43,7 @@ class TourPlaceAdapter(val context: FragmentActivity?) :
 
 
         holder.itemView.setOnClickListener(View.OnClickListener {
-
+            if (!SClick.check(SClick.BUTTON_CLICK)) return@OnClickListener;
             helper!!.initPref()
             helper!!.SaveStringPref(AppConfig.PREFERENCE.PLACEID, data[position].master_id!!)
             helper!!.ApplyPref()

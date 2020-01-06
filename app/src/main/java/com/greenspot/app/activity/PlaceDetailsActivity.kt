@@ -33,20 +33,23 @@ import com.pierfrancescosoffritti.youtubeplayer.player.AbstractYouTubePlayerList
 import com.pierfrancescosoffritti.youtubeplayer.player.YouTubePlayer
 import com.pierfrancescosoffritti.youtubeplayer.player.YouTubePlayerFullScreenListener
 import com.pierfrancescosoffritti.youtubeplayer.player.YouTubePlayerView
+import hk.ids.gws.android.sclick.SClick
+import it.sephiroth.android.library.imagezoom.ImageViewTouch
 import kotlinx.android.synthetic.main.activity_place_details.*
-import kotlinx.android.synthetic.main.activity_tour_list.ib_back
 import kotlinx.android.synthetic.main.content_place_details.*
+import org.jetbrains.anko.imageBitmap
 import org.jetbrains.anko.layoutInflater
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.net.MalformedURLException
-import java.net.URL
+import java.util.regex.Pattern
 
 
 class PlaceDetailsActivity : AppCompatActivity() {
 
 
+    private var latitude: String? = ""
+    private var longitude: String? = ""
     private var imgURl: String? = ""
     private var videoId: String? = ""
     private var videoLink: String? = ""
@@ -89,7 +92,7 @@ class PlaceDetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.greenspot.app.R.layout.activity_place_details)
+        setContentView(R.layout.activity_place_details)
 
 
         val intenttt = getIntent()
@@ -123,12 +126,25 @@ class PlaceDetailsActivity : AppCompatActivity() {
         })
 
 
-//        btn_booknow.setOnClickListener(View.OnClickListener {
-//
-//            startActivity(
-//                Intent(this, PlaceBookingActivity::class.java)
-//            )
-//        })
+        btn_booknow.setOnClickListener(View.OnClickListener {
+            if (!SClick.check(SClick.BUTTON_CLICK)) return@OnClickListener;
+            startActivity(
+                Intent(this, PlaceBookingActivity::class.java)
+            )
+        })
+
+        txt_viewonmap.setOnClickListener(View.OnClickListener {
+
+            //            val uri = "http://maps.google.com/maps?saddr=" + latitude + "," + longitude;
+//            val uri = "https://www.google.com/maps/?api=1&query="
+            val uri =
+                "https://www.google.com/maps/search/?api=1&query=" + latitude + "," + longitude
+
+            val mapIntent = Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+            mapIntent.setPackage("com.google.android.apps.maps");
+            startActivity(mapIntent);
+
+        })
 
         lay_prev.setOnClickListener(View.OnClickListener {
             if (count == 0) {
@@ -147,15 +163,19 @@ class PlaceDetailsActivity : AppCompatActivity() {
                     .placeholder(R.drawable.travel)
                     .centerCrop()
                     .into(img_place)
+
             } else {
 
                 img_play.visibility = View.GONE
+                imgURl = gallaryCombineList[count].item_name
                 Glide.with(this@PlaceDetailsActivity)
-                    .load(gallaryCombineList[count].item_name)
+                    .load(imgURl)
                     .placeholder(R.drawable.travel)
                     .centerCrop()
                     .into(img_place)
             }
+            rv_placeimg.scrollToPosition(count)
+            Log.e("prev", " " + count)
 
             /*      Glide.with(this)
                       .load(gallaryImageList[count].imageName)
@@ -165,22 +185,57 @@ class PlaceDetailsActivity : AppCompatActivity() {
         })
 
 
-        img_play.setOnClickListener(View.OnClickListener {
+//        img_play.setOnClickListener(View.OnClickListener {
+//
+//            if (videoLink!!.isEmpty()) {
+//
+//                return@OnClickListener
+//            }
+//
+//
+//        })
 
-            if (videoLink!!.isEmpty()) {
+        img_place.setOnClickListener(View.OnClickListener {
 
-                return@OnClickListener
+            if (gallaryCombineList[count].flag == 1) {
+                showLargeImage(context = this, url = videoLink, type = "V")
+            } else {
+                showLargeImage(context = this, url = imgURl, type = "I")
             }
-            showLargeImageInDialog(context = this, url = videoLink, type = "V")
+
 
         })
 
 
         lay_next.setOnClickListener(View.OnClickListener {
-            val position = gallaryImageList.size - 1
+            val position = gallaryCombineList.size - 1
             if (position == count) {
+                if (gallaryCombineList[position].flag == 1) {
+
+                    img_play.visibility = View.VISIBLE
+                    videoId = extractYoutubeId(gallaryCombineList[position].item_name);
+                    imgURl = "http://img.youtube.com/vi/" + videoId + "/0.jpg"
+                    videoLink = gallaryCombineList[position].item_name
+                    Glide.with(this@PlaceDetailsActivity)
+                        .load(imgURl)
+                        .placeholder(R.drawable.travel)
+                        .centerCrop()
+                        .into(img_place)
+                } else {
+
+                    img_play.visibility = View.GONE
+                    videoLink = ""
+                    imgURl = gallaryCombineList[position].item_name
+                    Glide.with(this@PlaceDetailsActivity)
+                        .load(imgURl)
+                        .placeholder(R.drawable.travel)
+                        .centerCrop()
+                        .into(img_place)
+                }
+
                 return@OnClickListener
             }
+
             count++
 
             if (gallaryCombineList[count].flag == 1) {
@@ -197,13 +252,18 @@ class PlaceDetailsActivity : AppCompatActivity() {
             } else {
 
                 img_play.visibility = View.GONE
+                videoLink = ""
+                imgURl = gallaryCombineList[count].item_name
                 Glide.with(this@PlaceDetailsActivity)
-                    .load(gallaryCombineList[count].item_name)
+                    .load(imgURl)
                     .placeholder(R.drawable.travel)
                     .centerCrop()
                     .into(img_place)
             }
 
+            Log.e("next", " " + count)
+
+            rv_placeimg.scrollToPosition(count)
             /* Glide.with(this)
                  .load(gallaryImageList[count].imageName)
                  .placeholder(R.drawable.travel)
@@ -230,8 +290,10 @@ class PlaceDetailsActivity : AppCompatActivity() {
             } else {
 
                 img_play.visibility = View.GONE
+                videoLink = ""
+                imgURl = gallaryCombineList[count].item_name
                 Glide.with(this@PlaceDetailsActivity)
-                    .load(gallaryCombineList[count].item_name)
+                    .load(imgURl)
                     .placeholder(R.drawable.travel)
                     .centerCrop()
                     .into(img_place)
@@ -239,10 +301,10 @@ class PlaceDetailsActivity : AppCompatActivity() {
 
 
             /*Glide.with(this)
-                .load(gallaryImageList[position].imageName)
-                .placeholder(R.drawable.travel)
-                .centerCrop()
-                .into(img_place)*/
+              .load(gallaryImageList[position].imageName)
+              .placeholder(R.drawable.travel)
+              .centerCrop()
+              .into(img_place)*/
         }
 
     }
@@ -276,85 +338,131 @@ class PlaceDetailsActivity : AppCompatActivity() {
         }
 
 
-        txt_pdescription.setOnClickListener(View.OnClickListener {
+//        txt_pdescription.setOnClickListener(View.OnClickListener {
+//            if (!SClick.check(SClick.BUTTON_CLICK)) return@OnClickListener;
+//            startActivity(
+//                Intent(this, PlaceTabActivity::class.java)
+//                    .putExtra(AppConfig.EXTRA.TABCHECK, 0)
+//            )
+//        })
 
-            startActivity(
-                Intent(this, PlaceTabActivity::class.java)
-                    .putExtra(AppConfig.EXTRA.TABCHECK,0)
+        txt_pdescription.setOnClickListener {
+            onclickDesciption(it)
+        }
 
-            )
-        })
+        txt_pavailibility.setOnClickListener {
+            onclickAvailibility(it)
+        }
 
-        txt_pamenites.setOnClickListener(View.OnClickListener {
+        txt_pamenites.setOnClickListener {
+            onclickAminites(it)
+        }
 
-            startActivity(
-                Intent(this, PlaceTabActivity::class.java)
-                    .putExtra(AppConfig.EXTRA.TABCHECK,0)
+        txt_pstay.setOnClickListener {
+//            onclickAminites(it)
+            onClickStay(it)
+        }
 
-            )
-        })
+        txt_ppyament.setOnClickListener {
+//            onclickAminites(it)
+            onClickPayment(it)
+        }
 
-        txt_pavailibility.setOnClickListener(View.OnClickListener {
+        txt_pother.setOnClickListener {
+//            onclickAminites(it)
+            onClickOther(it)
+        }
 
-            startActivity(
-                Intent(this, PlaceTabActivity::class.java)
-                    .putExtra(AppConfig.EXTRA.TABCHECK,1)
+        txt_preview.setOnClickListener {
+//            onclickAminites(it)
+            onClickReview(it)
+        }
 
-            )
-        })
+        txt_pcontactus.setOnClickListener {
+//            onclickAminites(it)
+            onClickContactus(it)
+        }
 
-        txt_pamenites.setOnClickListener(View.OnClickListener {
 
-            startActivity(
-                Intent(this, PlaceTabActivity::class.java)
-                    .putExtra(AppConfig.EXTRA.TABCHECK,2)
+    }
 
-            )
-        })
+    private fun onClickContactus(it: View?) {
+        if (!SClick.check(SClick.BUTTON_CLICK)) return
+        startActivity(
+            Intent(
+                this,
+                PlaceTabActivity::class.java
+            ).putExtra(AppConfig.EXTRA.TABCHECK, 7)
+        )
 
-        txt_pstay.setOnClickListener(View.OnClickListener {
+    }
 
-            startActivity(
-                Intent(this, PlaceTabActivity::class.java)
-                    .putExtra(AppConfig.EXTRA.TABCHECK,3)
+    private fun onClickReview(it: View?) {
 
-            )
-        })
+        if (!SClick.check(SClick.BUTTON_CLICK)) return
+        startActivity(
+            Intent(this, PlaceTabActivity::class.java)
+                .putExtra(AppConfig.EXTRA.TABCHECK, 6)
 
-        txt_pother.setOnClickListener(View.OnClickListener {
+        )
+    }
 
-            startActivity(
-                Intent(this, PlaceTabActivity::class.java)
-                    .putExtra(AppConfig.EXTRA.TABCHECK,4)
+    private fun onClickOther(it: View?) {
+        if (!SClick.check(SClick.BUTTON_CLICK)) return
+        startActivity(
+            Intent(this, PlaceTabActivity::class.java)
+                .putExtra(AppConfig.EXTRA.TABCHECK, 5)
 
-            )
-        })
-        txt_ppyament.setOnClickListener(View.OnClickListener {
+        )
 
-            startActivity(
-                Intent(this, PlaceTabActivity::class.java)
-                    .putExtra(AppConfig.EXTRA.TABCHECK,5)
+    }
 
-            )
-        })
+    private fun onClickPayment(it: View?) {
+        if (!SClick.check(SClick.BUTTON_CLICK)) return
+        startActivity(
+            Intent(this, PlaceTabActivity::class.java)
+                .putExtra(AppConfig.EXTRA.TABCHECK, 4)
 
-        txt_preview.setOnClickListener(View.OnClickListener {
+        )
 
-            startActivity(
-                Intent(this, PlaceTabActivity::class.java)
-                    .putExtra(AppConfig.EXTRA.TABCHECK,6)
+    }
 
-            )
-        })
+    private fun onClickStay(it: View?) {
 
-        txt_pcontactus.setOnClickListener(View.OnClickListener {
+        if (!SClick.check(SClick.BUTTON_CLICK)) return
+        startActivity(
+            Intent(this, PlaceTabActivity::class.java)
+                .putExtra(AppConfig.EXTRA.TABCHECK, 3)
 
-            startActivity(
-                Intent(this, PlaceTabActivity::class.java)
-                    .putExtra(AppConfig.EXTRA.TABCHECK,7)
+        )
+    }
 
-            )
-        })
+    private fun onclickAminites(it: View?) {
+
+        if (!SClick.check(SClick.BUTTON_CLICK)) return
+        startActivity(
+            Intent(this, PlaceTabActivity::class.java)
+                .putExtra(AppConfig.EXTRA.TABCHECK, 2)
+
+        )
+    }
+
+    private fun onclickAvailibility(it: View?) {
+        if (!SClick.check(SClick.BUTTON_CLICK)) return
+        startActivity(
+            Intent(this, PlaceTabActivity::class.java)
+                .putExtra(AppConfig.EXTRA.TABCHECK, 1)
+
+        )
+
+    }
+
+    private fun onclickDesciption(it: View?) {
+        if (!SClick.check(SClick.BUTTON_CLICK)) return
+        startActivity(
+            Intent(this, PlaceTabActivity::class.java)
+                .putExtra(AppConfig.EXTRA.TABCHECK, 0)
+        )
     }
 
     /*private fun tablayout() {
@@ -522,6 +630,21 @@ class PlaceDetailsActivity : AppCompatActivity() {
                     if (resRecreationDetails!!.status == 1) {
 
 
+                        val gson = Gson()
+                        placeDetailResponce = gson.toJson(resRecreationDetails)
+
+                        helper!!.initPref()
+                        helper!!.SaveStringPref(
+                            AppConfig.PREFERENCE.PLACEDETAILSRESPONCE,
+                            placeDetailResponce
+                        )
+                        helper?.SaveStringPref(
+                            AppConfig.PREFERENCE.SERVICEPROVIDERID,
+                            resRecreationDetails.data.mainRecords.createdBy
+                        )
+                        helper?.ApplyPref()
+                        helper!!.ApplyPref()
+
                         Log.e("lastpage", "" + resRecreationDetails.message)
                         txt_vacationplacename.setText(resRecreationDetails.data.mainRecords.placeName)
                         txt_placelocation.setText(resRecreationDetails.data.mainRecords.district + ", " + resRecreationDetails.data.mainRecords.country)
@@ -529,12 +652,17 @@ class PlaceDetailsActivity : AppCompatActivity() {
                         rt_placerating.rating =
                             resRecreationDetails.data.mainRecords.avgReviews.toFloat()
 
-                        helper?.initPref()
-                        helper?.SaveStringPref(
-                            AppConfig.PREFERENCE.SERVICEPROVIDERID,
-                            resRecreationDetails.data.mainRecords.createdBy
-                        )
-                        helper?.ApplyPref()
+                        latitude = resRecreationDetails.data.mainRecords.latitude
+                        longitude = resRecreationDetails.data.mainRecords.longitude
+
+                        if (latitude!!.isEmpty() && longitude!!.isEmpty()) {
+
+                            txt_viewonmap.visibility = View.GONE
+                        } else {
+                            txt_viewonmap.visibility = View.VISIBLE
+                        }
+
+
 
 
 
@@ -587,6 +715,7 @@ class PlaceDetailsActivity : AppCompatActivity() {
 
                             videoLink = gallaryCombineList[0].item_name
                             videoId = extractYoutubeId(gallaryCombineList[0].item_name);
+
                             imgURl = "http://img.youtube.com/vi/" + videoId + "/0.jpg"
 
                             Glide.with(this@PlaceDetailsActivity)
@@ -594,11 +723,14 @@ class PlaceDetailsActivity : AppCompatActivity() {
                                 .placeholder(R.drawable.travel)
                                 .centerCrop()
                                 .into(img_place)
+
                         } else {
 
                             img_play.visibility = View.GONE
+                            videoLink = ""
+                            imgURl = gallaryCombineList[0].item_name
                             Glide.with(this@PlaceDetailsActivity)
-                                .load(gallaryCombineList[0].item_name)
+                                .load(imgURl)
                                 .placeholder(R.drawable.travel)
                                 .centerCrop()
                                 .into(img_place)
@@ -638,7 +770,6 @@ class PlaceDetailsActivity : AppCompatActivity() {
                                 R.drawable.btn_fillgreen
                             )
 
-
                         } else {
                             val colorValue =
                                 ContextCompat.getColor(this@PlaceDetailsActivity, R.color.tansparnt)
@@ -646,25 +777,20 @@ class PlaceDetailsActivity : AppCompatActivity() {
                             btn_booknow.text = getString(R.string.res_book_now_na)
                         }
 
-                        if (resRecreationDetails.data.mainRecords.isBooking == 1) {
-                            txt_perperson.visibility = View.VISIBLE
-                            txt_startprice.text =
-                                getString(R.string.str_startingform) + currncyCode + " " + resRecreationDetails.data.mainRecords.minPriceRange.toString()
-                        } else {
+                        if (resRecreationDetails.data.mainRecords.minPriceRange.equals("0")) {
                             txt_startprice.text = getString(R.string.str_pricenotavaible)
                             txt_perperson.visibility = View.GONE
+                        } else if (resRecreationDetails.data.mainRecords.minPriceRange.isEmpty()) {
+                            txt_startprice.text = getString(R.string.str_pricenotavaible)
+                            txt_perperson.visibility = View.GONE
+                        } else {
+                            txt_perperson.visibility = View.VISIBLE
+                            txt_startprice.text =
+                                "Starting from " + currncyCode + " " + resRecreationDetails.data.mainRecords.minPriceRange.toString()
                         }
 
 
-                        val gson = Gson()
-                        placeDetailResponce = gson.toJson(resRecreationDetails)
 
-                        helper!!.initPref()
-                        helper!!.SaveStringPref(
-                            AppConfig.PREFERENCE.PLACEDETAILSRESPONCE,
-                            placeDetailResponce
-                        )
-                        helper!!.ApplyPref()
 
 
                         for (aminate in resRecreationDetails.data.amenities.amenitiesRecords!!) {
@@ -764,46 +890,143 @@ class PlaceDetailsActivity : AppCompatActivity() {
 
     }
 
-    @Throws(MalformedURLException::class)
     fun extractYoutubeId(url: String?): String? {
-        val query: String = URL(url).getQuery()
-        val param = query.split("&").toTypedArray()
         var id: String? = null
-        for (row in param) {
-            val param1 = row.split("=").toTypedArray()
-            if (param1[0] == "v") {
-                id = param1[1]
-            }
+
+        /*     val youTubeLinkWithoutProtocolAndDomain = youTubeLinkWithoutProtocolAndDomain(url);
+             val videoIdRegex = arrayOf(
+                 "\\?vi?=([^&]*)",
+                 "watch\\\\?.*v=([^&]*)",
+                 "(?:embed|vi?)/([^/?]*)",
+                 "^([A-Za-z0-9\\\\-]*)",
+                 "((?<=(v|V)/)|(?<=be/)|(?<=(\\\\?|\\\\&)v=)|(?<=embed/))([\\\\w-]++)"
+
+             )
+             for (regex in videoIdRegex) {
+
+
+                 val compiledPattern = Pattern.compile(regex);
+                 val matcher = compiledPattern.matcher(youTubeLinkWithoutProtocolAndDomain);
+
+                 if (matcher.find()) {
+                     return matcher.group(1);
+                 }
+             }*/
+
+
+        val regex =
+            "http(?:s)?:\\/\\/(?:m.)?(?:www\\.)?youtu(?:\\.be\\/|be\\.com\\/(?:watch\\?(?:feature=youtu.be\\&)?v=|v\\/|embed\\/|user\\/(?:[\\w#]+\\/)+))([^&#?\\n]+)";
+
+        val pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        val matcher = pattern.matcher(url);
+        if (matcher.find()) {
+            id = matcher.group(1);
+            Log.e("youtubeid", " " + id)
         }
         return id
+        return id
+
     }
 
-    fun showLargeImageInDialog(
+    /*  fun youTubeLinkWithoutProtocolAndDomain(url: String?): String? {
+          val youTubeUrlRegEx = "^(https?)?(://)?(www.)?(m.)?((youtube.com)|(youtu.be))/";
+          val compiledPattern = Pattern.compile(youTubeUrlRegEx);
+          val matcher = compiledPattern.matcher(url);
+
+          if (matcher.find()) {
+              return url!!.replace(matcher.group(), "");
+          }
+          return url;
+      }*/
+
+
+    /* fun showLargeImageInDialog(
+         context: Context,
+         url: String? = null,
+         bitmap: Bitmap? = null,
+         type: String = "I"
+     ) {
+         val dialog = Dialog(context, android.R.style.Theme_Black_NoTitleBar_Fullscreen)
+         dialog.window!!.requestFeature(Window.FEATURE_NO_TITLE)
+         dialog.setContentView(context.layoutInflater.inflate(R.layout.layout_large_imageview, null))
+
+         val btnClose = dialog.findViewById<ImageButton>(R.id.btnIvClose)
+         val youtubeView = dialog.findViewById<YouTubePlayerView>(R.id.youtubeView)
+         var youTubePlayer: YouTubePlayer? = null
+
+
+         if (bitmap != null) {
+             youtubeView.visibility = View.GONE
+
+         }
+
+         if (type == "I" && bitmap == null) {
+             youtubeView.visibility = View.GONE
+
+         } else if (type == "V") {
+             youtubeView.visibility = View.VISIBLE
+             btnClose.visibility = View.GONE
+             youtubeView.initialize({
+                 it.addListener(object : AbstractYouTubePlayerListener() {
+                     override fun onReady() {
+                         youTubePlayer = it
+                         it.loadVideo(getYoutubeId(url!!)!!, 0f)
+                     }
+                 })
+             }, true)
+             youtubeView.enterFullScreen()
+             youtubeView.addFullScreenListener(object : YouTubePlayerFullScreenListener {
+                 override fun onYouTubePlayerEnterFullScreen() {}
+
+                 override fun onYouTubePlayerExitFullScreen() {
+                     dialog.dismiss()
+                 }
+             })
+         }
+
+         btnClose.setOnClickListener {
+             dialog.dismiss()
+         }
+
+         dialog.setOnDismissListener {
+             youTubePlayer?.pause()
+             youTubePlayer = null
+         }
+
+         dialog.show()
+     }*/
+
+
+    fun showLargeImage(
         context: Context,
         url: String? = null,
         bitmap: Bitmap? = null,
-        type: String = "I"
+        type: String
     ) {
         val dialog = Dialog(context, android.R.style.Theme_Black_NoTitleBar_Fullscreen)
         dialog.window!!.requestFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(context.layoutInflater.inflate(R.layout.layout_large_imageview, null))
+        dialog.setContentView(context.layoutInflater.inflate(R.layout.layout_large_video, null))
 
         val btnClose = dialog.findViewById<ImageButton>(R.id.btnIvClose)
+        val ivPreview = dialog.findViewById<ImageViewTouch>(R.id.iv_preview_image)
         val youtubeView = dialog.findViewById<YouTubePlayerView>(R.id.youtubeView)
         var youTubePlayer: YouTubePlayer? = null
 
 
         if (bitmap != null) {
-            youtubeView.visibility = View.GONE
-
+            youtubeView.visibility = View.VISIBLE
+            ivPreview.imageBitmap = bitmap
         }
 
         if (type == "I" && bitmap == null) {
             youtubeView.visibility = View.GONE
-
+            btnClose.visibility = View.VISIBLE
+            ivPreview.visibility = View.VISIBLE
+            Glide.with(context).load(url).into(ivPreview)
         } else if (type == "V") {
-
-            btnClose.visibility = View.GONE
+            ivPreview.visibility = View.GONE
+            youtubeView.visibility = View.VISIBLE
+            btnClose.visibility = View.VISIBLE
             youtubeView.initialize({
                 it.addListener(object : AbstractYouTubePlayerListener() {
                     override fun onReady() {
@@ -823,15 +1046,26 @@ class PlaceDetailsActivity : AppCompatActivity() {
         }
 
         btnClose.setOnClickListener {
+            youtubeView.release();
             dialog.dismiss()
-        }
-
-        dialog.setOnDismissListener {
             youTubePlayer?.pause()
             youTubePlayer = null
         }
 
+        dialog.setOnDismissListener {
+            youtubeView.release();
+            youTubePlayer?.pause()
+            youTubePlayer = null
+        }
+
+
         dialog.show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+
     }
 
 

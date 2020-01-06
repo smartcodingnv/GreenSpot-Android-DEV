@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import android.widget.Button
 import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
@@ -21,10 +22,10 @@ import com.greenspot.app.network.ApiClient
 import com.greenspot.app.network.ApiInterface
 import com.greenspot.app.responce.ResponceListMaster
 import com.greenspot.app.responce.SortingItem
-import com.greenspot.app.responce.tourlist.IncludedInTourPackageItem
 import com.greenspot.app.responce.tourlist.RecordsItem
 import com.greenspot.app.responce.tourlist.ResponceTourList
 import com.greenspot.app.utils.*
+import hk.ids.gws.android.sclick.SClick
 import kotlinx.android.synthetic.main.activity_tour_list.*
 import kotlinx.android.synthetic.main.content_tour_list.*
 import kotlinx.android.synthetic.main.dialog_placesort.*
@@ -37,7 +38,10 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class TourListActivity : AppCompatActivity(), ItemClickListener {
-    private var includePkgList: ArrayList<IncludedInTourPackageItem> = ArrayList()
+
+    private var loading: Boolean = true
+    private var previousTotal = 0
+
 
     private var searchText: String = ""
     private var sortOrderby: String = ""
@@ -95,7 +99,7 @@ class TourListActivity : AppCompatActivity(), ItemClickListener {
 
 
         txt_title.setText(
-            "Tour in " + helperlang!!.LoadStringPref(
+            "Tours in " + helperlang!!.LoadStringPref(
                 AppConfig.PREFERENCE.SELECTCONTRY,
                 ""
             )
@@ -109,6 +113,7 @@ class TourListActivity : AppCompatActivity(), ItemClickListener {
             openSearchDialog()
         })
         ib_filter.setOnClickListener(View.OnClickListener {
+            if (!SClick.check(SClick.BUTTON_CLICK)) return@OnClickListener;
             startActivityForResult(
                 Intent(this, PlaceFilterActivity::class.java).putExtra(
                     AppConfig.EXTRA.FILTERCHECK,
@@ -117,8 +122,7 @@ class TourListActivity : AppCompatActivity(), ItemClickListener {
                     .putExtra(AppConfig.EXTRA.FILTERRESPONCE, filterResponce)
                     .putExtra(AppConfig.EXTRA.CHECKFILTERDATA, checkfilterData)
                     .putExtra(AppConfig.EXTRA.FILTERPRICEMIN, priceRangeMin)
-                    .putExtra(AppConfig.EXTRA.FILTERPRICEMAX, priceRangeMax)
-                , checkFilterApply
+                    .putExtra(AppConfig.EXTRA.FILTERPRICEMAX, priceRangeMax), checkFilterApply
             )
 
         })
@@ -131,12 +135,15 @@ class TourListActivity : AppCompatActivity(), ItemClickListener {
 
         swipeRefreshLayouttour.setOnRefreshListener {
             pageNumber = 1
+            previousTotal = 0
             tourList.clear()
             tourlistAdapter!!.notifyDataSetChanged()
             getTourData(
                 contryID = this.countryID!!,
                 selectCurrency = this.currncyCode!!,
-                langCode = this.langCode!!
+                langCode = this.langCode!!,
+                flag = 0
+
             )
         }
 
@@ -153,9 +160,12 @@ class TourListActivity : AppCompatActivity(), ItemClickListener {
         getTourData(
             contryID = this.countryID!!,
             selectCurrency = this.currncyCode!!,
-            langCode = this.langCode!!
+            langCode = this.langCode!!,
+            flag = 0
         )
+
         setVisitorplace()
+
 
     }
 
@@ -164,7 +174,7 @@ class TourListActivity : AppCompatActivity(), ItemClickListener {
 
         mLayoutManager = LinearLayoutManager(this)
         rv_tourlist.setLayoutManager(mLayoutManager)
-
+        rv_tourlist.setHasFixedSize(true)
         tourlistAdapter = TourListAdapter(this)
 //        Common.setVerticalRecyclerView(this, rv_tourlist)
         tourlistAdapter!!.swapData(this.tourList)
@@ -197,31 +207,47 @@ class TourListActivity : AppCompatActivity(), ItemClickListener {
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.MATCH_PARENT
         )
-
+        val cancel = dialog.findViewById<Button>(R.id.btn_scanel)
 
 //        val searchText = helper!!.LoadStringPref(AppConfig.PREFERENCE.PLACESEARCHTEXT, "")
 
         if (searchText.isNullOrEmpty()) {
             dialog.et_search.hint = getString(R.string.res_search_title)
-
+            cancel.text = getString(R.string.res_cancel)
         } else {
             dialog.et_search.setText(searchText)
+            cancel.text = getString(R.string.res_clear)
         }
 
-        dialog.btn_scanel.setOnClickListener(View.OnClickListener {
-            helper!!.initPref()
-            helper!!.SaveStringPref(AppConfig.PREFERENCE.PLACESEARCHTEXT, "")
-            helper!!.ApplyPref()
-            searchText = ""
-            pageNumber = 1
-            tourList.clear()
-            tourlistAdapter!!.notifyDataSetChanged()
-            getTourData(
-                contryID = this.countryID!!,
-                selectCurrency = this.currncyCode!!,
-                langCode = this.langCode!!
-            )
+        dialog.lay_dialogsearch.setOnClickListener {
             dialog.dismiss()
+        }
+
+
+        cancel.setOnClickListener(View.OnClickListener {
+            searchText = dialog.et_search.text.toString()
+            Log.e("searchtext", " " + searchText)
+            if (searchText.isEmpty()) {
+                dialog.dismiss()
+            } else {
+
+                helper!!.initPref()
+                helper!!.SaveStringPref(AppConfig.PREFERENCE.PLACESEARCHTEXT, "")
+                helper!!.ApplyPref()
+                searchText = ""
+                pageNumber = 1
+                previousTotal = 0
+                tourList.clear()
+                tourlistAdapter!!.notifyDataSetChanged()
+                getTourData(
+                    contryID = this.countryID!!,
+                    selectCurrency = this.currncyCode!!,
+                    langCode = this.langCode!!,
+                    flag = 0
+                )
+                dialog.dismiss()
+            }
+
         })
 
         dialog.btn_btnapply.setOnClickListener(View.OnClickListener {
@@ -234,12 +260,14 @@ class TourListActivity : AppCompatActivity(), ItemClickListener {
 
             searchText = dialog.et_search.text.toString()
             pageNumber = 1
+            previousTotal = 0
             tourList.clear()
             tourlistAdapter!!.notifyDataSetChanged()
             getTourData(
                 contryID = this.countryID!!,
                 selectCurrency = this.currncyCode!!,
-                langCode = this.langCode!!
+                langCode = this.langCode!!,
+                flag = 0
             )
 
             dialog.dismiss()
@@ -267,6 +295,12 @@ class TourListActivity : AppCompatActivity(), ItemClickListener {
         placeSortAdapter.swapData(sortData)
         dialog.rv_placesort.adapter = placeSortAdapter
 
+        dialog.lay_dialg.setOnClickListener {
+            dialog.dismiss()
+        }
+
+
+
 
         dialog.btn_canel.setOnClickListener {
 
@@ -274,6 +308,7 @@ class TourListActivity : AppCompatActivity(), ItemClickListener {
             helper?.SaveStringPref(AppConfig.PREFERENCE.SELECTSORTTITAL, "")
             helper?.ApplyPref()
             pageNumber = 1
+            previousTotal = 0
             sortOrderType = ""
             sortOrderby = ""
             tourList.clear()
@@ -281,7 +316,8 @@ class TourListActivity : AppCompatActivity(), ItemClickListener {
             getTourData(
                 contryID = this.countryID!!,
                 selectCurrency = this.currncyCode!!,
-                langCode = this.langCode!!
+                langCode = this.langCode!!,
+                flag = 0
             )
 
             dialog.dismiss()
@@ -303,12 +339,14 @@ class TourListActivity : AppCompatActivity(), ItemClickListener {
             helper?.SaveStringPref(AppConfig.PREFERENCE.SELECTSORTTITAL, sortOrderTitle)
             helper?.ApplyPref()
             pageNumber = 1
+            previousTotal = 0
             tourList.clear()
             tourlistAdapter!!.notifyDataSetChanged()
             getTourData(
                 contryID = this.countryID!!,
                 selectCurrency = this.currncyCode!!,
-                langCode = this.langCode!!
+                langCode = this.langCode!!,
+                flag = 0
             )
 
             dialog.dismiss()
@@ -323,42 +361,79 @@ class TourListActivity : AppCompatActivity(), ItemClickListener {
         rv_tourlist.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
+
+                if (dy > 0) {
+
+                    val visibleItemCount = mLayoutManager!!.childCount
+                    val totalItemCount = mLayoutManager!!.itemCount
+                    val firstVisibleItem = mLayoutManager!!.findFirstVisibleItemPosition()
+                    val itemcount = visibleItemCount + firstVisibleItem
+
+                    if (isLastpage == 1) {
+                        return
+                    }
+                    if (loading) {
+                        if (totalItemCount > previousTotal) {
+                            loading = false;
+                            previousTotal = totalItemCount;
+                        }
+                    }
+
+                    if (!loading && itemcount >= totalItemCount && firstVisibleItem >= 0) {
+                        // End has been reached
+
+                        viewDialog!!.hideDialog()
+                        pageNumber++
+                        getTourData(
+                            contryID = countryID!!,
+                            selectCurrency = currncyCode!!,
+                            langCode = langCode!!,
+                            flag = 1
+                        )
+
+                        loading = true;
+                    }
+
+                }
+
+                /*    if (dy > 0) {
+                        val visibleItemCount = mLayoutManager?.childCount
+                        val totalItemCount = mLayoutManager?.itemCount
+                        val firstVisibleItemPosition = mLayoutManager?.findFirstVisibleItemPosition()
+                        val itemcount = visibleItemCount!! + firstVisibleItemPosition!!
+                        if (isLastpage == 1) {
+                            return
+                        }
+                        if (itemcount >= totalItemCount!! && firstVisibleItemPosition >= 0) {
+                            Log.e("itemcount", " item")
+                            viewDialog!!.hideDialog()
+                            pageNumber++
+
+                            getTourData(
+                                contryID = countryID!!,
+                                selectCurrency = currncyCode!!,
+                                langCode = langCode!!
+                            )
+                        }
+                    }*/
+
+
             }
 
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
-                val visibleItemCount = mLayoutManager?.childCount
-                val totalItemCount = mLayoutManager?.itemCount
-                val firstVisibleItemPosition = mLayoutManager?.findFirstVisibleItemPosition()
-                val itemcount = visibleItemCount!! + firstVisibleItemPosition!!
 
-
-                if (isLastpage == 1) {
-                    return
-                } else if (isLastpage == 0) {
-                    if (itemcount >= totalItemCount!! && firstVisibleItemPosition >= 0) {
-                        Log.e("itemcount", " item")
-                        pageNumber++
-                        viewDialog!!.hideDialog()
-
-                        getTourData(
-                            contryID = countryID!!,
-                            selectCurrency = currncyCode!!,
-                            langCode = langCode!!
-                        )
-                    }
-
-                }
             }
 
         })
 
     }
 
-    private fun getTourData(contryID: String, selectCurrency: String, langCode: String) {
+    private fun getTourData(contryID: String, selectCurrency: String, langCode: String, flag: Int) {
 
 //        progress!!.createDialog(false)
 //        progress!!.DialogMessage(getString(R.string.please_wait))
+
         viewDialog!!.showDialog()
         utils!!.hideKeyboard()
 
@@ -391,20 +466,22 @@ class TourListActivity : AppCompatActivity(), ItemClickListener {
 
 
                         isLastpage = recreationList.data.isLastPage
+
                         Log.e("lastpage", "" + isLastpage)
+                        Log.e("pageNumber", "" + pageNumber)
                         tourList.addAll(recreationList.data.records!!)
-
-
-
                         tourlistAdapter!!.notifyDataSetChanged()
 
                     } else {
 
-                        Toast.makeText(
-                            this@TourListActivity,
-                            recreationList.message,
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        if (tourList == null || tourList.isEmpty()) {
+                            Toast.makeText(
+                                this@TourListActivity,
+                                recreationList.message,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
 
                     }
                 } else {
@@ -462,19 +539,22 @@ class TourListActivity : AppCompatActivity(), ItemClickListener {
 
 //                        filterTitle = responceListMaster.data!![0].records!![0].id = 0
 
-                        for(name in responceListMaster.sorting){
+                        for (name in responceListMaster.sorting) {
 
-                            if(name.isDefault==1){
+                            if (name.isDefault == 1) {
                                 sortOrderby = name.column
                                 sortOrderType = name.order
                                 sortOrderTitle = name.title
 
                                 helper?.initPref()
-                                helper?.SaveStringPref(AppConfig.PREFERENCE.SELECTSORTTITAL, sortOrderTitle)
+                                helper?.SaveStringPref(
+                                    AppConfig.PREFERENCE.SELECTSORTTITAL,
+                                    sortOrderTitle
+                                )
                                 helper?.ApplyPref()
+
                             }
                         }
-
 
 
                     } else {
@@ -522,14 +602,16 @@ class TourListActivity : AppCompatActivity(), ItemClickListener {
             checkfilterData = data?.getStringExtra(AppConfig.EXTRA.CHECKFILTERDATA)!!
             priceRangeMin = data.getStringExtra(AppConfig.EXTRA.FILTERPRICEMIN)!!
             priceRangeMax = data.getStringExtra(AppConfig.EXTRA.FILTERPRICEMAX)!!
-            meMap = data.getSerializableExtra(AppConfig.EXTRA.FILTERCHECKDATA) as HashMap<String, String>
+            meMap =
+                data.getSerializableExtra(AppConfig.EXTRA.FILTERCHECKDATA) as HashMap<String, String>
 
             pageNumber = 1
-
+            previousTotal = 0
             getTourData(
                 contryID = this.countryID!!,
                 selectCurrency = this.currncyCode!!,
-                langCode = this.langCode!!
+                langCode = this.langCode!!,
+                flag = 0
             )
 
 //            Log.e(TAG,checkfilterData)

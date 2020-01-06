@@ -71,14 +71,14 @@ class TourAminitesTitleAdapter(val context: FragmentActivity?) :
 
                 title.setCompoundDrawablesWithIntrinsicBounds(
                     null, null, ContextCompat.getDrawable(
-                        context!!, R.drawable.drawable_collops
+                        context!!, R.drawable.ic_ncollops
                     ), null
                 )
             } else {
 
                 title.setCompoundDrawablesWithIntrinsicBounds(
                     null, null, ContextCompat.getDrawable(
-                        context!!, R.drawable.drawable_add
+                        context!!, R.drawable.ic_nexpand
                     ), null
                 )
             }

@@ -7,7 +7,7 @@
     android:layout_margin="@dimen/_3sdp"
     android:orientation="vertical"
     app:cardCornerRadius="10dp"
-    app:cardElevation="6dp">
+    app:cardElevation="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
                 android:id="@+id/imageView1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/travel"
+
                 android:scaleType="centerCrop"
                 android:layout_weight="1"
                 app:riv_corner_radius="10dip"

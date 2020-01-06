@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.greenspot.app.R
 import com.greenspot.app.activity.EventDetailsActivity
 import com.greenspot.app.model.ListBookingDetails
+import hk.ids.gws.android.sclick.SClick
 import java.util.*
 
 class BookingDetailsAdapter(val context: FragmentActivity?) :
@@ -33,7 +34,7 @@ class BookingDetailsAdapter(val context: FragmentActivity?) :
         holder.bind(data[position], context)
 
         holder.itemView.setOnClickListener(View.OnClickListener {
-
+            if (!SClick.check(SClick.BUTTON_CLICK)) return@OnClickListener;
             val intent = Intent(mContext, EventDetailsActivity::class.java);
             mContext!!.startActivity(intent)
 

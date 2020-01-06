@@ -5,7 +5,7 @@ class AppConfig {
     object URL {
 
         val BASE_URL = "http://greenspot.hvjstest.com/api/"
-//        val BASE_URL = "http://192.168.0.103/ldorado/api/"
+        //        val BASE_URL = "http://192.168.0.103/ldorado/api/"
         val PAYMENT_URL = "https://api.mollie.com/v2/"
         val BASE_IMAGEURL = "http://159.203.105.17"
 
@@ -33,13 +33,15 @@ class AppConfig {
         const val URL_TOURSPAYMENT = "tours/payment-stripe"
         const val URL_CURRENCYCONVERT = "currencyconvert"
         const val URL_CHECKBEFOREPAY = "check-before-pay"
-        const val URL_PAYMENTMOLIE = "tours/payment-mollie"
-
-
-
+        const val URL_TOURPAYMENTMOLIE = "tours/payment-mollie"
+        const val URL_BOOKINGLIST = "bookings/list"
+        const val URL_BOOKINGDETAILS = "bookings/detail"
+        const val URL_EVENTPAYMENTMOLIE = "events/payment-mollie"
+        const val URL_RECREATIONPAYMENTMOLIE = "recreations/payment-mollie"
 
 
         val SUCCESS = 200
+        val TOKEN_EXPIRE = 400
 
     }
 
@@ -54,6 +56,7 @@ class AppConfig {
         val USER_FNAME = "firstname"
         val USER_LNAME = "lastname"
         val USER_EMAIL = "email"
+        val USER_CONTACTNO = "contactno"
         val USERNAME = "username"
         val SELECTCONTRY = "selectcontry"
         val SELECTCONTRYID = "selectcontryid"
@@ -77,15 +80,65 @@ class AppConfig {
         val EVENTDETAILSRESPONCE = "eventdetailsresponce"
         val TOURDETAILSRESPONCE = "tourdetailsresponce"
 
-        val START_PRICE = "startprice"
-        val FINAL_PRICE = "finalprice"
-        val FROM_DATE = "fromdate"
-        val NO_OF_PERSON = "noofperson"
+
+        val TOUR_START_PRICE = "tourstartprice"
+        val TOUR_FINAL_PRICE = "tourfinalprice"
+        val TOUR_FROM_DATE = "tourfromdate"
+        val TOUR_NO_OF_PERSON = "tournoofperson"
+
+        val EVENT_START_PRICE = "eventstartprice"
+        val EVENT_FINAL_PRICE = "eventfinalprice"
+        val EVENT_FROM_DATE = "eventfromdate"
+        val EVENT_NO_OF_PERSON = "eventnoofperson"
+
+
+        val RECREATION_START_PRICE = "recreationstartprice"
+        val RECREATION_FINAL_PRICE = "recreationfinalprice"
+        val RECREATION_FROM_DATE = "recreationfromdate"
+        val RECREATION_NO_OF_PERSON = "recreationnoofperson"
+
+
+        val mid_week_day_pass_adult_price = "mid_week_day_pass_adult_price"
+        val mid_week_day_pass_adult_nop = "mid_week_day_pass_adult_nop"
+
+        val mid_week_day_pass_child_price = "mid_week_day_pass_child_price"
+        val mid_week_day_pass_child_nop = "mid_week_day_pass_child_nop"
+
+        val mid_week_night_pass_adult_price = "mid_week_night_pass_adult_price"
+        val mid_week_night_pass_adult_nop = "mid_week_night_pass_adult_nop"
+
+        val mid_week_night_pass_child_price = "mid_week_night_pass_child_price"
+        val mid_week_night_pass_child_nop = "mid_week_night_pass_child_nop"
+
+
+        val weekend_day_pass_adult_price = "weekend_day_pass_adult_price"
+        val weekend_day_pass_adult_nop = "weekend_day_pass_adult_nop"
+
+        val weekend_day_pass_child_price = "weekend_day_pass_child_price"
+        val weekend_day_pass_child_nop = "weekend_day_pass_child_nop"
+
+        val weekend_night_pass_adult_price = "weekend_night_pass_adult_price"
+        val weekend_night_pass_adult_nop = "weekend_night_pass_adult_nop"
+
+        val weekend_night_pass_child_price = "weekend_night_pass_child_price"
+        val weekend_night_pass_child_nop = "weekend_night_pass_child_nop"
+
+
+
+
+
+
         val PERSONDETAILS = "persondetails"
         val FINALEURPRICE = "finaleurprice"
         val TRANSACTIONID = "transactionid"
+
+
         val BANKNAME = "bankname"
         val CHECKPAYMENT = "checkpayment"
+
+        val BOOKINGINFO = "ResponceTourBookinginfo"
+        val EVENTBOOKINGINFO = "ResponceBookinginfoEvent"
+        val VACATIONBOOKINGINFO = "ResponceBookinginforvcation"
 
 
     }
@@ -93,8 +146,11 @@ class AppConfig {
     object BUNDLE {
 
         val CHECKDISCRIPTION = "checkdiscription" // 1-place , = 2- tour, 3-contact us
-        val CHECKANIMATIES = "checkanimaties" // 1-place , = 2- tour, 3-contact us
-        val CHECKAOTHER = "checkother" //1 = placeother , 2= event contact us
+        val CHECKANIMATIES =
+            "checkanimaties" // 1-place , = 2- tour, 3-contact us , 4 - bookinfo touramintes, 5- bookinfo events amintes
+        val CHECKAOTHER =
+            "checkother" //1 = placeother , 2= event contact us , 3-tourcontact us , 4- bookinginfo , 5 - eventbooking enfo
+        val CHECKAITINERARY = "checkitinerary" //1 = tourdata iteineary , 2= booking iteinerary
         val CHECKREIVEW = "checkreivew" //1 = placeother , 2= event contact us
         val RING = "Ring"
         val END = "end"
@@ -112,6 +168,7 @@ class AppConfig {
         val FILTERPRICEMIN = "filterpricemin"
         val FILTERPRICEMAX = "filterpricemax"
         val FILTERCHECKDATA = "filtercheckdata"
+
         val TABCHECK = "tabcheck"
 
         val RECREATIONITEMID = "recreationitemid"
@@ -124,6 +181,12 @@ class AppConfig {
         val TOURNAME = "tourname"
 
         val TOTALGUEST = "totalguest"
+        val TYPE = "type"  // passed in booking details api
+        val BOOKINGID = "bookingid"
+        val BOOKINGTYPE = "bookingtype"   //tour, event , recreation
+        val CHECKBOOKINGINFO = "checkbookinginfo"
+
+        val TOURTITLE = "toutTitle"
 
 
     }

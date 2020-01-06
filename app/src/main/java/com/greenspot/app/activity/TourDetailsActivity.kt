@@ -1,11 +1,16 @@
 package com.greenspot.app.activity
 
+import android.app.Dialog
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.Window
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AlertDialog
@@ -19,17 +24,24 @@ import com.google.gson.Gson
 import com.greenspot.app.R
 import com.greenspot.app.adapter.SliderTourAdapter
 import com.greenspot.app.adapter.TourDetailsAdapter
+import com.greenspot.app.adapter.TourImgOtherServiceAdapter
 import com.greenspot.app.adapter.TourPopularAdapter
+import com.greenspot.app.model.ItineraryImg
 import com.greenspot.app.model.PlaceSubItem
 import com.greenspot.app.network.ApiClient
 import com.greenspot.app.network.ApiInterface
-import com.greenspot.app.responce.tourdetail.AmenitiesItem
-import com.greenspot.app.responce.tourdetail.GalleryImagesItem
-import com.greenspot.app.responce.tourdetail.PopularToursItem
-import com.greenspot.app.responce.tourdetail.ResponceTourDetails
+import com.greenspot.app.responce.tourdetail.*
 import com.greenspot.app.utils.*
+import com.pierfrancescosoffritti.youtubeplayer.player.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.youtubeplayer.player.YouTubePlayer
+import com.pierfrancescosoffritti.youtubeplayer.player.YouTubePlayerFullScreenListener
+import com.pierfrancescosoffritti.youtubeplayer.player.YouTubePlayerView
+import hk.ids.gws.android.sclick.SClick
+import it.sephiroth.android.library.imagezoom.ImageViewTouch
 import kotlinx.android.synthetic.main.activity_tour_details.*
 import kotlinx.android.synthetic.main.content_tour_details.*
+import org.jetbrains.anko.imageBitmap
+import org.jetbrains.anko.layoutInflater
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -67,6 +79,11 @@ class TourDetailsActivity : AppCompatActivity() {
     private var tourID: String = ""
     private var tourName: String = ""
     private var token: String = ""
+    private var imgURl: String? = ""
+
+
+    var itineraryImg: ArrayList<ItineraryImg> = ArrayList()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,6 +113,15 @@ class TourDetailsActivity : AppCompatActivity() {
 
 
 
+        img_tour.setOnClickListener(View.OnClickListener {
+            if (imgURl!!.isEmpty()) {
+
+                return@OnClickListener
+            }
+            showLargeImage(context = this, url = imgURl, type = "I")
+
+        })
+
         ib_back.setOnClickListener(View.OnClickListener {
             onBackPressed()
         })
@@ -106,11 +132,13 @@ class TourDetailsActivity : AppCompatActivity() {
                 return@OnClickListener
             }
             count--
-
+            imgURl = gallaryImageList[count].imageName
             Glide.with(this)
-                .load(gallaryImageList[count].imageName)
+                .load(imgURl)
                 .centerCrop()
                 .into(img_tour)
+
+            rv_tourplaceimg.scrollToPosition(count)
         })
 
         lay_next.setOnClickListener(View.OnClickListener {
@@ -119,20 +147,28 @@ class TourDetailsActivity : AppCompatActivity() {
                 return@OnClickListener
             }
             count++
+            imgURl = gallaryImageList[count].imageName
 
             Glide.with(this)
-                .load(gallaryImageList[count].imageName)
+                .load(imgURl)
                 .centerCrop()
                 .into(img_tour)
+
+            rv_tourplaceimg.scrollToPosition(count)
         })
 
         rv_tourplaceimg.affectOnItemClicks() { position, view ->
 
             count = position
+
+            imgURl = gallaryImageList[position].imageName
+
             Glide.with(this)
-                .load(gallaryImageList[position].imageName)
+                .load(imgURl)
                 .centerCrop()
                 .into(img_tour)
+
+
         }
 
         btn_booknowtour.setOnClickListener(View.OnClickListener {
@@ -140,7 +176,8 @@ class TourDetailsActivity : AppCompatActivity() {
             if (helper!!.LoadIntPref(AppConfig.PREFERENCE.CHECK_LOGINAS, 0) == 2) {
 
                 startActivity(
-                    Intent(this, TourBookingActivity::class.java))
+                    Intent(this, TourBookingActivity::class.java)
+                )
 
             } else {
                 alertLogin()
@@ -159,7 +196,7 @@ class TourDetailsActivity : AppCompatActivity() {
         builder1.setCancelable(true)
 
         builder1.setPositiveButton(
-            "YES",
+            "OK",
             DialogInterface.OnClickListener { dialog, id ->
                 dialog.cancel()
                 helper!!.clearAllPrefs()
@@ -245,60 +282,85 @@ class TourDetailsActivity : AppCompatActivity() {
             view_tamenites.visibility = View.GONE
         }
 
-        txt_toverview.setOnClickListener(View.OnClickListener {
+        txt_toverview.setOnClickListener {
+            onclickOverivew(it)
+        }
 
-            startActivity(
-                Intent(this, TourTabActivity::class.java)
-                    .putExtra(AppConfig.EXTRA.TABCHECK, 0)
 
-            )
-        })
+        txt_titinerary.setOnClickListener {
+            onclickItinerary(it)
+        }
 
-        txt_titinerary.setOnClickListener(View.OnClickListener {
+        txt_tamenites.setOnClickListener {
+            onclickAmenites(it)
+        }
 
-            startActivity(
-                Intent(this, TourTabActivity::class.java)
-                    .putExtra(AppConfig.EXTRA.TABCHECK, 1)
+        txt_tother.setOnClickListener {
+            onclickOther(it)
+        }
 
-            )
-        })
+        txt_treview.setOnClickListener {
+            onclickReview(it)
+        }
 
-        txt_tamenites.setOnClickListener(View.OnClickListener {
+        txt_tcontactus.setOnClickListener {
+            onclickContacus(it)
+        }
 
-            startActivity(
-                Intent(this, TourTabActivity::class.java)
-                    .putExtra(AppConfig.EXTRA.TABCHECK, 2)
+    }
 
-            )
-        })
+    private fun onclickContacus(it: View?) {
+        if (!SClick.check(SClick.BUTTON_CLICK)) return
+        startActivity(
+            Intent(this, TourTabActivity::class.java)
+                .putExtra(AppConfig.EXTRA.TABCHECK, 5)
 
-        txt_tother.setOnClickListener(View.OnClickListener {
+        )
+    }
 
-            startActivity(
-                Intent(this, TourTabActivity::class.java)
-                    .putExtra(AppConfig.EXTRA.TABCHECK, 3)
+    private fun onclickReview(it: View?) {
+        if (!SClick.check(SClick.BUTTON_CLICK)) return
+        startActivity(
+            Intent(this, TourTabActivity::class.java)
+                .putExtra(AppConfig.EXTRA.TABCHECK, 4)
 
-            )
-        })
+        )
+    }
 
-        txt_treview.setOnClickListener(View.OnClickListener {
+    private fun onclickOther(it: View?) {
+        if (!SClick.check(SClick.BUTTON_CLICK)) return
+        startActivity(
+            Intent(this, TourTabActivity::class.java)
+                .putExtra(AppConfig.EXTRA.TABCHECK, 3)
 
-            startActivity(
-                Intent(this, TourTabActivity::class.java)
-                    .putExtra(AppConfig.EXTRA.TABCHECK, 4)
+        )
+    }
 
-            )
-        })
+    private fun onclickAmenites(it: View?) {
+        if (!SClick.check(SClick.BUTTON_CLICK)) return
+        startActivity(
+            Intent(this, TourTabActivity::class.java)
+                .putExtra(AppConfig.EXTRA.TABCHECK, 2)
 
-        txt_tcontactus.setOnClickListener(View.OnClickListener {
+        )
+    }
 
-            startActivity(
-                Intent(this, TourTabActivity::class.java)
-                    .putExtra(AppConfig.EXTRA.TABCHECK, 5)
+    private fun onclickItinerary(it: View?) {
+        if (!SClick.check(SClick.BUTTON_CLICK)) return
+        startActivity(
+            Intent(this, TourTabActivity::class.java)
+                .putExtra(AppConfig.EXTRA.TABCHECK, 1)
 
-            )
-        })
+        )
+    }
 
+    private fun onclickOverivew(it: View?) {
+        if (!SClick.check(SClick.BUTTON_CLICK)) return
+        startActivity(
+            Intent(this, TourTabActivity::class.java)
+                .putExtra(AppConfig.EXTRA.TABCHECK, 0)
+
+        )
 
     }
 
@@ -327,10 +389,17 @@ class TourDetailsActivity : AppCompatActivity() {
     private fun setVisitorplace() {
 
         val sliderTourAdapter = SliderTourAdapter(this)
-
         Common.setHorizontalRecyclerView(this!!, rv_tourplaceimg)
         sliderTourAdapter.swapData(gallaryImageList)
         rv_tourplaceimg.adapter = sliderTourAdapter
+    }
+
+    private fun setOtherserviceimg() {
+
+        val imgOtherServiceAdapter = TourImgOtherServiceAdapter(this)
+        Common.setHorizontalRecyclerView(this, rv_otherservicetourdetailsimg)
+        imgOtherServiceAdapter.swapData(itineraryImg)
+        rv_otherservicetourdetailsimg.adapter = imgOtherServiceAdapter
     }
 
     private fun setPopularTour() {
@@ -378,6 +447,10 @@ class TourDetailsActivity : AppCompatActivity() {
                             AppConfig.PREFERENCE.TOURDETAILSRESPONCE,
                             tourDetailsResponce
                         )
+                        helper?.SaveStringPref(
+                            AppConfig.PREFERENCE.SERVICEPROVIDERID,
+                            tourDetails.data.mainRecords.createdBy
+                        )
                         helper!!.ApplyPref()
 
 
@@ -388,12 +461,7 @@ class TourDetailsActivity : AppCompatActivity() {
                         rt_tourdetails.rating =
                             tourDetails.data.mainRecords.avgReviews.toFloat()
 
-                        helper?.initPref()
-                        helper?.SaveStringPref(
-                            AppConfig.PREFERENCE.SERVICEPROVIDERID,
-                            tourDetails.data.mainRecords.createdBy
-                        )
-                        helper?.ApplyPref()
+
 
 
 
@@ -407,8 +475,9 @@ class TourDetailsActivity : AppCompatActivity() {
 
                         }
 
+                        imgURl = gallaryImageList.get(0).imageName
                         Glide.with(this@TourDetailsActivity)
-                            .load(gallaryImageList.get(0).imageName)
+                            .load(imgURl)
                             .placeholder(R.drawable.travel)
                             .centerCrop()
                             .into(img_tour)
@@ -424,36 +493,11 @@ class TourDetailsActivity : AppCompatActivity() {
                         setPopularTour()
                         setVisitorplace()
 
-                        for (name in tourDetails.data.mainRecords.includedInTourPackage!!) {
+                        itineraryImg.clear()
+                        setSubImgData(tourDetails.data.mainRecords.includedInTourPackage)
+                        setOtherserviceimg()
 
-                            if (name.masterId.equals("1")) {
 
-                                lay_flight.visibility = View.VISIBLE
-
-                            }
-                            if (name.masterId.equals("2")) {
-
-                                lay_hotel.visibility = View.VISIBLE
-                            }
-
-                            if (name.masterId.equals("3")) {
-
-                                lay_sightseen.visibility = View.VISIBLE
-                            }
-                            if (name.masterId.equals("4")) {
-
-                                lay_meals.visibility = View.VISIBLE
-                            }
-                            if (name.masterId.equals("5")) {
-
-                                lay_transportaion.visibility = View.VISIBLE
-                            }
-                            if (name.masterId.equals("6")) {
-
-                                lay_wifi.visibility = View.VISIBLE
-                            }
-
-                        }
 
                         tourCategory = tourDetails.data.mainRecords.tourCategory
                         depatureCity = tourDetails.data.mainRecords.depatureCity
@@ -473,7 +517,7 @@ class TourDetailsActivity : AppCompatActivity() {
                         )
                         txt_perperson.visibility = View.VISIBLE
                         txt_startprice.text =
-                            getString(R.string.str_startingform) + " " + currncyCode + " " + tourDetails.data.mainRecords.price
+                            "Starting from " + currncyCode + " " + tourDetails.data.mainRecords.price
 
 
 
@@ -525,6 +569,77 @@ class TourDetailsActivity : AppCompatActivity() {
 
     }
 
+    private fun setSubImgData(includedInTourPackage: List<IncludedInTourPackageItem>?) {
+        for (name in includedInTourPackage!!) {
+
+            if (name.masterId.equals("1")) {
+
+                itineraryImg.add(
+                    ItineraryImg(
+                        "1",
+                        "Flight",
+                        getURLForResource(R.drawable.ic_otherflight)
+                    )
+                )
+            }
+
+            if (name.masterId.equals("2")) {
+
+                itineraryImg.add(
+                    ItineraryImg(
+                        "2",
+                        "Hotel",
+                        getURLForResource(R.drawable.ic_ohterhotel)
+                    )
+                )
+            }
+
+            if (name.masterId.equals("3")) {
+
+                itineraryImg.add(
+                    ItineraryImg(
+                        "3",
+                        "Sightseeing",
+                        getURLForResource(R.drawable.ic_othersigghtsign)
+                    )
+                )
+            }
+            if (name.masterId.equals("4")) {
+
+                itineraryImg.add(
+                    ItineraryImg(
+                        "4",
+                        "Meals",
+                        getURLForResource(R.drawable.ic_othermeal)
+                    )
+                )
+            }
+            if (name.masterId.equals("5")) {
+
+                itineraryImg.add(
+                    ItineraryImg(
+                        "5",
+                        "Transportation",
+                        getURLForResource(R.drawable.ic_othertransport)
+                    )
+                )
+            }
+            if (name.masterId.equals("6")) {
+
+                itineraryImg.add(
+                    ItineraryImg(
+                        "6",
+                        "Wifi",
+                        getURLForResource(R.drawable.ic_otherservicewifi)
+                    )
+                )
+            }
+
+        }
+
+
+    }
+
 
     private fun setUpOtherData() {
 
@@ -565,17 +680,7 @@ class TourDetailsActivity : AppCompatActivity() {
                 PlaceSubItem(
                     "5",
                     "PRICE",
-                    tourprice
-                )
-            )
-        }
-
-        if (days.isNotEmpty()) {
-            otherData.add(
-                PlaceSubItem(
-                    "6",
-                    "DAYS",
-                    days
+                    currncyCode + " " + tourprice
                 )
             )
         }
@@ -583,12 +688,24 @@ class TourDetailsActivity : AppCompatActivity() {
         if (nights.isNotEmpty()) {
             otherData.add(
                 PlaceSubItem(
-                    "7",
+                    "6",
                     "NIGHTS",
                     nights
                 )
             )
         }
+
+        if (days.isNotEmpty()) {
+            otherData.add(
+                PlaceSubItem(
+                    "7",
+                    "DAYS",
+                    days
+                )
+            )
+        }
+
+
 
         if (tourType.isNotEmpty()) {
             otherData.add(
@@ -621,6 +738,66 @@ class TourDetailsActivity : AppCompatActivity() {
                 onLongClick
             )
         )
+    }
+
+    fun showLargeImage(
+        context: Context,
+        url: String? = null,
+        bitmap: Bitmap? = null,
+        type: String
+    ) {
+        val dialog = Dialog(context, android.R.style.Theme_Black_NoTitleBar_Fullscreen)
+        dialog.window!!.requestFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(context.layoutInflater.inflate(R.layout.layout_large_video, null))
+
+        val btnClose = dialog.findViewById<ImageButton>(R.id.btnIvClose)
+        val ivPreview = dialog.findViewById<ImageViewTouch>(R.id.iv_preview_image)
+        val youtubeView = dialog.findViewById<YouTubePlayerView>(R.id.youtubeView)
+        var youTubePlayer: YouTubePlayer? = null
+
+
+        if (bitmap != null) {
+            youtubeView.visibility = View.VISIBLE
+            ivPreview.imageBitmap = bitmap
+        }
+
+        if (type == "I" && bitmap == null) {
+            youtubeView.visibility = View.GONE
+            btnClose.visibility = View.VISIBLE
+            ivPreview.visibility = View.VISIBLE
+            Glide.with(context).load(url).into(ivPreview)
+        } else if (type == "V") {
+            ivPreview.visibility = View.GONE
+            youtubeView.visibility = View.VISIBLE
+            btnClose.visibility = View.VISIBLE
+            youtubeView.initialize({
+                it.addListener(object : AbstractYouTubePlayerListener() {
+                    override fun onReady() {
+                        youTubePlayer = it
+                        it.loadVideo(Common.getYoutubeId(url!!)!!, 0f)
+                    }
+                })
+            }, true)
+            youtubeView.enterFullScreen()
+            youtubeView.addFullScreenListener(object : YouTubePlayerFullScreenListener {
+                override fun onYouTubePlayerEnterFullScreen() {}
+
+                override fun onYouTubePlayerExitFullScreen() {
+                    dialog.dismiss()
+                }
+            })
+        }
+
+        btnClose.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.setOnDismissListener {
+            youTubePlayer?.pause()
+            youTubePlayer = null
+        }
+
+        dialog.show()
     }
 
 

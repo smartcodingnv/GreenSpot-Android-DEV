@@ -1,6 +1,7 @@
 package com.greenspot.app.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import kotlinx.android.synthetic.main.item_placeimg.view.*
 import java.net.MalformedURLException
 import java.net.URL
 import java.util.*
+import java.util.regex.Pattern
 
 class SliderVisiterPlaceAdapter(val context: FragmentActivity?) :
     RecyclerView.Adapter<SliderVisiterPlaceAdapter.FeatureViewHolder>() {
@@ -64,15 +66,17 @@ class SliderVisiterPlaceAdapter(val context: FragmentActivity?) :
 
 
             if (item.flag == 1) {
-                val query: String = URL(item.item_name).getQuery()
-                val param = query.split("&").toTypedArray()
+
                 var id: String? = null
-                for (row in param) {
-                    val param1 = row.split("=").toTypedArray()
-                    if (param1[0] == "v") {
-                        id = param1[1]
-                    }
+                val regex = "http(?:s)?:\\/\\/(?:m.)?(?:www\\.)?youtu(?:\\.be\\/|be\\.com\\/(?:watch\\?(?:feature=youtu.be\\&)?v=|v\\/|embed\\/|user\\/(?:[\\w#]+\\/)+))([^&#?\\n]+)";
+
+                val pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+                val matcher = pattern.matcher(item.item_name);
+                if (matcher.find()) {
+                    id = matcher.group(1);
+                    Log.e("youtubeid", " " + id)
                 }
+
 
                 val imgURl = "http://img.youtube.com/vi/" + id + "/0.jpg"
                 Glide.with(itemView)
