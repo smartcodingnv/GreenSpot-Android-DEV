@@ -141,14 +141,14 @@ class PlaceTabActivity : AppCompatActivity() {
 
     private fun tablayout() {
 
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("DESCRIPTION"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("AVAILABILITY"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("AMENITIES"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("STAY"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("PAYMENTS"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("OTHER"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("WRITE A REVIEW"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("CONTACT US"))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText(getString(R.string.tab_description)))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText(getString(R.string.tab_availability)))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText(getString(R.string.tab_amenities)))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText(getString(R.string.tab_stay)))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText(getString(R.string.tab_others)))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText(getString(R.string.tab_paymnet)))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText(getString(R.string.tab_write_a_review)))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText(getString(R.string.tab_contact_us)))
         tabLayout!!.tabGravity = TabLayout.GRAVITY_FILL
 
         Log.e("stay", " " + stayRecordsMy!!.size)

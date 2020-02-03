@@ -28,9 +28,38 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".activity.HotelBookingActivity"
+            android:label="@string/title_activity_hotel_booking"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activity.HotelRoomTabActivity"
+            android:label="@string/title_activity_hotel_room_tab"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.HotelRoomListActivity"
+            android:label="@string/title_activity_hotel_room_list"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.HotelTabActivity"
+            android:label="@string/title_activity_hotel_tab"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.HotelDetailsActivity"
+            android:label="@string/title_activity_hotel_details"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.HotelDateandGuestActivity"
+            android:label="@string/title_activity_hotel_dateand_guest"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.HotelListActivity"
+            android:label="@string/title_activity_hotel_list"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".activity.BookingInfoTabActivity"
             android:label="@string/title_activity_booking_info_tab"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.BookingInfoActvity"
             android:label="@string/title_activity_booking_info_actvity"
@@ -159,7 +188,6 @@
         <activity
             android:name=".activity.SplashActivity"
             android:screenOrientation="portrait"
-
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

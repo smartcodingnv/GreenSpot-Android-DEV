@@ -97,7 +97,7 @@ class ListPlaceActivity : AppCompatActivity(), ItemClickListener {
         countryID = helperlang!!.LoadStringPref(AppConfig.PREFERENCE.SELECTCONTRYID, "")
 
         txt_title.setText(
-            "Vacation In " + helperlang!!.LoadStringPref(
+           getString(R.string.res_vacationin) +" " + helperlang!!.LoadStringPref(
                 AppConfig.PREFERENCE.SELECTCONTRY,
                 ""
             )
@@ -165,8 +165,7 @@ class ListPlaceActivity : AppCompatActivity(), ItemClickListener {
             checkfilterData = data?.getStringExtra(AppConfig.EXTRA.CHECKFILTERDATA)!!
             priceRangeMin = data.getStringExtra(AppConfig.EXTRA.FILTERPRICEMIN)!!
             priceRangeMax = data.getStringExtra(AppConfig.EXTRA.FILTERPRICEMAX)!!
-            meMap =
-                data.getSerializableExtra(AppConfig.EXTRA.FILTERCHECKDATA) as HashMap<String, String>
+            meMap = data.getSerializableExtra(AppConfig.EXTRA.FILTERCHECKDATA) as HashMap<String, String>
 
             pageNumber = 1
             previousTotal = 0

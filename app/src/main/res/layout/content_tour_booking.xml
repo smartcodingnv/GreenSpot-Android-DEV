@@ -101,7 +101,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:fontFamily="@font/open_sans_semibold"
-            android:text="Schedule"
+            android:text="@string/res_schedule"
             android:textColor="@color/black"
             android:textSize="@dimen/_14ssp" />
 
@@ -111,35 +111,48 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_5sdp"
             android:visibility="visible">
 
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:layout_weight="1"
                 android:fontFamily="@font/open_sans_semibold"
-                android:text="Date"
+                android:text="@string/res_date"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/_14ssp" />
 
             <TextView
-                android:id="@+id/txt_date"
-                android:layout_width="0dp"
+                android:id="@+id/txt_month"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginRight="@dimen/_30sdp"
-                android:layout_weight="1"
                 android:drawableRight="@drawable/ic_down"
                 android:drawablePadding="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_35sdp"
                 android:fontFamily="@font/open_sans_semibold"
                 android:gravity="end|center"
-                android:paddingLeft="@dimen/_10sdp"
+                android:hint="@string/res_month"
+                android:longClickable="false"
+                android:paddingLeft="@dimen/_5sdp"
+                android:textColor="@color/green"
+                android:textSize="@dimen/_13ssp" />
 
-                android:textColor="@color/gray"
-                android:textSize="@dimen/_14ssp" />
+            <TextView
+                android:id="@+id/txt_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:drawableRight="@drawable/ic_down"
+                android:drawablePadding="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:fontFamily="@font/open_sans_semibold"
+                android:gravity="end|center"
+                android:longClickable="false"
+                android:hint="@string/res_date"
+                android:paddingLeft="@dimen/_5sdp"
+                android:textColor="@color/green"
+                android:textSize="@dimen/_13ssp" />
         </LinearLayout>
 
 
@@ -199,7 +212,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:fontFamily="@font/open_sans_semibold"
-            android:text="Person"
+            android:text="@string/str_person"
             android:textColor="@color/black"
             android:textSize="@dimen/_14ssp" />
 
@@ -219,7 +232,7 @@
                 android:layout_marginRight="@dimen/_10sdp"
                 android:layout_weight="1"
                 android:fontFamily="@font/open_sans_semibold"
-                android:text="Adult"
+                android:text="@string/txt_adults"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/_14ssp" />
 
@@ -276,7 +289,7 @@
                 android:layout_marginRight="@dimen/_10sdp"
                 android:layout_weight="1"
                 android:fontFamily="@font/open_sans_semibold"
-                android:text="Children"
+                android:text="@string/txt_child"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/_14ssp" />
 

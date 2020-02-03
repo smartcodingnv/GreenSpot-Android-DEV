@@ -1,6 +1,7 @@
 package com.greenspot.app.activity
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
@@ -9,10 +10,13 @@ import com.google.android.material.tabs.TabLayout
 import com.google.gson.Gson
 import com.greenspot.app.R
 import com.greenspot.app.adapter.BookinginfoEventAdapter
+import com.greenspot.app.adapter.BookinginfoTabHotelAdapter
 import com.greenspot.app.adapter.BookinginfoTabTourAdapter
 import com.greenspot.app.adapter.BookinginfoTabVacationAdapter
 import com.greenspot.app.responce.bookinginfo.ResponceBookinginfo
 import com.greenspot.app.responce.bookinginfo.TourAmenitiesItem
+import com.greenspot.app.responce.bookinginfohotel.AmenitiesItem
+import com.greenspot.app.responce.bookinginfohotel.ResponceBookinginfoHotel
 import com.greenspot.app.utils.*
 import kotlinx.android.synthetic.main.activity_booking_info_tab.*
 import java.util.ArrayList
@@ -20,6 +24,7 @@ import java.util.ArrayList
 class BookingInfoTabActivity : AppCompatActivity() {
 
     private var amenitiesRecordsMy: ArrayList<TourAmenitiesItem>? = ArrayList()
+    private var hotelamenitiesRecordsMy: ArrayList<AmenitiesItem>? = ArrayList()
 
     private var bookingType: String =""
     var tabLayout: TabLayout? = null
@@ -60,6 +65,7 @@ class BookingInfoTabActivity : AppCompatActivity() {
 
         txt_title.text = intent.getStringExtra(AppConfig.EXTRA.TOURTITLE)
 
+        Log.e("bookinginfo"," "+bookingType)
 
 //        val gson = Gson()
 //        val tourBookingifo =
@@ -82,6 +88,9 @@ class BookingInfoTabActivity : AppCompatActivity() {
 
             vacationTablayout()
 
+        }else if(bookingType.equals("Hotel")){
+
+            hotelTablayout()
         }
 
 
@@ -106,11 +115,11 @@ class BookingInfoTabActivity : AppCompatActivity() {
         }
 
 
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("TOUR DETAILS"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("ALL PERSONS"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("ITINERARY"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("INCLUDED FACILITIES"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("CONTACT US"))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText(getString(R.string.res_tour_details)))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText(getString(R.string.tab_allperson)))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText(getString(R.string.res_itinerary)))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText(getString(R.string.res_included_facilities)))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText(getString(R.string.tab_contact_us)))
 
         tabLayout!!.tabGravity = TabLayout.GRAVITY_FILL
 
@@ -146,9 +155,9 @@ class BookingInfoTabActivity : AppCompatActivity() {
 
     private fun eventTablayout() {
 
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("EVENT DETAILS"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("INCLUDED FACILITIES"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("CONTACT US"))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText(getString(R.string.res_event_details)))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText(getString(R.string.res_included_facilities)))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText(getString(R.string.tab_contact_us)))
         tabLayout!!.tabGravity = TabLayout.GRAVITY_FILL
 
 
@@ -178,14 +187,61 @@ class BookingInfoTabActivity : AppCompatActivity() {
 
     private fun vacationTablayout() {
 
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("VACATION DETAILS"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("INCLUDED FACILITIES"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("STAY"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("CONTACT US"))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText(getString(R.string.res_vacation_details)))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText(getString(R.string.res_included_facilities)))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText(getString(R.string.tab_stay)))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText(getString(R.string.tab_contact_us)))
         tabLayout!!.tabGravity = TabLayout.GRAVITY_FILL
 
 
         val adapter = BookinginfoTabVacationAdapter(this, supportFragmentManager, tabLayout!!.tabCount)
+        viewPager!!.adapter = adapter
+
+        viewPager!!.setOnTouchListener(View.OnTouchListener { v, event -> true })
+        viewPager!!.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
+
+        tabLayout!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                viewPager!!.currentItem = tab.position
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab) {
+
+            }
+        })
+
+        tabLayout!!.getTabAt(checkTab)!!.select()
+    }
+
+    private fun hotelTablayout() {
+
+//        val gson = Gson()
+//        val bookinginfo = gson.fromJson(
+//            helper!!.LoadStringPref(AppConfig.PREFERENCE.HOTELBOOKINGINFO, ""),
+//            ResponceBookinginfoHotel::class.java
+//        )
+
+//        hotelamenitiesRecordsMy!!.clear()
+//        for (aminate in bookinginfo.data.amenities!!) {
+//            if (aminate.value != "") {
+//                hotelamenitiesRecordsMy!!.add(aminate)
+//            }
+//
+//        }
+
+        tabLayout!!.addTab(tabLayout!!.newTab().setText(getString(R.string.res_hoteldetails)))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText(getString(R.string.res_rooms)))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText(getString(R.string.res_included_facilities)))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText(getString(R.string.res_policies)))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText(getString(R.string.tab_contact_us)))
+        tabLayout!!.tabGravity = TabLayout.GRAVITY_FILL
+
+
+        val adapter = BookinginfoTabHotelAdapter(this, supportFragmentManager, tabLayout!!.tabCount)
         viewPager!!.adapter = adapter
 
         viewPager!!.setOnTouchListener(View.OnTouchListener { v, event -> true })

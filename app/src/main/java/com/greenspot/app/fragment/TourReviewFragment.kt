@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RatingBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AlertDialog
@@ -60,6 +61,7 @@ class TourReviewFragment : Fragment() {
     private var countryID: String? = ""
     private var langCode: String? = ""
     private var mLayoutManager: LinearLayoutManager? = null
+    private var txt_guestreview: TextView? = null
 
     private val guestreviewData: LinkedList<PlaceReivewRecordsItem> =
         LinkedList<PlaceReivewRecordsItem>()
@@ -94,7 +96,7 @@ class TourReviewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         mView = view
 
-
+        txt_guestreview = mView.findViewById(R.id.txt_guestreview)
         placeID = helper!!.LoadStringPref(AppConfig.PREFERENCE.PLACEID, "")!!
         serviceProviderid = helper!!.LoadStringPref(AppConfig.PREFERENCE.SERVICEPROVIDERID, "")!!
         token = "Bearer " + helper!!.LoadStringPref(AppConfig.PREFERENCE.AUTHTOKEN, "")
@@ -257,11 +259,11 @@ class TourReviewFragment : Fragment() {
 
     private fun alertLogin() {
         val builder1 = AlertDialog.Builder(this.activity!!)
-        builder1.setMessage("Please login to use submit a review.")
+        builder1.setMessage(getString(R.string.alert_reviewlogin))
         builder1.setCancelable(true)
 
         builder1.setPositiveButton(
-            "OK",
+            getString(R.string.res_ok),
             DialogInterface.OnClickListener { dialog, id ->
                 dialog.cancel()
                 helper!!.clearAllPrefs()
@@ -273,7 +275,7 @@ class TourReviewFragment : Fragment() {
             })
 
         builder1.setNegativeButton(
-            "CANCEL",
+            getString(R.string.res_cancel),
             DialogInterface.OnClickListener { dialog, id -> dialog.cancel() })
 
         val alert11 = builder1.create()
@@ -336,9 +338,9 @@ class TourReviewFragment : Fragment() {
                         guestreviewData.addAll(reivewData.data.records!!)
 
                         if(guestreviewData.size>=0){
-                            txt_guestreview.visibility = View.VISIBLE
+                            txt_guestreview!!.visibility = View.VISIBLE
                         }else{
-                            txt_guestreview.visibility = View.GONE
+                            txt_guestreview!!.visibility = View.GONE
                         }
                         guestReviewAdapter.notifyDataSetChanged()
 

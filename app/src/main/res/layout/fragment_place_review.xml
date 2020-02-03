@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_10sdp"
             android:fontFamily="@font/open_sans_semibold"
-            android:text="Ratings &amp; Reviews"
+            android:text="@string/res_ratings_amp_reviews"
             android:textColor="@color/black"
             android:textSize="@dimen/_13ssp" />
 
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_10sdp"
             android:fontFamily="@font/open_sans_semibold"
-            android:text="Give Star Rating"
+            android:text="@string/res_give_star_rating"
             android:textColor="@color/black"
             android:textSize="@dimen/_13ssp" />
 
@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_10sdp"
             android:fontFamily="@font/open_sans_semibold"
-            android:text="Your Review"
+            android:text="@string/res_your_review"
             android:textColor="@color/black"
             android:textSize="@dimen/_13ssp" />
 
@@ -88,7 +88,7 @@
             android:background="@drawable/et_address"
             android:fontFamily="@font/open_sans"
             android:gravity="start"
-            android:hint="Enter your review (maximum 200 characters)"
+            android:hint="@string/res_reivewhint"
             android:inputType="textMultiLine"
             android:maxLines="8"
             android:maxLength="200"
@@ -105,7 +105,7 @@
             android:layout_marginRight="@dimen/_10sdp"
             android:background="@drawable/btn_fillgreen"
             android:fontFamily="@font/open_sans_semibold"
-            android:text="Submit Review"
+            android:text="@string/res_submit_review"
             android:textColor="@color/white" />
 
         <TextView

@@ -142,7 +142,7 @@ data class EventData(
     @SerializedName("final_price")
     val finalPrice: Int = 0,
     @SerializedName("price")
-    val price: Int = 0,
+    val price: Double = 0.0,
     @SerializedName("alias")
     val alias: String = "",
     @SerializedName("currency")

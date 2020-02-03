@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:scrollbars="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".activity.HotelDetailsActivity"
+    tools:showIn="@layout/activity_hotel_details">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_180sdp">
+
+            <ImageView
+                android:id="@+id/img_hotel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
+
+
+            <ImageView
+                android:id="@+id/img_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_youtube_red"
+                android:scaleType="centerCrop"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/lay_prev"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:background="@drawable/txt_curvblack"
+                    android:clickable="true"
+                    android:duplicateParentState="true"
+                    android:gravity="center">
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_back"
+                        android:backgroundTint="@color/green"
+                        android:clickable="false">
+
+                    </ImageButton>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end">
+
+                    <LinearLayout
+                        android:id="@+id/lay_next"
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_marginRight="@dimen/_5sdp"
+                        android:background="@drawable/txt_curvblack"
+                        android:clickable="true"
+                        android:duplicateParentState="true"
+                        android:gravity="center">
+
+                        <ImageButton
+                            android:id="@+id/ib_next"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ic_next"
+                            android:backgroundTint="@color/green"
+                            android:clickable="false" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </FrameLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:orientation="horizontal">
+
+            <!--   <LinearLayout
+                   android:id="@+id/lay_prev"
+                   android:layout_width="0dp"
+                   android:layout_height="match_parent"
+                   android:layout_weight="0.7"
+                   android:background="@color/yello"
+                   android:gravity="center">
+
+                   <ImageButton
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:background="@drawable/ic_back"
+                       android:backgroundTint="@color/white">
+
+                   </ImageButton>
+
+               </LinearLayout>-->
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_hotelplaceimg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/_3sdp"
+                android:layout_marginRight="@dimen/_3sdp"
+                android:scrollbars="horizontal">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+        </LinearLayout>
+
+
+
+        <TextView
+            android:id="@+id/txt_tourpackgname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:paddingLeft="@dimen/_10sdp"
+            android:text="Ahmdebad to Goa"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/txt_tourlocation"
+                android:layout_width="@dimen/_180sdp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:paddingLeft="@dimen/_10sdp"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_12ssp"
+                android:visibility="visible"
+                tools:text="Motera stadium, Ahmedabad, India, 364001." />
+
+
+            <TextView
+                android:id="@+id/txt_viewonmap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/drawable_place"
+                android:drawablePadding="@dimen/_3sdp"
+                android:fontFamily="@font/open_sans_semibold"
+                android:paddingLeft="@dimen/_5sdp"
+                android:text="@string/view_on_map"
+                android:textColor="@color/green"
+                android:textSize="@dimen/_12ssp"
+                android:visibility="visible" />
+
+
+        </LinearLayout>
+
+
+
+
+        <!--https://stackoverflow.com/questions/5800657/how-to-create-custom-ratings-bar-in-android-->
+
+        <RatingBar
+            android:id="@+id/rt_hoteldetails"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:numStars="5"
+            android:progressBackgroundTint="@color/raringnoraml"
+            android:rating="3"
+            android:theme="@style/RatingBar">
+
+        </RatingBar>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_otherservicetourdetailsimg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:scrollbars="vertical"
+            android:visibility="visible"
+            app:reverseLayout="true" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/_10sdp">
+
+
+            <TextView
+                android:id="@+id/txt_hoverview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_3sdp"
+                android:drawableRight="@drawable/ic_rightgreen"
+                android:fontFamily="@font/open_sans_semibold"
+                android:text="@string/tab_overview"
+                android:textAllCaps="true"
+                android:textColor="@color/green"
+                android:textSize="@dimen/_12ssp" />
+
+            <View
+                android:id="@+id/view_hoverview"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/black" />
+
+
+            <TextView
+                android:id="@+id/txt_hamenites"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_3sdp"
+                android:drawableRight="@drawable/ic_rightgreen"
+                android:fontFamily="@font/open_sans_semibold"
+                android:text="@string/tab_amenities"
+                android:textAllCaps="true"
+                android:textColor="@color/green"
+                android:textSize="@dimen/_12ssp" />
+
+            <View
+                android:id="@+id/view_hamenites"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/black" />
+
+
+            <TextView
+                android:id="@+id/txt_hother"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_3sdp"
+                android:drawableRight="@drawable/ic_rightgreen"
+                android:fontFamily="@font/open_sans_semibold"
+                android:text="@string/res_policies"
+                android:textAllCaps="true"
+                android:textColor="@color/green"
+                android:textSize="@dimen/_12ssp" />
+
+            <View
+                android:id="@+id/view_hother"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/black" />
+
+
+            <TextView
+                android:id="@+id/txt_hreview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_3sdp"
+                android:drawableRight="@drawable/ic_rightgreen"
+                android:fontFamily="@font/open_sans_semibold"
+                android:text="@string/tab_write_a_review"
+                android:textAllCaps="true"
+                android:textColor="@color/green"
+                android:textSize="@dimen/_12ssp" />
+
+            <View
+                android:id="@+id/view_hreivew"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+
+                android:background="@color/black" />
+
+            <TextView
+                android:id="@+id/txt_hcontactus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_3sdp"
+                android:drawableRight="@drawable/ic_rightgreen"
+                android:fontFamily="@font/open_sans_semibold"
+                android:text="@string/tab_contact_us"
+                android:textAllCaps="true"
+                android:textColor="@color/green"
+                android:textSize="@dimen/_12ssp" />
+
+            <View
+                android:id="@+id/view_hcontactus"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/black" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/txt_populartour"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:paddingLeft="@dimen/_10sdp"
+            android:text="@string/res_near_by_hotels"
+            android:textColor="@color/black"
+            android:visibility="visible"
+            android:textSize="@dimen/_14ssp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_popuplarhotel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:visibility="visible"
+            android:scrollbars="horizontal">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

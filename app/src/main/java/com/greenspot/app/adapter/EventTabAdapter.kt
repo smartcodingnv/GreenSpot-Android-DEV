@@ -25,11 +25,12 @@ class EventTabAdapter(
             }
             2 -> {
                 // val movieFragment = MovieFragment()
-                return PlaceOthersFragment().newInstance(3)
+                return EventReviewFragment().newInstance()
+
             }
             3 -> {
                 // val movieFragment = MovieFragment()
-                return EventReviewFragment().newInstance()
+                return PlaceOthersFragment().newInstance(3)
 
             }
 

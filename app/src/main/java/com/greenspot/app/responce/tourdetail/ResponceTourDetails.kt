@@ -9,6 +9,7 @@ data class AmenitiesItem(@SerializedName("id")
                          val title: String = "",
                          @SerializedName("value")
                          val value: String = "")
+
 {
     private var expanded: Boolean = false
 
@@ -20,12 +21,18 @@ data class AmenitiesItem(@SerializedName("id")
         return expanded
     }
 }
-
-
 data class Others(@SerializedName("important_note")
                   val importantNote: String = "",
                   @SerializedName("term_and_condition")
                   val termAndCondition: String = "")
+
+
+data class BookingDatesItem(@SerializedName("dates")
+                            val dates: List<String>?,
+                            @SerializedName("id")
+                            val id: Int = 0,
+                            @SerializedName("title")
+                            val title: String = "")
 
 
 data class IncludedInTourPackageItem(@SerializedName("master_id")
@@ -49,7 +56,7 @@ data class PopularToursItem(@SerializedName("master_id")
 data class MainRecords(@SerializedName("tour_category")
                        val tourCategory: String = "",
                        @SerializedName("avg_reviews")
-                       val avgReviews: Double = 0.0,
+                       val avgReviews: Int = 0,
                        @SerializedName("included_in_tour_package")
                        val includedInTourPackage: List<IncludedInTourPackageItem>?,
                        @SerializedName("price")
@@ -94,6 +101,8 @@ data class Ovierview(@SerializedName("ovierview")
 
 data class Data(@SerializedName("amenities")
                 val amenities: List<AmenitiesItem>?,
+                @SerializedName("booking_dates")
+                val bookingDates: List<BookingDatesItem>?,
                 @SerializedName("main_records")
                 val mainRecords: MainRecords,
                 @SerializedName("popular_tours")

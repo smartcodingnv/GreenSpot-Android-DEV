@@ -4,8 +4,9 @@ class AppConfig {
 
     object URL {
 
+//        val BASE_URL = "https://promo.visitgreenspot.com/api/"
         val BASE_URL = "http://greenspot.hvjstest.com/api/"
-        //        val BASE_URL = "http://192.168.0.103/ldorado/api/"
+//         val BASE_URL = "http://192.168.0.109:8080/LDorado/api/"
         val PAYMENT_URL = "https://api.mollie.com/v2/"
         val BASE_IMAGEURL = "http://159.203.105.17"
 
@@ -38,6 +39,10 @@ class AppConfig {
         const val URL_BOOKINGDETAILS = "bookings/detail"
         const val URL_EVENTPAYMENTMOLIE = "events/payment-mollie"
         const val URL_RECREATIONPAYMENTMOLIE = "recreations/payment-mollie"
+        const val URL_HOTELLIST = "hotels/list"
+        const val URL_HOTELDETAILS = "hotels/detail"
+        const val URL_HOTELREVIEWLIST = "hotels/review-list"
+        const val URL_HOTELPAYMENTMOLLIE = "hotels/payment-mollie"
 
 
         val SUCCESS = 200
@@ -60,7 +65,7 @@ class AppConfig {
         val USERNAME = "username"
         val SELECTCONTRY = "selectcontry"
         val SELECTCONTRYID = "selectcontryid"
-        val SELECTCURRENCYID = "selectcurrencyid"
+
         val SELECTCURRENCYNAME = "selectcurrencyname"
         val SELECTLANGCODE = "selectlancode"
         val SELECTLANGNAME = "selectlanname"
@@ -79,6 +84,7 @@ class AppConfig {
         val EVENTID = "eventID"
         val EVENTDETAILSRESPONCE = "eventdetailsresponce"
         val TOURDETAILSRESPONCE = "tourdetailsresponce"
+        val HOTELDETAILSRESPONCE = "hoteldetailsresponce"
 
 
         val TOUR_START_PRICE = "tourstartprice"
@@ -124,11 +130,14 @@ class AppConfig {
         val weekend_night_pass_child_nop = "weekend_night_pass_child_nop"
 
 
+        val SELECTTOURMONTH = "selecttourmonth"
+        val SELECTTOURDATE = "selecttourdate"
 
 
 
 
         val PERSONDETAILS = "persondetails"
+        val FINALROOMDATA = "finalroomdata"
         val FINALEURPRICE = "finaleurprice"
         val TRANSACTIONID = "transactionid"
 
@@ -139,6 +148,14 @@ class AppConfig {
         val BOOKINGINFO = "ResponceTourBookinginfo"
         val EVENTBOOKINGINFO = "ResponceBookinginfoEvent"
         val VACATIONBOOKINGINFO = "ResponceBookinginforvcation"
+        val HOTELBOOKINGINFO = "ResponceBookinginforHotel"
+
+        val ROOMMASTERID = "roommasterid"
+        val CHECKINDATE = "checkindate"
+        val CHECKOUTDATE = "checkoutdate"
+        val HOTEL_FINAL_PRICE = "hotelfinalprice"
+        val HOTEL_NO_OF_ROOM = "hotelnoofroom"
+
 
 
     }
@@ -146,12 +163,10 @@ class AppConfig {
     object BUNDLE {
 
         val CHECKDISCRIPTION = "checkdiscription" // 1-place , = 2- tour, 3-contact us
-        val CHECKANIMATIES =
-            "checkanimaties" // 1-place , = 2- tour, 3-contact us , 4 - bookinfo touramintes, 5- bookinfo events amintes
-        val CHECKAOTHER =
-            "checkother" //1 = placeother , 2= event contact us , 3-tourcontact us , 4- bookinginfo , 5 - eventbooking enfo
+        val CHECKANIMATIES = "checkanimaties" // 1-place , = 2- tour, 3-contact us , 4 - bookinfo touramintes, 5- bookinfo events amintes
+        val CHECKAOTHER = "checkother" //1 = placeother , 2= event contact us , 3-tourcontact us , 4- bookinginfo , 5 - eventbooking enfo
         val CHECKAITINERARY = "checkitinerary" //1 = tourdata iteineary , 2= booking iteinerary
-        val CHECKREIVEW = "checkreivew" //1 = placeother , 2= event contact us
+        val CHECKTOUROTHER = "checktourother" //1 = TOUROTHER , 2= HotelPolicy
         val RING = "Ring"
         val END = "end"
         val CALL_END = "call_end"
@@ -180,11 +195,26 @@ class AppConfig {
         val TOURID = "tourid"
         val TOURNAME = "tourname"
 
+        val HOTELID = "hotelid"
+        val HOTELNAME = "hotelname"
+
+        val CHECKDATEGUESTSCREEN = "checkdateguestscreen"
+        val CHECKDATEGUEST = "checkdateguest"
+        val CHECKINDATE = "checkingdate"
+        val CHECKOUTDATE = "checkoutgdate"
+        val TOTALROOM = "totalroom"
+        val ROOMTOTALGUEST = "roomtotalguest"
+        val ROOMGUESTRESPONCE = "roomguestresponce"
+        val SELECTROOMLIST = "selectroomlist"
+        val HOTELROOMPRICE = "hotelroomprice"
+        val ROOMDATA = "roomdata"
+
         val TOTALGUEST = "totalguest"
         val TYPE = "type"  // passed in booking details api
         val BOOKINGID = "bookingid"
         val BOOKINGTYPE = "bookingtype"   //tour, event , recreation
         val CHECKBOOKINGINFO = "checkbookinginfo"
+        val ROOMTABFLAG = "roomtabflag" //1 list room , 2 bookroomlist
 
         val TOURTITLE = "toutTitle"
 

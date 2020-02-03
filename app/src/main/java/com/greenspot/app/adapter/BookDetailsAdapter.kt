@@ -245,7 +245,7 @@ class BookDetailsAdapter(val context: FragmentActivity?) :
 
             })
             val arrayForSpinner =
-                arrayOf("Male", "Female")
+                arrayOf(context.getString(R.string.res_male), context.getString(R.string.res_female))
             val adapter: ArrayAdapter<String> =
                 ArrayAdapter<String>(context, R.layout.spinner_item, arrayForSpinner)
             spGender.setAdapter(adapter);

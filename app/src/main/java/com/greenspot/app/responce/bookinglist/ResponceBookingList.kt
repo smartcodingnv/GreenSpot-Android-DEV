@@ -15,6 +15,8 @@ data class RecordsItem(@SerializedName("master_id")
                        val personFullName: String = "",
                        @SerializedName("no_of_person")
                        val noOfPerson: String = "",
+                       @SerializedName("no_of_rooms")
+                       val noOfRooms: String = "",
                        @SerializedName("transaction_at")
                        val transactionAt: String = "",
                        @SerializedName("title")

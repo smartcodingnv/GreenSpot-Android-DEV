@@ -184,7 +184,7 @@
                 android:drawablePadding="@dimen/_3sdp"
                 android:fontFamily="@font/open_sans_semibold"
                 android:paddingLeft="@dimen/_5sdp"
-                android:text="View On Map"
+                android:text="@string/view_on_map"
                 android:textColor="@color/green"
                 android:textSize="@dimen/_12ssp"
                 android:visibility="visible" />
@@ -209,9 +209,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
-            android:ellipsize="end"
             android:fontFamily="@font/open_sans"
-            android:maxLines="4"
             android:paddingLeft="@dimen/_10sdp"
             android:textColor="@color/black"
             android:textSize="@dimen/_11ssp"
@@ -359,7 +357,7 @@
                 android:drawableRight="@drawable/ic_rightgreen"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/tab_description"
-
+                android:textAllCaps="true"
                 android:layout_marginBottom="@dimen/_3sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:textColor="@color/green"
@@ -380,6 +378,7 @@
                 android:drawableRight="@drawable/ic_rightgreen"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/tab_availability"
+                android:textAllCaps="true"
                 android:textColor="@color/green"
                 android:textSize="@dimen/_12ssp" />
 
@@ -397,6 +396,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:drawableRight="@drawable/ic_rightgreen"
                 android:fontFamily="@font/open_sans_semibold"
+                android:textAllCaps="true"
                 android:text="@string/tab_amenities"
                 android:textColor="@color/green"
                 android:textSize="@dimen/_12ssp" />
@@ -416,6 +416,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:drawableRight="@drawable/ic_rightgreen"
                 android:fontFamily="@font/open_sans_semibold"
+                android:textAllCaps="true"
                 android:text="@string/tab_stay"
                 android:textColor="@color/green"
                 android:textSize="@dimen/_12ssp" />
@@ -434,6 +435,7 @@
                 android:layout_marginBottom="@dimen/_3sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:drawableRight="@drawable/ic_rightgreen"
+                android:textAllCaps="true"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/tab_others"
                 android:textColor="@color/green"
@@ -443,7 +445,6 @@
                 android:id="@+id/view_pother"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-
                 android:background="@color/black" />
 
             <TextView
@@ -452,6 +453,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_3sdp"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:textAllCaps="true"
                 android:drawableRight="@drawable/ic_rightgreen"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/tab_paymnet"
@@ -469,6 +471,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_3sdp"
+                android:textAllCaps="true"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:drawableRight="@drawable/ic_rightgreen"
                 android:fontFamily="@font/open_sans_semibold"
@@ -489,6 +492,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_3sdp"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:textAllCaps="true"
                 android:drawableRight="@drawable/ic_rightgreen"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/tab_contact_us"

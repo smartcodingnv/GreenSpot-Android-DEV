@@ -64,6 +64,7 @@
                     android:layout_marginRight="@dimen/_5sdp"
                     android:layout_weight="3"
                     android:background="@drawable/btn_fillgreen"
+                    android:textAllCaps="true"
                     android:fontFamily="@font/open_sans_semibold"
                     android:padding="@dimen/_10sdp"
                     android:text="@string/res_clear"
@@ -79,7 +80,8 @@
                     android:background="@drawable/btn_fillgreen"
                     android:fontFamily="@font/open_sans_semibold"
                     android:padding="@dimen/_10sdp"
-                    android:text="Apply"
+                    android:textAllCaps="true"
+                    android:text="@string/res_apply"
                     android:textColor="@color/white" />
 
 

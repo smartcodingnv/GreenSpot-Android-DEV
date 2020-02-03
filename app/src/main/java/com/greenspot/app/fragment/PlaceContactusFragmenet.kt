@@ -124,7 +124,7 @@ class PlaceContactusFragmenet : Fragment() {
             eventcontactusdata.add(
                 PlaceSubItem(
                     "1",
-                    "Address :",
+                    getString(R.string.item_address)+" :",
                     addrss
                 )
             )
@@ -134,7 +134,7 @@ class PlaceContactusFragmenet : Fragment() {
             eventcontactusdata.add(
                 PlaceSubItem(
                     "4",
-                    "Phone :",
+                    getString(R.string.item_phoneno)+" :",
                     phone
                 )
             )
@@ -143,7 +143,7 @@ class PlaceContactusFragmenet : Fragment() {
             eventcontactusdata.add(
                 PlaceSubItem(
                     "4",
-                    "Email :",
+                    getString(R.string.res_email)+" :",
                     email
                 )
             )

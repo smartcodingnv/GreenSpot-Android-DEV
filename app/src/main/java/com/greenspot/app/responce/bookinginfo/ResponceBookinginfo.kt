@@ -86,7 +86,7 @@ data class TourData(
     @SerializedName("important_note")
     val importantNote: String = "",
     @SerializedName("price")
-    val price: Int = 0,
+    val price: Double = 0.0,
     @SerializedName("contact_detail_mobile")
     val contactDetailMobile: String = "",
     @SerializedName("tour_type")

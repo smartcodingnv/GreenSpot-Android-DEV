@@ -99,7 +99,7 @@ class TourListActivity : AppCompatActivity(), ItemClickListener {
 
 
         txt_title.setText(
-            "Tours in " + helperlang!!.LoadStringPref(
+            getString(R.string.txt_toursin)+" " + helperlang!!.LoadStringPref(
                 AppConfig.PREFERENCE.SELECTCONTRY,
                 ""
             )
@@ -635,130 +635,6 @@ class TourListActivity : AppCompatActivity(), ItemClickListener {
     }
 
 
-//    private fun setSortData() {
-//        sortData.add(
-//            PlaceFiltermenuItem(
-//                "1",
-//                "Name A-Z",
-//                false
-//            )
-//        )
-//        sortData.add(
-//            PlaceFiltermenuItem(
-//                "2",
-//                "Name Z-A",
-//                false
-//            )
-//        )
-//        sortData.add(
-//            PlaceFiltermenuItem(
-//                "3",
-//                "Rate 1-5",
-//                false
-//            )
-//        )
-//        sortData.add(
-//            PlaceFiltermenuItem(
-//                "4",
-//                "Rate 5-1",
-//                false
-//            )
-//        )
-//
-//    }
-//
-//    private fun setUpTourData() {
-//        tourList.add(
-//            TourList(
-//                "1",
-//                "Ahemdabad to Dubai",
-//                "Burj Khalifa, Palm Jumeirah, Burj Al Arab.",
-//                itineraryImg
-//            )
-//        )
-//        tourList.add(
-//            TourList(
-//                "2",
-//                "Ahemdabad to Goa",
-//                "Baga Beach, Grand Island, Fort Aguada",
-//                itineraryImg2
-//            )
-//        )
-//        tourList.add(
-//            TourList(
-//                "3",
-//                "Ahemdabad to Dubai",
-//                "Burj Khalifa, Palm Jumeirah, Burj Al Arab.",
-//                itineraryImg
-//            )
-//        )
-//        tourList.add(
-//            TourList(
-//                "4",
-//                "Ahemdabad to Goa",
-//                "Baga Beach, Grand Island, Fort Aguada",
-//                itineraryImg
-//            )
-//        )
-//        tourList.add(
-//            TourList(
-//                "5",
-//                "Ahemdabad to Dubai",
-//                "Burj Khalifa, Palm Jumeirah, Burj Al Arab.",
-//                itineraryImg2
-//            )
-//        )
-//    }
-//
-//
-//    private fun setSubImgData() {
-//        itineraryImg.add(
-//            ItineraryImg(
-//                "1",
-//                getURLForResource(R.drawable.ic_otherservicewifi)
-//
-//
-//            )
-//        )
-//        itineraryImg.add(
-//            ItineraryImg(
-//                "2",
-//                getURLForResource(R.drawable.ic_otherflight)
-//            )
-//        )
-//
-//        itineraryImg.add(
-//            ItineraryImg(
-//                "2",
-//                getURLForResource(R.drawable.ic_othermeal)
-//            )
-//        )
-//    }
-//
-//    private fun setSubImgData2() {
-//        itineraryImg2.add(
-//            ItineraryImg(
-//                "1",
-//                getURLForResource(R.drawable.ic_otherflight)
-//
-//
-//            )
-//        )
-//        itineraryImg2.add(
-//            ItineraryImg(
-//                "2",
-//                getURLForResource(R.drawable.ic_othersigghtsign)
-//            )
-//        )
-//
-//        itineraryImg2.add(
-//            ItineraryImg(
-//                "2",
-//                getURLForResource(R.drawable.ic_ohterhotel)
-//            )
-//        )
-//    }
-//
 
     fun getURLForResource(resourceId: Int): String {
         //use BuildConfig.APPLICATION_ID instead of R.class.getPackage().getName() if both are not same

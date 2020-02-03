@@ -29,7 +29,7 @@ class TourTabAdapter(
             }
             3 -> {
                 // val movieFragment = MovieFragment()
-                return TourOthersFragment().newInstance()
+                return TourOthersFragment().newInstance(1)
             }
             4 -> {
                 // val movieFragment = MovieFragment()

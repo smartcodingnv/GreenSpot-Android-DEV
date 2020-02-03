@@ -61,7 +61,7 @@
                 android:layout_marginRight="@dimen/_10sdp"
                 android:layout_weight="1"
                 android:fontFamily="@font/open_sans_semibold"
-                android:text="Date"
+                android:text="@string/res_date"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/_14ssp" />
 

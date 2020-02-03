@@ -8,6 +8,7 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
+import com.greenspot.app.MyApp
 import com.greenspot.app.R
 import com.greenspot.app.adapter.LanguageAdapter
 import com.greenspot.app.interfaces.ItemClickListener
@@ -36,6 +37,8 @@ class MainActivity : AppCompatActivity(), ItemClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        MyApp.updateLanguage(this)
+
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
@@ -47,6 +50,18 @@ class MainActivity : AppCompatActivity(), ItemClickListener {
             finish()
             return
         }
+
+        if(PreferenceHelper(this, AppConfig.PREFERENCE.PREF_FILE_LANG).LoadStringPref(AppConfig.PREFERENCE.SELECTLANGCODE, "")!!.isEmpty()){
+            MyApp.Companion.updateLanguage(this@MainActivity)
+            val intent = Intent(this@MainActivity, MainActivity::class.java)
+
+
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
+        }
+
         setContentView(R.layout.activity_main)
 
 
@@ -176,6 +191,9 @@ class MainActivity : AppCompatActivity(), ItemClickListener {
                                     languageData!!.get(0).languageCode
                                 )
                                 helperlang.ApplyPref()
+
+
+
                             }
 
 
@@ -236,8 +254,15 @@ class MainActivity : AppCompatActivity(), ItemClickListener {
             helperlang.ApplyPref()
             dialog.dismiss()
             txt_languagee.setText(languageData!!.get(position).languageName)
+            MyApp.Companion.updateLanguage(this)
+            val intent = Intent(this, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
         }
     }
+
 
 
 }

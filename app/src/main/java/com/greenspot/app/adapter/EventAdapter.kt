@@ -96,18 +96,18 @@ class EventAdapter(val context: FragmentActivity?) :
 
             if(item.start_date!!.isEmpty()){
 
-                itemView.findViewById<TextView>(R.id.txt_eventtime).text = item.start_time + " To " +item.end_time
+                itemView.findViewById<TextView>(R.id.txt_eventtime).text = item.start_time + "  "+context.getString(R.string.res_to)  +" " +item.end_time
 
 
             }else{
-                itemView.findViewById<TextView>(R.id.txt_eventtime).text = item.start_date + " To " +item.end_date
+                itemView.findViewById<TextView>(R.id.txt_eventtime).text = item.start_date + "  "+context.getString(R.string.res_to)  +" "  +item.end_date
 
             }
             if(item.final_price.equals("0")){
 
-                itemView.findViewById<TextView>(R.id.txt_eventprice).text = "Free"
+                itemView.findViewById<TextView>(R.id.txt_eventprice).text = context.getString(R.string.txt_free)
             }else{
-                itemView.findViewById<TextView>(R.id.txt_eventprice).text = "From " + currency + " " + item.final_price
+                itemView.findViewById<TextView>(R.id.txt_eventprice).text = context.getString(R.string.txt_from)+" " + currency + " " + item.final_price
             }
 
             itemView.findViewById<TextView>(R.id.txt_eventname).text = item.title

@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/open_sans_semibold"
-            android:text="Booking"
+            android:text="@string/res_bookings"
             android:textColor="@color/black"
             android:textSize="@dimen/_14ssp" />
 
@@ -78,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans"
-                android:text="Per person"
+                android:text="@string/per_person"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_11ssp"
                 android:visibility="gone" />
@@ -91,7 +91,8 @@
             android:layout_height="@dimen/_35sdp"
             android:background="@drawable/btn_fillgreen"
             android:fontFamily="@font/open_sans_semibold"
-            android:text="Continue"
+            android:text="@string/res_continue"
+            android:textAllCaps="false"
             android:textColor="@color/white" />
 
     </LinearLayout>

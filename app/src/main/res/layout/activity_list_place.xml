@@ -43,7 +43,7 @@
             android:layout_marginRight="@dimen/_10sdp"
             android:layout_weight="7"
             android:fontFamily="@font/open_sans_semibold"
-            android:text="Tour Place in Suriname"
+            tools:text="Tour Place in Suriname"
             android:textColor="@color/black"
             android:textSize="@dimen/_14ssp" />
 

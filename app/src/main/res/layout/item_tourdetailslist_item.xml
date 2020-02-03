@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans"
         android:textColor="@color/green"
+        android:textAllCaps="true"
         android:textSize="@dimen/_10ssp"
         tools:text="Hello" />
 

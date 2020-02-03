@@ -94,9 +94,8 @@ class VisiterListPlaceAdapter(val context: FragmentActivity?) :
             rating = itemView.findViewById(R.id.recreation_rating)
             Glide.with(itemView)
                 .load(item.mainImage)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .onlyRetrieveFromCache(true)
                 .placeholder(R.drawable.travel)
+                .dontTransform()
                 .into(itemView.imageView1)
 
 
@@ -106,13 +105,13 @@ class VisiterListPlaceAdapter(val context: FragmentActivity?) :
             itemView.findViewById<TextView>(R.id.txt_location).text = item.city + ", " + item.district + ", " + item.country
 
             if (item.minPriceRange.isEmpty()) {
-                itemView.findViewById<TextView>(R.id.txt_price).text = "From " + currency + " " + item.minPriceRange
+                itemView.findViewById<TextView>(R.id.txt_price).text = context!!.getString(R.string.txt_from)+" " + currency + " " + item.minPriceRange
                 itemView.findViewById<TextView>(R.id.txt_price).visibility = View.GONE
             }else if (item.minPriceRange.equals("0")) {
-                itemView.findViewById<TextView>(R.id.txt_price).text = "From " + currency + " " + item.minPriceRange
+                itemView.findViewById<TextView>(R.id.txt_price).text = context!!.getString(R.string.txt_from)+" " + currency + " " + item.minPriceRange
                 itemView.findViewById<TextView>(R.id.txt_price).visibility = View.GONE
             } else {
-                itemView.findViewById<TextView>(R.id.txt_price).text = "From " + currency + " " + item.minPriceRange
+                itemView.findViewById<TextView>(R.id.txt_price).text = context!!.getString(R.string.txt_from)+" " + currency + " " + item.minPriceRange
                 itemView.findViewById<TextView>(R.id.txt_price).visibility = View.VISIBLE
             }
 

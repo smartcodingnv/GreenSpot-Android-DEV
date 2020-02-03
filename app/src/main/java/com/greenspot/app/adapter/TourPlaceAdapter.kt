@@ -81,11 +81,11 @@ class TourPlaceAdapter(val context: FragmentActivity?) :
 //
 //                .into(itemView.img_itemm)
 
-            var helperlang: PreferenceHelper? =
+            val helperlang: PreferenceHelper? =
                 PreferenceHelper(context!!, AppConfig.PREFERENCE.PREF_FILE_LANG)
-            var currency = helperlang!!.LoadStringPref(AppConfig.PREFERENCE.SELECTCURRENCYNAME, "")
+            val currency = helperlang!!.LoadStringPref(AppConfig.PREFERENCE.SELECTCURRENCYNAME, "")
 
-            var rating: RatingBar
+            val rating: RatingBar
             rating = itemView.findViewById(R.id.rt_tourrating)
             Glide.with(itemView)
                 .load(item.main_image)
@@ -96,9 +96,11 @@ class TourPlaceAdapter(val context: FragmentActivity?) :
 
             itemView.findViewById<TextView>(R.id.txt_tourname).text = item.package_name
             itemView.findViewById<TextView>(R.id.txt_tourlocation).text = item.locations
-            itemView.findViewById<TextView>(R.id.txt_daynight).text = item.nights.toString() +" Nights | " +  item.days.toString() +" Days"
+            itemView.findViewById<TextView>(R.id.txt_daynight).text = item.nights.toString() +" " +context.getString(
+                            R.string.txt_night)+ " | " +  item.days.toString() +" "+context.getString(
+                                            R.string.txt_days)
             itemView.findViewById<TextView>(R.id.txt_tourprice).text =
-                "From " + currency + " " + item.price + "*"
+                context.getString(R.string.txt_from)+ " " + currency + " " + item.price + "*"
 
         }
     }

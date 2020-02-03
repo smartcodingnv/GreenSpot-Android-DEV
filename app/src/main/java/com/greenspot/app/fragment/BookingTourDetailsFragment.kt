@@ -80,7 +80,7 @@ class BookingTourDetailsFragment : Fragment() {
             txt_tourname.text = bookinginfo.data.tourData.packageName
             txt_location.text = bookinginfo.data.tourData.locations
             txt_duration.text =
-                bookinginfo.data.tourData.nights.toString() + " Nights & " + bookinginfo.data.tourData.days.toString() + " Days"
+                bookinginfo.data.tourData.nights.toString() +  getString(R.string.txt_night)+ " & " + bookinginfo.data.tourData.days.toString() + " "+getString(R.string.txt_days)
             txt_departure.text = bookinginfo.data.tourData.departureCity
             txt_category.text = bookinginfo.data.tourData.category
             txt_type.text = bookinginfo.data.tourData.tourType
@@ -124,10 +124,10 @@ class BookingTourDetailsFragment : Fragment() {
 
             } else if (bookinginfo.data.eventData.eventHappeningTypeId.equals("2")) {
                 txt_eventdate.text =
-                    bookinginfo.data.eventData.startDate + " To " + bookinginfo.data.eventData.endDate
+                    bookinginfo.data.eventData.startDate + " "+getString(R.string.res_to)+" " + bookinginfo.data.eventData.endDate
             }
             txt_eventime.text =
-                bookinginfo.data.eventData.startTime + " To " + bookinginfo.data.eventData.endTime
+                bookinginfo.data.eventData.startTime + " "+getString(R.string.res_to)+" "+ bookinginfo.data.eventData.endTime
             txt_eventlocation.text =
                 bookinginfo.data.eventData.city + ", " + bookinginfo.data.eventData.district + ", " + bookinginfo.data.eventData.country
 

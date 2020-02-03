@@ -90,7 +90,7 @@
                     android:ellipsize="end"
                     android:fontFamily="@font/open_sans"
                     android:maxLines="2"
-                    android:text="Per person"
+                    android:text="@string/per_person"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/_8ssp" />
 

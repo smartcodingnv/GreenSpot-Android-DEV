@@ -17,8 +17,10 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.tabs.TabLayout
 import com.google.gson.Gson
+import com.greenspot.app.MyApp.Companion.updateLanguage
 import com.greenspot.app.R
 import com.greenspot.app.adapter.SliderVisiterPlaceAdapter
 import com.greenspot.app.adapter.TourSuggestedAdapter
@@ -36,7 +38,12 @@ import com.pierfrancescosoffritti.youtubeplayer.player.YouTubePlayerView
 import hk.ids.gws.android.sclick.SClick
 import it.sephiroth.android.library.imagezoom.ImageViewTouch
 import kotlinx.android.synthetic.main.activity_place_details.*
+import kotlinx.android.synthetic.main.content_hotel_details.*
 import kotlinx.android.synthetic.main.content_place_details.*
+import kotlinx.android.synthetic.main.content_place_details.img_play
+import kotlinx.android.synthetic.main.content_place_details.lay_next
+import kotlinx.android.synthetic.main.content_place_details.lay_prev
+import kotlinx.android.synthetic.main.content_place_details.txt_viewonmap
 import org.jetbrains.anko.imageBitmap
 import org.jetbrains.anko.layoutInflater
 import retrofit2.Call
@@ -92,6 +99,12 @@ class PlaceDetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//
+//        if(PreferenceHelper(this, AppConfig.PREFERENCE.PREF_FILE_LANG).LoadStringPref(AppConfig.PREFERENCE.SELECTLANGCODE, "")!!.isEmpty()){
+//            MyApp.Companion.updateLanguage(this)
+//            val intent = Intent(this, PlaceDetailsActivity::class.java)
+//            startActivity(intent)
+//        }
         setContentView(R.layout.activity_place_details)
 
 
@@ -161,6 +174,8 @@ class PlaceDetailsActivity : AppCompatActivity() {
                 Glide.with(this@PlaceDetailsActivity)
                     .load(imgURl)
                     .placeholder(R.drawable.travel)
+                    .dontTransform()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .centerCrop()
                     .into(img_place)
 
@@ -171,6 +186,7 @@ class PlaceDetailsActivity : AppCompatActivity() {
                 Glide.with(this@PlaceDetailsActivity)
                     .load(imgURl)
                     .placeholder(R.drawable.travel)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .centerCrop()
                     .into(img_place)
             }
@@ -219,6 +235,8 @@ class PlaceDetailsActivity : AppCompatActivity() {
                     Glide.with(this@PlaceDetailsActivity)
                         .load(imgURl)
                         .placeholder(R.drawable.travel)
+                        .dontTransform()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .centerCrop()
                         .into(img_place)
                 } else {
@@ -229,6 +247,8 @@ class PlaceDetailsActivity : AppCompatActivity() {
                     Glide.with(this@PlaceDetailsActivity)
                         .load(imgURl)
                         .placeholder(R.drawable.travel)
+                        .dontTransform()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .centerCrop()
                         .into(img_place)
                 }
@@ -247,6 +267,8 @@ class PlaceDetailsActivity : AppCompatActivity() {
                 Glide.with(this@PlaceDetailsActivity)
                     .load(imgURl)
                     .placeholder(R.drawable.travel)
+                    .dontTransform()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .centerCrop()
                     .into(img_place)
             } else {
@@ -257,6 +279,8 @@ class PlaceDetailsActivity : AppCompatActivity() {
                 Glide.with(this@PlaceDetailsActivity)
                     .load(imgURl)
                     .placeholder(R.drawable.travel)
+                    .dontTransform()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .centerCrop()
                     .into(img_place)
             }
@@ -285,6 +309,8 @@ class PlaceDetailsActivity : AppCompatActivity() {
                 Glide.with(this@PlaceDetailsActivity)
                     .load(imgURl)
                     .placeholder(R.drawable.travel)
+                    .dontTransform()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .centerCrop()
                     .into(img_place)
             } else {
@@ -295,6 +321,8 @@ class PlaceDetailsActivity : AppCompatActivity() {
                 Glide.with(this@PlaceDetailsActivity)
                     .load(imgURl)
                     .placeholder(R.drawable.travel)
+                    .dontTransform()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .centerCrop()
                     .into(img_place)
             }
@@ -359,27 +387,27 @@ class PlaceDetailsActivity : AppCompatActivity() {
         }
 
         txt_pstay.setOnClickListener {
-//            onclickAminites(it)
+            //            onclickAminites(it)
             onClickStay(it)
         }
 
         txt_ppyament.setOnClickListener {
-//            onclickAminites(it)
+            //            onclickAminites(it)
             onClickPayment(it)
         }
 
         txt_pother.setOnClickListener {
-//            onclickAminites(it)
+            //            onclickAminites(it)
             onClickOther(it)
         }
 
         txt_preview.setOnClickListener {
-//            onclickAminites(it)
+            //            onclickAminites(it)
             onClickReview(it)
         }
 
         txt_pcontactus.setOnClickListener {
-//            onclickAminites(it)
+            //            onclickAminites(it)
             onClickContactus(it)
         }
 
@@ -411,7 +439,7 @@ class PlaceDetailsActivity : AppCompatActivity() {
         if (!SClick.check(SClick.BUTTON_CLICK)) return
         startActivity(
             Intent(this, PlaceTabActivity::class.java)
-                .putExtra(AppConfig.EXTRA.TABCHECK, 5)
+                .putExtra(AppConfig.EXTRA.TABCHECK, 4)
 
         )
 
@@ -421,7 +449,7 @@ class PlaceDetailsActivity : AppCompatActivity() {
         if (!SClick.check(SClick.BUTTON_CLICK)) return
         startActivity(
             Intent(this, PlaceTabActivity::class.java)
-                .putExtra(AppConfig.EXTRA.TABCHECK, 4)
+                .putExtra(AppConfig.EXTRA.TABCHECK, 5)
 
         )
 
@@ -642,7 +670,6 @@ class PlaceDetailsActivity : AppCompatActivity() {
                             AppConfig.PREFERENCE.SERVICEPROVIDERID,
                             resRecreationDetails.data.mainRecords.createdBy
                         )
-                        helper?.ApplyPref()
                         helper!!.ApplyPref()
 
                         Log.e("lastpage", "" + resRecreationDetails.message)
@@ -721,6 +748,8 @@ class PlaceDetailsActivity : AppCompatActivity() {
                             Glide.with(this@PlaceDetailsActivity)
                                 .load(imgURl)
                                 .placeholder(R.drawable.travel)
+                                .dontTransform()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
                                 .centerCrop()
                                 .into(img_place)
 
@@ -732,8 +761,20 @@ class PlaceDetailsActivity : AppCompatActivity() {
                             Glide.with(this@PlaceDetailsActivity)
                                 .load(imgURl)
                                 .placeholder(R.drawable.travel)
+                                .dontTransform()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
                                 .centerCrop()
                                 .into(img_place)
+                        }
+
+                        if(gallaryCombineList.size==1){
+                            lay_next.visibility = View.GONE
+                            lay_prev.visibility = View.GONE
+
+                        }else{
+                            lay_next.visibility = View.VISIBLE
+                            lay_prev.visibility = View.VISIBLE
+
                         }
 
                         suggestedTour =
@@ -769,12 +810,14 @@ class PlaceDetailsActivity : AppCompatActivity() {
                                 this@PlaceDetailsActivity,
                                 R.drawable.btn_fillgreen
                             )
+                            btn_booknow.isClickable = true
 
                         } else {
                             val colorValue =
                                 ContextCompat.getColor(this@PlaceDetailsActivity, R.color.tansparnt)
                             btn_booknow.setBackgroundColor(colorValue)
                             btn_booknow.text = getString(R.string.res_book_now_na)
+                            btn_booknow.isClickable = false
                         }
 
                         if (resRecreationDetails.data.mainRecords.minPriceRange.equals("0")) {
@@ -924,7 +967,6 @@ class PlaceDetailsActivity : AppCompatActivity() {
             Log.e("youtubeid", " " + id)
         }
         return id
-        return id
 
     }
 
@@ -1022,7 +1064,12 @@ class PlaceDetailsActivity : AppCompatActivity() {
             youtubeView.visibility = View.GONE
             btnClose.visibility = View.VISIBLE
             ivPreview.visibility = View.VISIBLE
-            Glide.with(context).load(url).into(ivPreview)
+            Glide.with(context)
+                .load(url)
+                .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .dontTransform()
+                .into(ivPreview)
         } else if (type == "V") {
             ivPreview.visibility = View.GONE
             youtubeView.visibility = View.VISIBLE
@@ -1038,9 +1085,11 @@ class PlaceDetailsActivity : AppCompatActivity() {
             youtubeView.enterFullScreen()
             youtubeView.addFullScreenListener(object : YouTubePlayerFullScreenListener {
                 override fun onYouTubePlayerEnterFullScreen() {}
-
                 override fun onYouTubePlayerExitFullScreen() {
+
+
                     dialog.dismiss()
+
                 }
             })
         }
@@ -1048,23 +1097,23 @@ class PlaceDetailsActivity : AppCompatActivity() {
         btnClose.setOnClickListener {
             youtubeView.release();
             dialog.dismiss()
+            updateLanguage(context)
             youTubePlayer?.pause()
             youTubePlayer = null
         }
 
         dialog.setOnDismissListener {
+            updateLanguage(context)
             youtubeView.release();
             youTubePlayer?.pause()
             youTubePlayer = null
         }
-
 
         dialog.show()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-
 
     }
 

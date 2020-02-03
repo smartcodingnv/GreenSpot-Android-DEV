@@ -94,8 +94,8 @@ class BookingFragment : Fragment() {
     private fun tablayout() {
 
 
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("UPCOMING"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("PAST"))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText(getString(R.string.tab_upcoming)))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText(getString(R.string.tab_past)))
 
         tabLayout!!.tabGravity = TabLayout.GRAVITY_FILL
 

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.greenspot.app.R
 import com.greenspot.app.model.GalleryImgList
 
@@ -82,6 +83,8 @@ class SliderVisiterPlaceAdapter(val context: FragmentActivity?) :
                 Glide.with(itemView)
                     .load(imgURl)
                     .placeholder(R.drawable.travel)
+                    .dontTransform()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .centerCrop()
                     .into(itemView.img_item)
             } else {
@@ -90,7 +93,8 @@ class SliderVisiterPlaceAdapter(val context: FragmentActivity?) :
                 Glide.with(itemView)
                     .load(item.item_name)
                     .placeholder(R.drawable.travel)
-                    .centerCrop()
+                    .dontTransform()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(itemView.img_item)
             }
 

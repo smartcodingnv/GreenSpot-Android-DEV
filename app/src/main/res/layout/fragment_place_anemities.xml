@@ -22,7 +22,7 @@
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_5sdp"
             android:fontFamily="@font/open_sans_semibold"
-            android:text="Other Activities"
+            android:text="@string/res_other_activities"
             android:visibility="gone"
             android:textColor="@color/gray"
             android:textSize="@dimen/_12ssp" />
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_10sdp"
             android:fontFamily="@font/open_sans"
-            android:text="Other Activities 12234"
+            tools:text="Other Activities 12234"
             android:textColor="@color/black"
             android:visibility="gone"
             android:textSize="@dimen/_12ssp" />
@@ -51,6 +51,29 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
             android:scrollbars="vertical" />
+
+        <TextView
+            android:id="@+id/txt_labetermspolicy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:fontFamily="@font/open_sans"
+            android:text="@string/res_other_activities"
+            android:visibility="gone"
+            android:textColor="@color/green"
+            android:textSize="@dimen/_12ssp" />
+
+        <TextView
+            android:id="@+id/txt_termspolicy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:fontFamily="@font/open_sans"
+            tools:text="Other Activities 12234"
+            android:textColor="@color/black"
+            android:visibility="gone"
+            android:textSize="@dimen/_12ssp" />
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

@@ -39,7 +39,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/_10sdp"
             android:fontFamily="@font/open_sans"
-            android:text="Edit Profile"
+            android:text="@string/res_edit_profile"
             android:textColor="@color/gray"
             android:textSize="@dimen/_14ssp"></TextView>
     </LinearLayout>
@@ -75,7 +75,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/_10sdp"
             android:fontFamily="@font/open_sans"
-            android:text="Change Password"
+            android:text="@string/res_change_password"
             android:textColor="@color/gray"
             android:textSize="@dimen/_14ssp"></TextView>
     </LinearLayout>
@@ -111,7 +111,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/_10sdp"
             android:fontFamily="@font/open_sans"
-            android:text="Settings"
+            android:text="@string/res_settings"
             android:textColor="@color/gray"
             android:textSize="@dimen/_14ssp"></TextView>
     </LinearLayout>
@@ -147,7 +147,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/_10sdp"
             android:fontFamily="@font/open_sans"
-            android:text="Logout"
+            android:text="@string/res_logout"
             android:textColor="@color/gray"
             android:textSize="@dimen/_14ssp"></TextView>
     </LinearLayout>
@@ -174,7 +174,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/_10sdp"
             android:fontFamily="@font/open_sans"
-            android:text="Login"
+            android:text="@string/res_login"
             android:textColor="@color/gray"
             android:textSize="@dimen/_14ssp"></TextView>
     </LinearLayout>

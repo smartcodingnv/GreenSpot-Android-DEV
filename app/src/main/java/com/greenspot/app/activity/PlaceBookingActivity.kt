@@ -53,7 +53,7 @@ class PlaceBookingActivity : AppCompatActivity(), ItemClickListener {
 
     var listBookingdetails: ArrayList<RecBookingList> = ArrayList()
 
-    var pass = arrayOf("Day pass", "Night Pass")
+
 
     private var progress: Progress? = null
     private var viewDialog: ViewDialog? = null
@@ -98,7 +98,7 @@ class PlaceBookingActivity : AppCompatActivity(), ItemClickListener {
         weekendNightPassChild = placedetails.data.prices.weekendNightPassChild
 
 
-
+        var pass = arrayOf(resources.getString(R.string.res_day_pass), resources.getString(R.string.res_night_pass))
 
         txt_name.text = placedetails.data.mainRecords.placeName
         txt_address.text = placedetails.data.mainRecords.district + ", " + placedetails.data.mainRecords.country
@@ -214,12 +214,6 @@ class PlaceBookingActivity : AppCompatActivity(), ItemClickListener {
 
         val totalguest = adultcount + childcount
 
-
-
-
-        Log.e("placebooking ", " " + listBookingdetails[0].count)
-        Log.e("placebooking ", " " + listBookingdetails[1].count)
-        Log.e("placebooking ", " " + listBookingdetails[2].count)
 
         if (dayString.equals("Saturday") || dayString.equals("Sunday")) {
 
@@ -351,7 +345,7 @@ class PlaceBookingActivity : AppCompatActivity(), ItemClickListener {
         if(totalnoofperson==0){
         Toast.makeText(
             applicationContext,
-            "Please select any one pass",
+            getString(R.string.alert_selectonepass),
             Toast.LENGTH_SHORT
         ).show()
             return
@@ -379,7 +373,7 @@ class PlaceBookingActivity : AppCompatActivity(), ItemClickListener {
                 listBookingdetails.add(
                     RecBookingList(
                         "1",
-                        "Weekend Day Adult Pass",
+                        getString(R.string.str_weekend)+" "+getString(R.string.str_day)+" "+getString(R.string.txt_adults) +" "+ getString(R.string.str_pass),
                         weekendDayPassAdult,
                         "2",
                         ""
@@ -392,7 +386,7 @@ class PlaceBookingActivity : AppCompatActivity(), ItemClickListener {
                 listBookingdetails.add(
                     RecBookingList(
                         "2",
-                        "Weekend Day Child Pass",
+                        getString(R.string.str_weekend)+" "+getString(R.string.str_day)+" "+getString(R.string.txt_child) +" "+ getString(R.string.str_pass),
                         weekendDayPassChild,
                         "0",
                         ""
@@ -404,7 +398,7 @@ class PlaceBookingActivity : AppCompatActivity(), ItemClickListener {
                 listBookingdetails.add(
                     RecBookingList(
                         "3",
-                        "Weekend Night Adult Pass",
+                        getString(R.string.str_weekend)+" "+getString(R.string.str_night)+" "+getString(R.string.txt_adults) +" "+ getString(R.string.str_pass),
                         weekendNightPassAdult,
                         "0",
                         ""
@@ -416,7 +410,7 @@ class PlaceBookingActivity : AppCompatActivity(), ItemClickListener {
                 listBookingdetails.add(
                     RecBookingList(
                         "4",
-                        "Weekend Night Child Pass",
+                        getString(R.string.str_weekend)+" "+getString(R.string.str_night)+" "+getString(R.string.txt_child) +" "+ getString(R.string.str_pass),
                         weekendNightPassChild,
                         "0",
                         ""
@@ -431,7 +425,7 @@ class PlaceBookingActivity : AppCompatActivity(), ItemClickListener {
                 listBookingdetails.add(
                     RecBookingList(
                         "1",
-                        "Midweek Day Adult Pass",
+                        getString(R.string.str_midweek)+" "+getString(R.string.str_day)+" "+getString(R.string.txt_adults) +" "+ getString(R.string.str_pass),
                         midWeekDayPassAdult,
                         "2",
                         ""
@@ -445,7 +439,7 @@ class PlaceBookingActivity : AppCompatActivity(), ItemClickListener {
                 listBookingdetails.add(
                     RecBookingList(
                         "2",
-                        "Midweek Day Child Pass",
+                        getString(R.string.str_midweek)+" "+getString(R.string.str_day)+" "+getString(R.string.txt_child) +" "+ getString(R.string.str_pass),
                         midWeekDayPassChild,
                         "0",
                         ""
@@ -457,7 +451,7 @@ class PlaceBookingActivity : AppCompatActivity(), ItemClickListener {
                 listBookingdetails.add(
                     RecBookingList(
                         "3",
-                        "Midweek Night Adult Pass",
+                        getString(R.string.str_midweek)+" "+getString(R.string.str_night)+" "+getString(R.string.txt_adults) +" "+ getString(R.string.str_pass),
                         midWeekNightPassAdult,
                         "0",
                         ""
@@ -470,7 +464,7 @@ class PlaceBookingActivity : AppCompatActivity(), ItemClickListener {
                 listBookingdetails.add(
                     RecBookingList(
                         "4",
-                        "Midweek Night Child Pass",
+                        getString(R.string.str_midweek)+" "+getString(R.string.str_night)+" "+getString(R.string.txt_child) +" "+ getString(R.string.str_pass),
                         midWeekNightPassChild,
                         "0",
                         ""

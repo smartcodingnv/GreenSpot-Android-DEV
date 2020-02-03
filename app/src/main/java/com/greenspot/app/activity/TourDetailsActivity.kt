@@ -21,6 +21,7 @@ import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.google.gson.Gson
+import com.greenspot.app.MyApp.Companion.updateLanguage
 import com.greenspot.app.R
 import com.greenspot.app.adapter.SliderTourAdapter
 import com.greenspot.app.adapter.TourDetailsAdapter
@@ -39,7 +40,14 @@ import com.pierfrancescosoffritti.youtubeplayer.player.YouTubePlayerView
 import hk.ids.gws.android.sclick.SClick
 import it.sephiroth.android.library.imagezoom.ImageViewTouch
 import kotlinx.android.synthetic.main.activity_tour_details.*
+import kotlinx.android.synthetic.main.content_hotel_details.*
 import kotlinx.android.synthetic.main.content_tour_details.*
+import kotlinx.android.synthetic.main.content_tour_details.lay_next
+import kotlinx.android.synthetic.main.content_tour_details.lay_prev
+import kotlinx.android.synthetic.main.content_tour_details.rv_otherservicetourdetailsimg
+import kotlinx.android.synthetic.main.content_tour_details.txt_populartour
+import kotlinx.android.synthetic.main.content_tour_details.txt_tourlocation
+import kotlinx.android.synthetic.main.content_tour_details.txt_tourpackgname
 import org.jetbrains.anko.imageBitmap
 import org.jetbrains.anko.layoutInflater
 import retrofit2.Call
@@ -135,7 +143,7 @@ class TourDetailsActivity : AppCompatActivity() {
             imgURl = gallaryImageList[count].imageName
             Glide.with(this)
                 .load(imgURl)
-                .centerCrop()
+                 .dontTransform()
                 .into(img_tour)
 
             rv_tourplaceimg.scrollToPosition(count)
@@ -151,7 +159,7 @@ class TourDetailsActivity : AppCompatActivity() {
 
             Glide.with(this)
                 .load(imgURl)
-                .centerCrop()
+
                 .into(img_tour)
 
             rv_tourplaceimg.scrollToPosition(count)
@@ -165,7 +173,7 @@ class TourDetailsActivity : AppCompatActivity() {
 
             Glide.with(this)
                 .load(imgURl)
-                .centerCrop()
+
                 .into(img_tour)
 
 
@@ -192,11 +200,11 @@ class TourDetailsActivity : AppCompatActivity() {
 
     private fun alertLogin() {
         val builder1 = AlertDialog.Builder(this)
-        builder1.setMessage("Please login to use this feature")
+        builder1.setMessage(getString(R.string.alert_loginmsg))
         builder1.setCancelable(true)
 
         builder1.setPositiveButton(
-            "OK",
+            getString(R.string.res_ok),
             DialogInterface.OnClickListener { dialog, id ->
                 dialog.cancel()
                 helper!!.clearAllPrefs()
@@ -209,7 +217,7 @@ class TourDetailsActivity : AppCompatActivity() {
             })
 
         builder1.setNegativeButton(
-            "CANCEL",
+            getString(R.string.res_cancel),
             DialogInterface.OnClickListener { dialog, id -> dialog.cancel() })
 
         val alert11 = builder1.create()
@@ -475,11 +483,21 @@ class TourDetailsActivity : AppCompatActivity() {
 
                         }
 
+                        if(gallaryImageList.size==1){
+                            lay_next.visibility = View.GONE
+                            lay_prev.visibility = View.GONE
+
+                        }else{
+                            lay_next.visibility = View.VISIBLE
+                            lay_prev.visibility = View.VISIBLE
+
+                        }
+
                         imgURl = gallaryImageList.get(0).imageName
                         Glide.with(this@TourDetailsActivity)
                             .load(imgURl)
                             .placeholder(R.drawable.travel)
-                            .centerCrop()
+
                             .into(img_tour)
 
                         popularTour = tourDetails.data.popularTours as ArrayList<PopularToursItem>
@@ -517,7 +535,7 @@ class TourDetailsActivity : AppCompatActivity() {
                         )
                         txt_perperson.visibility = View.VISIBLE
                         txt_startprice.text =
-                            "Starting from " + currncyCode + " " + tourDetails.data.mainRecords.price
+                            getString(R.string.res_startingfrom) + " " + currncyCode + " " + tourDetails.data.mainRecords.price
 
 
 
@@ -577,7 +595,7 @@ class TourDetailsActivity : AppCompatActivity() {
                 itineraryImg.add(
                     ItineraryImg(
                         "1",
-                        "Flight",
+                        getString(R.string.res_flight),
                         getURLForResource(R.drawable.ic_otherflight)
                     )
                 )
@@ -588,7 +606,7 @@ class TourDetailsActivity : AppCompatActivity() {
                 itineraryImg.add(
                     ItineraryImg(
                         "2",
-                        "Hotel",
+                        getString(R.string.res_hotel),
                         getURLForResource(R.drawable.ic_ohterhotel)
                     )
                 )
@@ -599,7 +617,7 @@ class TourDetailsActivity : AppCompatActivity() {
                 itineraryImg.add(
                     ItineraryImg(
                         "3",
-                        "Sightseeing",
+                        getString(R.string.res_sightseeing),
                         getURLForResource(R.drawable.ic_othersigghtsign)
                     )
                 )
@@ -609,7 +627,7 @@ class TourDetailsActivity : AppCompatActivity() {
                 itineraryImg.add(
                     ItineraryImg(
                         "4",
-                        "Meals",
+                        getString(R.string.res_meals),
                         getURLForResource(R.drawable.ic_othermeal)
                     )
                 )
@@ -619,7 +637,7 @@ class TourDetailsActivity : AppCompatActivity() {
                 itineraryImg.add(
                     ItineraryImg(
                         "5",
-                        "Transportation",
+                        getString(R.string.res_trasnportations),
                         getURLForResource(R.drawable.ic_othertransport)
                     )
                 )
@@ -629,7 +647,7 @@ class TourDetailsActivity : AppCompatActivity() {
                 itineraryImg.add(
                     ItineraryImg(
                         "6",
-                        "Wifi",
+                        getString(R.string.res_wifi),
                         getURLForResource(R.drawable.ic_otherservicewifi)
                     )
                 )
@@ -647,7 +665,7 @@ class TourDetailsActivity : AppCompatActivity() {
             otherData.add(
                 PlaceSubItem(
                     "2",
-                    "TOUR CATEGORY",
+                    getString(R.string.str_tourcategory),
                     tourCategory
                 )
             )
@@ -658,7 +676,7 @@ class TourDetailsActivity : AppCompatActivity() {
             otherData.add(
                 PlaceSubItem(
                     "3",
-                    "DEPARTURE CITY",
+                    getString(R.string.str_depaturesicty),
                     depatureCity
                 )
             )
@@ -669,7 +687,7 @@ class TourDetailsActivity : AppCompatActivity() {
             otherData.add(
                 PlaceSubItem(
                     "4",
-                    "LOCATION",
+                    getString(R.string.str_location),
                     tourlocation
                 )
             )
@@ -679,7 +697,7 @@ class TourDetailsActivity : AppCompatActivity() {
             otherData.add(
                 PlaceSubItem(
                     "5",
-                    "PRICE",
+                    getString(R.string.sttr_price),
                     currncyCode + " " + tourprice
                 )
             )
@@ -689,7 +707,7 @@ class TourDetailsActivity : AppCompatActivity() {
             otherData.add(
                 PlaceSubItem(
                     "6",
-                    "NIGHTS",
+                    getString(R.string.strr_night),
                     nights
                 )
             )
@@ -699,7 +717,7 @@ class TourDetailsActivity : AppCompatActivity() {
             otherData.add(
                 PlaceSubItem(
                     "7",
-                    "DAYS",
+                    getString(R.string.strr_days),
                     days
                 )
             )
@@ -711,7 +729,7 @@ class TourDetailsActivity : AppCompatActivity() {
             otherData.add(
                 PlaceSubItem(
                     "8",
-                    "TOUR TYPE",
+                    getString(R.string.strr_torutype),
                     tourType
                 )
             )
@@ -765,7 +783,10 @@ class TourDetailsActivity : AppCompatActivity() {
             youtubeView.visibility = View.GONE
             btnClose.visibility = View.VISIBLE
             ivPreview.visibility = View.VISIBLE
-            Glide.with(context).load(url).into(ivPreview)
+            Glide.with(context)
+                .load(url)
+                .dontTransform()
+                .into(ivPreview)
         } else if (type == "V") {
             ivPreview.visibility = View.GONE
             youtubeView.visibility = View.VISIBLE
@@ -790,11 +811,13 @@ class TourDetailsActivity : AppCompatActivity() {
 
         btnClose.setOnClickListener {
             dialog.dismiss()
+            updateLanguage(context)
         }
 
         dialog.setOnDismissListener {
             youTubePlayer?.pause()
             youTubePlayer = null
+            updateLanguage(context)
         }
 
         dialog.show()

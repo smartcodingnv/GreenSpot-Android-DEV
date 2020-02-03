@@ -100,7 +100,7 @@ class EventPopularAdapter(val context: FragmentActivity?) :
 
             if(item.price.equals("Free")){
 
-                itemView.findViewById<TextView>(R.id.txt_eventprice).text = "Free"
+                itemView.findViewById<TextView>(R.id.txt_eventprice).text =  context.getString(R.string.txt_free)
 
 
             }else{

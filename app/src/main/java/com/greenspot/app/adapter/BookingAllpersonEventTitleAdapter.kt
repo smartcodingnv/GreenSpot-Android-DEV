@@ -35,7 +35,7 @@ class BookingAllpersonEventTitleAdapter(val context: FragmentActivity?) :
 
         val personno = position + 1
 
-        holder.title.text = "Person " + personno.toString()
+        holder.title.text = context!!.getString(R.string.data_person)+" " + personno.toString()
 
 
 

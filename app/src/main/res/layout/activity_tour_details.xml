@@ -82,7 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans"
-                android:text="Per person"
+                android:text="@string/per_person"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_11ssp" />
 
@@ -95,6 +95,7 @@
             android:background="@drawable/btn_fillgreen"
             android:fontFamily="@font/open_sans_semibold"
             android:text="@string/res_book_now"
+            android:textAllCaps="false"
             android:textColor="@color/white" />
 
     </LinearLayout>

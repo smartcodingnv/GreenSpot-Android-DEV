@@ -36,7 +36,7 @@
             android:layout_gravity="center"
             android:layout_weight="6"
             android:fontFamily="@font/open_sans_semibold"
-            android:text="Filter"
+            android:text="@string/res_filter"
             android:textColor="@color/black"
             android:textSize="@dimen/_14ssp" />
 
@@ -50,7 +50,8 @@
             android:gravity="end"
             android:maxLines="1"
             android:paddingRight="@dimen/_5sdp"
-            android:text="CLEAR FILTER"
+            android:text="@string/res_clear_filter"
+            android:textAllCaps="true"
             android:textColor="@color/gray"
             android:textSize="@dimen/_11ssp" />
 

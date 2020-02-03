@@ -3,11 +3,14 @@ package com.greenspot.app.network
 import com.greenspot.app.responce.*
 import com.greenspot.app.responce.bookinginfo.ResponceBookinginfo
 import com.greenspot.app.responce.bookinginfoevent.ResponceBookinginfoEvent
+import com.greenspot.app.responce.bookinginfohotel.ResponceBookinginfoHotel
 import com.greenspot.app.responce.bookinginforecreation.ResponceBookinginfoRecreation
 import com.greenspot.app.responce.bookinglist.ResponceBookingList
 import com.greenspot.app.responce.currencyconvert.CurrencyConvert
 import com.greenspot.app.responce.eventdetails.EvnetDetailsResponce
 import com.greenspot.app.responce.home.ResponeHome
+import com.greenspot.app.responce.hoteldetails.ResponceHotelDetails
+import com.greenspot.app.responce.hotellist.ResponceHotelList
 import com.greenspot.app.responce.idealpayment.ResponceIdealPayment
 import com.greenspot.app.responce.login.LoginResponce
 import com.greenspot.app.responce.payment.ResponcePayment
@@ -29,6 +32,10 @@ import com.greenspot.app.utils.AppConfig.URL.URL_EVENTREVIEWLIST
 import com.greenspot.app.utils.AppConfig.URL.URL_FILTERCOUNT
 import com.greenspot.app.utils.AppConfig.URL.URL_FORGOTPWD
 import com.greenspot.app.utils.AppConfig.URL.URL_HOME
+import com.greenspot.app.utils.AppConfig.URL.URL_HOTELDETAILS
+import com.greenspot.app.utils.AppConfig.URL.URL_HOTELLIST
+import com.greenspot.app.utils.AppConfig.URL.URL_HOTELPAYMENTMOLLIE
+import com.greenspot.app.utils.AppConfig.URL.URL_HOTELREVIEWLIST
 import com.greenspot.app.utils.AppConfig.URL.URL_LISTMASTER
 import com.greenspot.app.utils.AppConfig.URL.URL_LOCATION
 import com.greenspot.app.utils.AppConfig.URL.URL_LOGIN
@@ -196,6 +203,17 @@ interface ApiInterface {
 
 
     @FormUrlEncoded
+    @POST(URL_HOTELLIST)
+    fun HOTEL_LIST(
+        @Field("global_country_id") contryID: String, @Field("lang_code") langcode: String, @Field("selected_currency") selectCurrency: String,
+        @Field("page_number") pageNumber: String, @Field("limit") limit: String, @Field("search_text") searchText: String,
+        @Field("order_by") orderBy: String, @Field("order_type") orderType: String,
+        @Field("range_slider_min") minRange: String, @Field("range_slider_max") maxRange: String,
+        @FieldMap params: HashMap<String, String>
+    ): Call<ResponceHotelList>
+
+
+    @FormUrlEncoded
     @POST(URL_TOURDETAILS)
     fun TOUR_DETAILS(
         @Field("global_country_id") contryID: String, @Field("lang_code") langcode: String, @Field("selected_currency") selectCurrency: String,
@@ -203,8 +221,22 @@ interface ApiInterface {
     ): Call<ResponceTourDetails>
 
     @FormUrlEncoded
+    @POST(URL_HOTELDETAILS)
+    fun HOTEL_DETAILS(
+        @Field("global_country_id") contryID: String, @Field("lang_code") langcode: String, @Field("selected_currency") selectCurrency: String,
+        @Field("hotel_id") tourid: String
+    ): Call<ResponceHotelDetails>
+
+    @FormUrlEncoded
     @POST(URL_TOURREVIEW)
     fun TOURVIEW_DETAILS(
+        @Field("global_country_id") contryID: String, @Field("lang_code") langcode: String, @Field("selected_currency") selectCurrency: String,
+        @Field("id") id: String, @Field("limit") limit: String, @Field("page_number") pageNumber: String
+    ): Call<ResponcePlaceReview>
+
+    @FormUrlEncoded
+    @POST(URL_HOTELREVIEWLIST)
+    fun HOTELRVIEW_DETAILS(
         @Field("global_country_id") contryID: String, @Field("lang_code") langcode: String, @Field("selected_currency") selectCurrency: String,
         @Field("id") id: String, @Field("limit") limit: String, @Field("page_number") pageNumber: String
     ): Call<ResponcePlaceReview>
@@ -249,6 +281,7 @@ interface ApiInterface {
         @Field("lang_code") langcode: String
     ): Call<ComanResponce>
 
+
     @FormUrlEncoded
     @POST(URL_TOURPAYMENTMOLIE)
     fun TOURPAYMENTMOLIE_CALL(
@@ -285,6 +318,13 @@ interface ApiInterface {
         @Header("Authorization") token: String, @Field("id") bookingid: String, @Field("type") bookingtype: String,
         @Field("lang_code") langcode: String
     ): Call<ResponceBookinginfoEvent>
+
+    @FormUrlEncoded
+    @POST(URL_BOOKINGDETAILS)
+    fun CALL_HOTELBOOKINGINFO(
+        @Header("Authorization") token: String, @Field("id") bookingid: String, @Field("type") bookingtype: String,
+        @Field("lang_code") langcode: String
+    ): Call<ResponceBookinginfoHotel>
 
     @FormUrlEncoded
     @POST(URL_BOOKINGDETAILS)
@@ -327,9 +367,13 @@ interface ApiInterface {
     @FormUrlEncoded
     @POST(URL_RECREATIONPAYMENTMOLIE)
     fun RECREATIONPAYMENTMOLIE_CALL(
-        @Header("Authorization") token: String, @Field("global_country_id") contryID: String, @Field("lang_code") langcode: String,
-        @Field("selected_currency") selectCurrency: String,  @Field("original_payment_currency") originalPaymentcurrency: String,
-        @Field("recreation_id") tourid: String, @Field("transaction_id") tanstationID: String, @Field("from_date") formDate: String,
+        @Header("Authorization") token: String, @Field("global_country_id") contryID: String, @Field(
+            "lang_code"
+        ) langcode: String,
+        @Field("selected_currency") selectCurrency: String, @Field("original_payment_currency") originalPaymentcurrency: String,
+        @Field("recreation_id") tourid: String, @Field("transaction_id") tanstationID: String, @Field(
+            "from_date"
+        ) formDate: String,
 
         @Field("mid_week_day_pass_adult_price") midweekdayadultpass: String, @Field("mid_week_day_pass_adult_nop") midweekdayadultpassnop: String,
         @Field("mid_week_day_pass_child_price") midweekdaychildpass: String, @Field("mid_week_day_pass_child_nop") midweekdaychildpassnop: String,
@@ -344,4 +388,24 @@ interface ApiInterface {
     ): Call<ResponcePaymentMollie>
 
 
+    @FormUrlEncoded
+    @POST(URL_CHECKBEFOREPAY)
+    fun CALL_CHECKBEFOREPAYHOTEL(
+        @Header("Authorization") token: String, @Field("id") tourid: String, @Field("single_price") singleprice: String,
+        @Field("selected_currency") selectCurrency: String, @Field("master_type") masterType: String,
+        @Field("lang_code") langcode: String, @Field("rooms") room: Any
+    ): Call<ComanResponce>
+
+
+    @FormUrlEncoded
+    @POST(URL_HOTELPAYMENTMOLLIE)
+    fun HOTELPAYMENTMOLIE_CALL(
+        @Header("Authorization") token: String, @Field("global_country_id") contryID: String, @Field(
+            "lang_code"
+        ) langcode: String, @Field("selected_currency") selectCurrency: String,
+        @Field("hotel_id") tourid: String, @Field("transaction_id") tanstationID: String,
+        @Field("original_payment_price") originalPaymentprice: String, @Field("original_payment_currency") originalPaymentcurrency: String,
+        @Field("from_date") formDate: String, @Field("to_date") toDate: String, @Field("no_of_rooms") noofrooms: String,
+        @Field("rooms") rooms: Any, @Field("persons") person: Any
+    ): Call<ResponcePaymentMollie>
 }

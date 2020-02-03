@@ -118,7 +118,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:fontFamily="@font/open_sans_bold"
-                            android:text="Hey Sam, \nWhere you want to go?"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_14ssp" />
 
@@ -149,8 +148,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="bottom"
-                            android:layout_marginRight="@dimen/_25sdp"
-                            android:layout_marginLeft="@dimen/_25sdp"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:layout_marginLeft="@dimen/_5sdp"
                             android:orientation="horizontal">
 
                             <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -185,7 +184,7 @@
                                         android:layout_height="wrap_content"
                                         android:text="@string/res_vacatiion"
                                         android:textColor="@color/white"
-                                        android:textSize="@dimen/_12ssp" />
+                                        android:textSize="@dimen/_8ssp" />
                                 </LinearLayout>
 
 
@@ -223,7 +222,7 @@
                                         android:layout_height="wrap_content"
                                         android:text="@string/res_tour"
                                         android:textColor="@color/white"
-                                        android:textSize="@dimen/_12ssp" />
+                                        android:textSize="@dimen/_8ssp" />
                                 </LinearLayout>
 
 
@@ -261,7 +260,7 @@
                                         android:layout_height="wrap_content"
                                         android:text="@string/res_event"
                                         android:textColor="@color/white"
-                                        android:textSize="@dimen/_12ssp" />
+                                        android:textSize="@dimen/_8ssp" />
                                 </LinearLayout>
 
 
@@ -275,12 +274,13 @@
                                 android:layout_margin="@dimen/_5sdp"
                                 android:layout_weight="1"
                                 android:orientation="vertical"
-                                android:visibility="gone"
+                                android:visibility="visible"
                                 app:cardBackgroundColor="#B3A7A7A7"
                                 app:cardCornerRadius="10dp"
                                 app:cardElevation="0dp">
 
                                 <LinearLayout
+                                    android:id="@+id/lay_hotel"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
@@ -299,7 +299,7 @@
                                         android:layout_height="wrap_content"
                                         android:text="@string/res_hotel"
                                         android:textColor="@color/white"
-                                        android:textSize="@dimen/_12ssp" />
+                                        android:textSize="@dimen/_8ssp" />
                                 </LinearLayout>
 
 
@@ -324,7 +324,7 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="8"
+                        android:layout_weight="7"
                         android:orientation="vertical">
 
                         <TextView
@@ -352,12 +352,12 @@
                         android:id="@+id/txt_vacationall"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2"
+                        android:layout_weight="3"
                         android:drawableRight="@drawable/ic_right"
                         android:drawablePadding="@dimen/_2sdp"
                         android:fontFamily="@font/open_sans_semibold"
                         android:gravity="right"
-                        android:text="See all"
+                        android:text="@string/res_see_all"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/_11ssp" />
 
@@ -386,7 +386,7 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="8"
+                        android:layout_weight="7"
                         android:orientation="vertical">
 
                         <TextView
@@ -414,12 +414,12 @@
                         android:id="@+id/txt_tourall"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2"
+                        android:layout_weight="3"
                         android:drawableRight="@drawable/ic_right"
                         android:drawablePadding="@dimen/_2sdp"
                         android:fontFamily="@font/open_sans_semibold"
                         android:gravity="right"
-                        android:text="See all"
+                        android:text="@string/res_see_all"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/_11ssp" />
 
@@ -447,7 +447,7 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="8"
+                        android:layout_weight="7"
                         android:orientation="vertical">
 
                         <TextView
@@ -475,14 +475,14 @@
                         android:id="@+id/txt_eventall"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2"
+                        android:layout_weight="3"
                         android:drawableRight="@drawable/ic_right"
                         android:drawablePadding="@dimen/_2sdp"
                         android:fontFamily="@font/open_sans_semibold"
                         android:gravity="right"
-                        android:text="See all"
+                        android:text="@string/res_see_all"
                         android:textColor="@color/gray"
-                        android:textSize="@dimen/_11ssp" />
+                        android:textSize="@dimen/_10ssp" />
 
                 </LinearLayout>
 
@@ -539,7 +539,7 @@
                         android:drawablePadding="@dimen/_2sdp"
                         android:fontFamily="@font/open_sans_semibold"
                         android:gravity="right"
-                        android:text="See all"
+                        android:text="@string/res_see_all"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/_11ssp" />
 

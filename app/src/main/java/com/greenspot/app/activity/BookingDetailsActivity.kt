@@ -12,13 +12,12 @@ import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.greenspot.app.R
 import com.greenspot.app.adapter.BookDetailsAdapter
-import com.greenspot.app.adapter.CustomAdapter
 import com.greenspot.app.model.ListBookingDetails
+import com.greenspot.app.model.ListRoom
 import com.greenspot.app.network.ApiClient
 import com.greenspot.app.network.ApiInterface
 import com.greenspot.app.responce.ComanResponce
@@ -26,7 +25,6 @@ import com.greenspot.app.responce.currencyconvert.CurrencyConvert
 import com.greenspot.app.responce.idealpayment.ResponceIdealPayment
 import com.greenspot.app.responce.paymentmollie.ResponcePaymentMollie
 import com.greenspot.app.utils.*
-import hk.ids.gws.android.sclick.SClick
 import kotlinx.android.synthetic.main.activity_booking_details.*
 import kotlinx.android.synthetic.main.content_booking_details.*
 import org.json.JSONArray
@@ -34,10 +32,14 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
 
 
 class BookingDetailsActivity : AppCompatActivity() {
 
+    private var hotel_no_of_room: String = ""
+    private var checkin_date: String = ""
+    private var checkout_date: String = ""
     private var paymnetID: String = ""
     private var final_eur_price: String = ""
     private var transcationID: String = ""
@@ -93,6 +95,8 @@ class BookingDetailsActivity : AppCompatActivity() {
     private var weekend_night_pass_child_nop: String? = ""
 
 
+    private var roomList: ArrayList<ListRoom>? = ArrayList()
+    private var roomData: String = ""
 
     private lateinit var jsonOBject: JSONObject
 
@@ -131,38 +135,79 @@ class BookingDetailsActivity : AppCompatActivity() {
             formDate = helper!!.LoadStringPref(AppConfig.PREFERENCE.EVENT_FROM_DATE, "")
             no_of_person = helper!!.LoadStringPref(AppConfig.PREFERENCE.EVENT_NO_OF_PERSON, "")
 
-        }else if(bookingType.equals("Recreation")){
+        } else if (bookingType.equals("Recreation")) {
 
             final_price = helper!!.LoadStringPref(AppConfig.PREFERENCE.RECREATION_FINAL_PRICE, "")
             formDate = helper!!.LoadStringPref(AppConfig.PREFERENCE.RECREATION_FROM_DATE, "")
 
-            mid_week_day_pass_adult_price = helper!!.LoadStringPref(AppConfig.PREFERENCE.mid_week_day_pass_adult_price, "")
-            mid_week_day_pass_adult_nop = helper!!.LoadStringPref(AppConfig.PREFERENCE.mid_week_day_pass_adult_nop, "")
+            mid_week_day_pass_adult_price =
+                helper!!.LoadStringPref(AppConfig.PREFERENCE.mid_week_day_pass_adult_price, "")
+            mid_week_day_pass_adult_nop =
+                helper!!.LoadStringPref(AppConfig.PREFERENCE.mid_week_day_pass_adult_nop, "")
 
-            mid_week_day_pass_child_price = helper!!.LoadStringPref(AppConfig.PREFERENCE.mid_week_day_pass_child_price, "")
-            mid_week_day_pass_child_nop = helper!!.LoadStringPref(AppConfig.PREFERENCE.mid_week_day_pass_child_nop, "")
+            mid_week_day_pass_child_price =
+                helper!!.LoadStringPref(AppConfig.PREFERENCE.mid_week_day_pass_child_price, "")
+            mid_week_day_pass_child_nop =
+                helper!!.LoadStringPref(AppConfig.PREFERENCE.mid_week_day_pass_child_nop, "")
 
-            mid_week_night_pass_adult_price = helper!!.LoadStringPref(AppConfig.PREFERENCE.mid_week_night_pass_adult_price, "")
-            mid_week_night_pass_adult_nop = helper!!.LoadStringPref(AppConfig.PREFERENCE.mid_week_night_pass_adult_nop, "")
+            mid_week_night_pass_adult_price =
+                helper!!.LoadStringPref(AppConfig.PREFERENCE.mid_week_night_pass_adult_price, "")
+            mid_week_night_pass_adult_nop =
+                helper!!.LoadStringPref(AppConfig.PREFERENCE.mid_week_night_pass_adult_nop, "")
 
-            mid_week_night_pass_child_price = helper!!.LoadStringPref(AppConfig.PREFERENCE.mid_week_night_pass_child_price, "")
-            mid_week_night_pass_child_nop = helper!!.LoadStringPref(AppConfig.PREFERENCE.mid_week_night_pass_child_nop, "")
+            mid_week_night_pass_child_price =
+                helper!!.LoadStringPref(AppConfig.PREFERENCE.mid_week_night_pass_child_price, "")
+            mid_week_night_pass_child_nop =
+                helper!!.LoadStringPref(AppConfig.PREFERENCE.mid_week_night_pass_child_nop, "")
 
-            weekend_day_pass_adult_price = helper!!.LoadStringPref(AppConfig.PREFERENCE.weekend_day_pass_adult_price, "")
-            weekend_day_pass_adult_nop = helper!!.LoadStringPref(AppConfig.PREFERENCE.weekend_day_pass_adult_nop, "")
+            weekend_day_pass_adult_price =
+                helper!!.LoadStringPref(AppConfig.PREFERENCE.weekend_day_pass_adult_price, "")
+            weekend_day_pass_adult_nop =
+                helper!!.LoadStringPref(AppConfig.PREFERENCE.weekend_day_pass_adult_nop, "")
 
-            weekend_day_pass_child_price = helper!!.LoadStringPref(AppConfig.PREFERENCE.weekend_day_pass_child_price, "")
-            weekend_day_pass_child_nop = helper!!.LoadStringPref(AppConfig.PREFERENCE.weekend_day_pass_child_nop, "")
+            weekend_day_pass_child_price =
+                helper!!.LoadStringPref(AppConfig.PREFERENCE.weekend_day_pass_child_price, "")
+            weekend_day_pass_child_nop =
+                helper!!.LoadStringPref(AppConfig.PREFERENCE.weekend_day_pass_child_nop, "")
 
-            weekend_night_pass_adult_price = helper!!.LoadStringPref(AppConfig.PREFERENCE.weekend_night_pass_adult_price, "")
-            weekend_night_pass_adult_nop = helper!!.LoadStringPref(AppConfig.PREFERENCE.weekend_night_pass_adult_nop, "")
+            weekend_night_pass_adult_price =
+                helper!!.LoadStringPref(AppConfig.PREFERENCE.weekend_night_pass_adult_price, "")
+            weekend_night_pass_adult_nop =
+                helper!!.LoadStringPref(AppConfig.PREFERENCE.weekend_night_pass_adult_nop, "")
 
-            weekend_night_pass_child_price = helper!!.LoadStringPref(AppConfig.PREFERENCE.weekend_night_pass_child_price, "")
-            weekend_night_pass_child_nop = helper!!.LoadStringPref(AppConfig.PREFERENCE.weekend_night_pass_child_nop, "")
+            weekend_night_pass_child_price =
+                helper!!.LoadStringPref(AppConfig.PREFERENCE.weekend_night_pass_child_price, "")
+            weekend_night_pass_child_nop =
+                helper!!.LoadStringPref(AppConfig.PREFERENCE.weekend_night_pass_child_nop, "")
 
 
+        } else if (bookingType.equals("Hotel")) {
 
+            roomList = intent.getSerializableExtra(AppConfig.EXTRA.ROOMDATA) as ArrayList<ListRoom>
+            final_price = helper!!.LoadStringPref(AppConfig.PREFERENCE.HOTEL_FINAL_PRICE, "")
+            checkin_date = helper!!.LoadStringPref(AppConfig.PREFERENCE.CHECKINDATE, "")!!
+            checkout_date = helper!!.LoadStringPref(AppConfig.PREFERENCE.CHECKOUTDATE, "")!!
+            hotel_no_of_room = helper!!.LoadStringPref(AppConfig.PREFERENCE.HOTEL_NO_OF_ROOM, "")!!
 
+            val input = SimpleDateFormat("dd-MM-yyyy")
+            val output = SimpleDateFormat("MM/dd/yyyy")
+
+            val checkindate = input.parse(checkin_date)
+            checkin_date = output.format(checkindate)
+            val checkoutdate = input.parse(checkout_date)
+            checkout_date = output.format(checkoutdate)
+
+            Log.e("checking date"," "+checkin_date)
+            Log.e("checkout date"," "+checkout_date)
+            val gson = Gson()
+            val listString = gson.toJson(
+                roomList,
+                object : TypeToken<ArrayList<ListRoom?>?>() {}.type
+            )
+
+            roomData = listString
+
+            Log.e("roomData", " " + roomData)
         }
 
 
@@ -180,7 +225,9 @@ class BookingDetailsActivity : AppCompatActivity() {
         placeTitle[0].first_name = helper!!.LoadStringPref(AppConfig.PREFERENCE.USER_FNAME, "")!!
         placeTitle[0].last_name = helper!!.LoadStringPref(AppConfig.PREFERENCE.USER_LNAME, "")!!
         placeTitle[0].email = helper!!.LoadStringPref(AppConfig.PREFERENCE.USER_EMAIL, "")!!
-        placeTitle[0].contact_number = helper!!.LoadStringPref(AppConfig.PREFERENCE.USER_CONTACTNO, "")!!
+        placeTitle[0].gender = "M"
+        placeTitle[0].contact_number =
+            helper!!.LoadStringPref(AppConfig.PREFERENCE.USER_CONTACTNO, "")!!
 
         bookingDetailsAdapter.swapData(placeTitle)
         recycler.adapter = bookingDetailsAdapter
@@ -213,7 +260,7 @@ class BookingDetailsActivity : AppCompatActivity() {
                     if (value.first_name.isEmpty()) {
                         Toast.makeText(
                             applicationContext,
-                            "Please enter first name of " + value.person,
+                            getString(R.string.alert_firstname) + " " + getString(R.string.str_of) + " " + value.person,
                             Toast.LENGTH_SHORT
                         ).show()
 
@@ -223,7 +270,7 @@ class BookingDetailsActivity : AppCompatActivity() {
                     if (value.last_name.isEmpty()) {
                         Toast.makeText(
                             applicationContext,
-                            "Please enter last name of " + value.person,
+                            getString(R.string.alert_lastname) + " " + getString(R.string.str_of) + " " + value.person,
                             Toast.LENGTH_SHORT
                         ).show()
                         return@OnClickListener
@@ -233,7 +280,7 @@ class BookingDetailsActivity : AppCompatActivity() {
 
                         Toast.makeText(
                             applicationContext,
-                            "Please enter email of " + value.person,
+                            getString(R.string.alert_email) + " " + getString(R.string.str_of) + " " + value.person,
                             Toast.LENGTH_SHORT
                         ).show()
                         return@OnClickListener
@@ -242,7 +289,9 @@ class BookingDetailsActivity : AppCompatActivity() {
 
                         Toast.makeText(
                             applicationContext,
-                            "Please select date of birth of " + value.person,
+                            getString(R.string.str_plsselect) + " " + getString(R.string.str_dateofbirth) + " " + getString(
+                                R.string.str_of
+                            ) + " " + value.person,
                             Toast.LENGTH_SHORT
                         ).show()
                         return@OnClickListener
@@ -252,7 +301,9 @@ class BookingDetailsActivity : AppCompatActivity() {
 
                         Toast.makeText(
                             applicationContext,
-                            "Please select gender of " + value.person,
+                            getString(R.string.str_plsselect) + " " + getString(R.string.str_gender) + " " + getString(
+                                R.string.str_of
+                            ) + " " + value.person,
                             Toast.LENGTH_SHORT
                         ).show()
                         return@OnClickListener
@@ -262,7 +313,7 @@ class BookingDetailsActivity : AppCompatActivity() {
 
                         Toast.makeText(
                             applicationContext,
-                            "Please enter contact no of " + value.person,
+                            getString(R.string.enter_the_number) + " " + getString(R.string.str_of) + " " + value.person,
                             Toast.LENGTH_SHORT
                         ).show()
                         return@OnClickListener
@@ -272,7 +323,7 @@ class BookingDetailsActivity : AppCompatActivity() {
                     if (!isValidEmail(value.email)) {
                         Toast.makeText(
                             applicationContext,
-                            getString(R.string.res_validemail),
+                            getString(R.string.res_validemail) + " " + getString(R.string.str_of) + " " + value.person,
                             Toast.LENGTH_SHORT
                         ).show()
 
@@ -280,7 +331,6 @@ class BookingDetailsActivity : AppCompatActivity() {
                     }
 
                 }
-
 
             }
 
@@ -298,7 +348,7 @@ class BookingDetailsActivity : AppCompatActivity() {
 //            helper!!.ApplyPref()
 
 
-            alertProcessPayment("Please wait and don't close app while we are redirecting you to payment gateway.")
+            alertProcessPayment(getString(R.string.msg_payment))
 
 
 //            currencyConvertData(this.final_price!!, this.currncyCode!!, this.langCode!!)
@@ -318,7 +368,7 @@ class BookingDetailsActivity : AppCompatActivity() {
         builder1.setCancelable(false)
 
         builder1.setPositiveButton(
-            "Ok",
+            getString(R.string.res_ok),
             DialogInterface.OnClickListener { dialog, id ->
                 dialog.cancel()
 
@@ -355,7 +405,7 @@ class BookingDetailsActivity : AppCompatActivity() {
                     }
 
 
-                }else if(bookingType.equals("Recreation")){
+                } else if (bookingType.equals("Recreation")) {
 
 
                     checkBookingRecreation(
@@ -363,6 +413,15 @@ class BookingDetailsActivity : AppCompatActivity() {
                         selectCurrency = this.currncyCode!!,
                         langCode = this.langCode!!,
                         masterTyppe = "R"
+                    )
+                } else if (bookingType.equals("Hotel")) {
+
+
+                    checkHotelBooking(
+                        contryID = this.countryID!!,
+                        selectCurrency = this.currncyCode!!,
+                        langCode = this.langCode!!,
+                        masterTyppe = "H"
                     )
                 }
 
@@ -382,7 +441,7 @@ class BookingDetailsActivity : AppCompatActivity() {
 
 
             editModel = ListBookingDetails(
-                person = "Person " + i,
+                person = getString(R.string.str_person) + " " + i,
                 contact_number = "",
                 email = "",
                 id = "",
@@ -450,7 +509,7 @@ class BookingDetailsActivity : AppCompatActivity() {
 
                     login()
 
-                }else {
+                } else {
                     Toast.makeText(
                         this@BookingDetailsActivity,
                         getString(R.string.msg_unexpected_error),
@@ -463,7 +522,82 @@ class BookingDetailsActivity : AppCompatActivity() {
 
                 viewDialog!!.hideDialog()
 
-                Log.e("fail", " " + t.message)
+
+                Toast.makeText(
+                    this@BookingDetailsActivity,
+                    getString(R.string.msg_internet_conn),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
+
+    }
+
+
+    private fun checkHotelBooking(
+        contryID: String,
+        selectCurrency: String,
+        langCode: String,
+        masterTyppe: String
+    ) {
+
+//        progress!!.createDialog(false)
+//        progress!!.DialogMessage(getString(R.string.please_wait))
+        viewDialog!!.showDialog()
+        utils!!.hideKeyboard()
+        val jsonArrayroom = JSONArray(roomData)
+        val apiService = ApiClient.client?.create(ApiInterface::class.java)
+        val checkBookingResponce = apiService?.CALL_CHECKBEFOREPAYHOTEL(
+            token = token,
+            langcode = langCode,
+            tourid = itemID,
+            selectCurrency = selectCurrency,
+            masterType = masterTyppe,
+            singleprice = this.single_price!!,
+            room = jsonArrayroom
+
+        )
+
+        Log.e("roomdataaa"," "+jsonArrayroom.toString())
+
+        checkBookingResponce?.enqueue(object : Callback<ComanResponce> {
+            override fun onResponse(@NonNull call: Call<ComanResponce>, @NonNull response: Response<ComanResponce>) {
+                viewDialog!!.hideDialog()
+
+                val checkbookingcall = response.body()
+                if (response.code() == AppConfig.URL.SUCCESS) {
+                    if (checkbookingcall!!.status == 1) {
+
+                        currencyData()
+
+
+                    } else {
+
+                        alertbooking(checkbookingcall.message)
+//                        Toast.makeText(
+//                            this@ListPlaceActivity,
+//                            tourDetails.message,
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+
+                    }
+                } else if (response.code() == AppConfig.URL.TOKEN_EXPIRE) {
+
+                    login()
+
+                } else {
+                    Toast.makeText(
+                        this@BookingDetailsActivity,
+                        getString(R.string.msg_unexpected_error),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+            override fun onFailure(@NonNull call: Call<ComanResponce>, @NonNull t: Throwable) {
+
+                viewDialog!!.hideDialog()
+
 
                 Toast.makeText(
                     this@BookingDetailsActivity,
@@ -542,7 +676,7 @@ class BookingDetailsActivity : AppCompatActivity() {
 
                     login()
 
-                }else {
+                } else {
                     Toast.makeText(
                         this@BookingDetailsActivity,
                         getString(R.string.msg_unexpected_error),
@@ -579,7 +713,7 @@ class BookingDetailsActivity : AppCompatActivity() {
         builder1.setCancelable(false)
 
         builder1.setPositiveButton(
-            "Ok",
+            getString(R.string.res_ok),
             DialogInterface.OnClickListener { dialog, id ->
                 dialog.cancel()
                 startActivity(
@@ -733,6 +867,7 @@ class BookingDetailsActivity : AppCompatActivity() {
                     helper!!.initPref()
                     helper!!.SaveIntPref(AppConfig.PREFERENCE.CHECKPAYMENT, 1)
                     helper!!.SaveStringPref(AppConfig.PREFERENCE.PERSONDETAILS, persons)
+                    helper!!.SaveStringPref(AppConfig.PREFERENCE.FINALROOMDATA, roomData)
                     helper!!.SaveStringPref(AppConfig.PREFERENCE.FINALEURPRICE, final_eur_price)
                     helper!!.SaveStringPref(AppConfig.PREFERENCE.TRANSACTIONID, transcationID)
                     helper!!.ApplyPref()
@@ -805,13 +940,20 @@ class BookingDetailsActivity : AppCompatActivity() {
                     selectCurrency = this.currncyCode!!
                 )
 
-            }else if(bookingType.equals("Recreation")){
+            } else if (bookingType.equals("Recreation")) {
                 recreationsendPaymnetData(
                     contryID = this.countryID!!,
                     langCode = this.langCode!!,
                     selectCurrency = this.currncyCode!!
                 )
 
+            } else if(bookingType.equals("Hotel")){
+
+                hotelsendPaymnetData(
+                    contryID = this.countryID!!,
+                    langCode = this.langCode!!,
+                    selectCurrency = this.currncyCode!!
+                )
             }
 
 
@@ -901,7 +1043,7 @@ class BookingDetailsActivity : AppCompatActivity() {
                         ).show()
 
                     }
-                }else if (response.code() == AppConfig.URL.TOKEN_EXPIRE) {
+                } else if (response.code() == AppConfig.URL.TOKEN_EXPIRE) {
 
                     login()
 
@@ -1009,7 +1151,7 @@ class BookingDetailsActivity : AppCompatActivity() {
                         ).show()
 
                     }
-                }else if (response.code() == AppConfig.URL.TOKEN_EXPIRE) {
+                } else if (response.code() == AppConfig.URL.TOKEN_EXPIRE) {
 
                     login()
 
@@ -1117,7 +1259,106 @@ class BookingDetailsActivity : AppCompatActivity() {
 
                     login()
 
-                }else {
+                } else {
+
+                    Log.e("postreivewData", " error" + response.errorBody())
+                    Log.e("postreivewData", " error" + response.body().toString())
+                    Log.e("postreivewData", " error" + response.code())
+
+                    Toast.makeText(
+                        this@BookingDetailsActivity,
+                        getString(R.string.msg_unexpected_error),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+            override fun onFailure(@NonNull call: Call<ResponcePaymentMollie>, @NonNull t: Throwable) {
+
+                viewDialog!!.hideDialog()
+                Log.e("fail", " " + t.message)
+                Toast.makeText(
+                    this@BookingDetailsActivity,
+                    getString(R.string.msg_internet_conn),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
+
+    }
+
+    private fun hotelsendPaymnetData(contryID: String, selectCurrency: String, langCode: String) {
+
+//        progress!!.createDialog(false)
+//        progress!!.DialogMessage(getString(R.string.please_wait))
+        viewDialog!!.showDialog()
+
+        utils!!.hideKeyboard()
+        val jsonArray = JSONArray(helper!!.LoadStringPref(AppConfig.PREFERENCE.PERSONDETAILS, ""))
+        val roomdataa = JSONArray(helper!!.LoadStringPref(AppConfig.PREFERENCE.FINALROOMDATA, ""))
+        val apiService = ApiClient.client?.create(ApiInterface::class.java)
+        val responcePlaceReview = apiService?.HOTELPAYMENTMOLIE_CALL(
+            token = token,
+            contryID = contryID,
+            selectCurrency = "EUR",
+            langcode = langCode,
+            person = jsonArray,
+            tourid = itemID,
+            formDate = this.checkin_date,
+            toDate = this.checkout_date,
+            noofrooms = this.hotel_no_of_room,
+            tanstationID = helper!!.LoadStringPref(AppConfig.PREFERENCE.TRANSACTIONID, "")!!,
+            originalPaymentcurrency = selectCurrency,
+            originalPaymentprice = this.final_price!!,
+            rooms = roomdataa
+
+        )
+
+        Log.e("token", token)
+        Log.e("contryID", contryID)
+        Log.e("checkin_date", checkin_date)
+        Log.e("checkout_date", checkout_date)
+
+        Log.e("tanstationID", helper!!.LoadStringPref(AppConfig.PREFERENCE.TRANSACTIONID, "")!!)
+
+
+        responcePlaceReview?.enqueue(object : Callback<ResponcePaymentMollie> {
+
+            override fun onResponse(@NonNull call: Call<ResponcePaymentMollie>, @NonNull response: Response<ResponcePaymentMollie>) {
+                viewDialog!!.hideDialog()
+
+                val postreivewData = response.body()
+                if (response.code() == AppConfig.URL.SUCCESS) {
+
+                    if (postreivewData!!.status == 1) {
+
+                        paymnetID = postreivewData.data.id
+                        alertsuccessbooking(postreivewData.message)
+
+//                        Toast.makeText(
+//                            this@BookingDetailsActivity,
+//                            postreivewData.message,
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+//
+//                        startActivity(Intent(this@BookingDetailsActivity, HomeActivity::class.java))
+//                        finish()
+
+
+                    } else {
+
+                        Toast.makeText(
+                            this@BookingDetailsActivity,
+                            postreivewData.message,
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                    }
+                } else if (response.code() == AppConfig.URL.TOKEN_EXPIRE) {
+
+                    login()
+
+                } else {
 
                     Log.e("postreivewData", " error" + response.errorBody())
                     Log.e("postreivewData", " error" + response.body().toString())
@@ -1146,7 +1387,11 @@ class BookingDetailsActivity : AppCompatActivity() {
     }
 
 
-    private fun recreationsendPaymnetData(contryID: String, selectCurrency: String, langCode: String) {
+    private fun recreationsendPaymnetData(
+        contryID: String,
+        selectCurrency: String,
+        langCode: String
+    ) {
 
 //        progress!!.createDialog(false)
 //        progress!!.DialogMessage(getString(R.string.please_wait))
@@ -1225,7 +1470,7 @@ class BookingDetailsActivity : AppCompatActivity() {
                         ).show()
 
                     }
-                }else if (response.code() == AppConfig.URL.TOKEN_EXPIRE) {
+                } else if (response.code() == AppConfig.URL.TOKEN_EXPIRE) {
 
                     login()
 
@@ -1263,7 +1508,7 @@ class BookingDetailsActivity : AppCompatActivity() {
         builder1.setCancelable(false)
 
         builder1.setPositiveButton(
-            "Ok",
+            getString(R.string.res_ok),
             DialogInterface.OnClickListener { dialog, id ->
                 dialog.cancel()
                 if (bookingType.equals("Tour")) {
@@ -1285,7 +1530,17 @@ class BookingDetailsActivity : AppCompatActivity() {
                             .putExtra(AppConfig.EXTRA.CHECKBOOKINGINFO, 1)
                     )
                     finishAffinity()
-                }else if(bookingType.equals("Recreation")){
+                } else if (bookingType.equals("Recreation")) {
+
+                    startActivity(
+                        Intent(this, BookingInfoActvity::class.java)
+                            .putExtra(AppConfig.EXTRA.BOOKINGID, paymnetID)
+                            .putExtra(AppConfig.EXTRA.BOOKINGTYPE, bookingType)
+                            .putExtra(AppConfig.EXTRA.CHECKBOOKINGINFO, 1)
+                    )
+                    finishAffinity()
+
+                }else if(bookingType.equals("Hotel")){
 
                     startActivity(
                         Intent(this, BookingInfoActvity::class.java)

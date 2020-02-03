@@ -95,7 +95,7 @@ class TourSuggestedAdapter(val context: FragmentActivity?) :
 
             itemView.findViewById<TextView>(R.id.txt_tourplace).text = item.packageName
             itemView.findViewById<TextView>(R.id.txt_riview).text =
-                item.totalReviews.toString() + " Reviews"
+                item.totalReviews.toString() +" "+ context.getString(R.string.txt_reviews)
 
 
         }

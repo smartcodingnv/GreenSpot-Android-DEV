@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/open_sans_semibold"
-            android:text="Edit Profile"
+            android:text="@string/res_edit_profile"
             android:textColor="@color/black"
             android:textSize="@dimen/_14ssp" />
 

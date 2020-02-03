@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/background" />
+        android:src="@drawable/imglogin" />
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -66,7 +66,7 @@
                     android:drawablePadding="@dimen/_5sdp"
                     android:fontFamily="@font/open_sans_semibold"
                     android:gravity="center"
-                    android:text="Skip"
+                    android:text="@string/res_skip"
                     android:textColor="@color/green"
                     android:textSize="@dimen/_13ssp" />
             </LinearLayout>
@@ -91,6 +91,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/_20sdp"
             android:scaleType="fitCenter"
+            android:visibility="gone"
             android:src="@drawable/greenspot_vertical">
 
         </ImageView>

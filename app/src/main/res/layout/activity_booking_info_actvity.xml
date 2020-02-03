@@ -40,7 +40,7 @@
             android:ellipsize="end"
             android:fontFamily="@font/open_sans_semibold"
             android:maxLines="1"
-            android:text="Booking Details"
+            tools:text="Booking Details"
             android:textColor="@color/black"
             android:textSize="@dimen/_14ssp" />
 

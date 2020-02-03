@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:fontFamily="@font/open_sans"
-                android:text="Tour Name:"
+                android:text="@string/res_tour_name"
                 android:textColor="@color/green"
                 android:textSize="@dimen/_12ssp" />
 
@@ -49,7 +49,7 @@
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/open_sans"
-                android:text="Location:"
+                android:text="@string/res_location"
                 android:textColor="@color/green"
                 android:textSize="@dimen/_12ssp" />
 
@@ -69,7 +69,7 @@
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/open_sans"
-                android:text="Duration:"
+                android:text="@string/res_duration"
                 android:textColor="@color/green"
                 android:textSize="@dimen/_12ssp" />
 
@@ -89,7 +89,7 @@
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/open_sans"
-                android:text="Departure From:"
+                android:text="@string/res_departure_from"
                 android:textColor="@color/green"
                 android:textSize="@dimen/_12ssp" />
 
@@ -109,7 +109,7 @@
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/open_sans"
-                android:text="Category:"
+                android:text="@string/res_category"
                 android:textColor="@color/green"
                 android:textSize="@dimen/_12ssp" />
 
@@ -129,7 +129,7 @@
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/open_sans"
-                android:text="Type:"
+                android:text="@string/res_type"
                 android:textColor="@color/green"
                 android:textSize="@dimen/_12ssp" />
 
@@ -150,7 +150,7 @@
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/open_sans"
-                android:text="Overview:"
+                android:text="@string/txt_overview"
                 android:textColor="@color/green"
                 android:textSize="@dimen/_12ssp" />
 
@@ -171,7 +171,7 @@
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/open_sans"
-                android:text="Important Note:"
+                android:text="@string/res_important_note"
 
                 android:textColor="@color/green"
                 android:textSize="@dimen/_12ssp" />
@@ -193,7 +193,7 @@
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/open_sans"
-                android:text="Terms &amp; Conditions:"
+                android:text="@string/res_terms_amp_conditions"
                 android:textColor="@color/green"
                 android:textSize="@dimen/_12ssp" />
 
@@ -221,7 +221,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:fontFamily="@font/open_sans"
-                android:text="Event Name:"
+                android:text="@string/res_event_name"
                 android:textColor="@color/green"
                 android:textSize="@dimen/_12ssp" />
 
@@ -241,7 +241,7 @@
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/open_sans"
-                android:text="Location:"
+                android:text="@string/res_location:"
                 android:textColor="@color/green"
                 android:textSize="@dimen/_12ssp" />
 
@@ -262,7 +262,7 @@
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/open_sans"
-                android:text="Date: "
+                android:text="@string/res_dateee"
                 android:textColor="@color/green"
                 android:textSize="@dimen/_12ssp" />
 
@@ -282,7 +282,7 @@
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/open_sans"
-                android:text="Time: "
+                android:text="@string/res_timeee"
                 android:textColor="@color/green"
                 android:textSize="@dimen/_12ssp" />
 
@@ -302,7 +302,7 @@
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/open_sans"
-                android:text="Overview:"
+                android:text="@string/txt_overview"
                 android:textColor="@color/green"
                 android:textSize="@dimen/_12ssp" />
 
@@ -333,7 +333,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:fontFamily="@font/open_sans"
-                android:text="Vacation Name:"
+                android:text="@string/res_vacation_name"
                 android:textColor="@color/green"
                 android:textSize="@dimen/_12ssp" />
 
@@ -353,7 +353,7 @@
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/open_sans"
-                android:text="Location:"
+                android:text="@string/res_location"
                 android:textColor="@color/green"
                 android:textSize="@dimen/_12ssp" />
 
@@ -374,7 +374,7 @@
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/open_sans"
-                android:text="Overview:"
+                android:text="@string/txt_overview"
                 android:textColor="@color/green"
                 android:textSize="@dimen/_12ssp" />
 

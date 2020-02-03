@@ -139,7 +139,7 @@ class PlaceAvailabalityFragment : Fragment() {
             placeTitle.add(
                 PlaceAvaliblityTitle(
                     "1",
-                    "Place",
+                    getString(R.string.item_place),
                     placeData
 
                 )
@@ -150,7 +150,7 @@ class PlaceAvailabalityFragment : Fragment() {
             placeTitle.add(
                 PlaceAvaliblityTitle(
                     "2",
-                    "Office",
+                    getString(R.string.item_office),
                     officeData
 
                 )
@@ -164,7 +164,7 @@ class PlaceAvailabalityFragment : Fragment() {
             placeData.add(
                 PlaceSubItem(
                     "1",
-                    "Open Time",
+                    getString(R.string.item_opentime),
                     place_open_time
                 )
             )
@@ -174,7 +174,7 @@ class PlaceAvailabalityFragment : Fragment() {
             placeData.add(
                 PlaceSubItem(
                     "2",
-                    "Close Time",
+                    getString(R.string.item_closetime),
                     place_close_time
                 )
             )
@@ -185,7 +185,7 @@ class PlaceAvailabalityFragment : Fragment() {
             placeData.add(
                 PlaceSubItem(
                     "3",
-                    "Address",
+                    getString(R.string.item_address),
                     address
                 )
             )
@@ -199,7 +199,7 @@ class PlaceAvailabalityFragment : Fragment() {
             officeData.add(
                 PlaceSubItem(
                     "1",
-                    "Open Time",
+                    getString(R.string.item_opentime),
                     office_open_time
                 )
             )
@@ -209,7 +209,7 @@ class PlaceAvailabalityFragment : Fragment() {
             officeData.add(
                 PlaceSubItem(
                     "2",
-                    "Close Time",
+                    getString(R.string.item_closetime),
                     office_close_time
                 )
             )
@@ -222,7 +222,7 @@ class PlaceAvailabalityFragment : Fragment() {
             officeData.add(
                 PlaceSubItem(
                     "3",
-                    "Office Address",
+                    getString(R.string.item_officeaddress),
                     office_address
                 )
             )
@@ -236,7 +236,7 @@ class PlaceAvailabalityFragment : Fragment() {
             otherData.add(
                 PlaceSubItem(
                     "1",
-                    "Phone Number",
+                    getString(R.string.item_phoneno),
                     phone
                 )
             )
@@ -247,7 +247,7 @@ class PlaceAvailabalityFragment : Fragment() {
             otherData.add(
                 PlaceSubItem(
                     "2",
-                    "Mobile Number",
+                    getString(R.string.item_mobileno),
                     mobile
                 )
             )
@@ -258,7 +258,7 @@ class PlaceAvailabalityFragment : Fragment() {
             otherData.add(
                 PlaceSubItem(
                     "3",
-                    "Email",
+                    getString(R.string.res_email),
                     email
                 )
             )
@@ -268,7 +268,7 @@ class PlaceAvailabalityFragment : Fragment() {
             otherData.add(
                 PlaceSubItem(
                     "4",
-                    "Know More",
+                    getString(R.string.res_know_more),
                     known_for
                 )
             )

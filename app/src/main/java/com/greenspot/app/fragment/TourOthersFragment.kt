@@ -1,18 +1,26 @@
 package com.greenspot.app.fragment
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.gson.Gson
 import com.greenspot.app.R
+import com.greenspot.app.adapter.BookingHotelPolicyAdapter
+import com.greenspot.app.adapter.HotelPolicyAdapter
 import com.greenspot.app.adapter.TourOtherAdapter
 import com.greenspot.app.model.PlaceSubItem
+import com.greenspot.app.responce.bookinginfohotel.ResponceBookinginfoHotel
+import com.greenspot.app.responce.hoteldetails.RecordsItem
+import com.greenspot.app.responce.hoteldetails.ResponceHotelDetails
 import com.greenspot.app.responce.tourdetail.ResponceTourDetails
 import com.greenspot.app.utils.*
-import kotlinx.android.synthetic.main.fragment_place_availabality.*
+import kotlinx.android.synthetic.main.fragment_place_anemities.*
+import kotlinx.android.synthetic.main.fragment_place_availabality.rv_placemenu
 import kotlinx.android.synthetic.main.fragment_place_availabality.view.*
 import java.util.*
 
@@ -20,9 +28,13 @@ import java.util.*
 class TourOthersFragment : Fragment() {
 
 
+    private var policyRecordsMy: ArrayList<RecordsItem>? = ArrayList()
+    private var bookpolicyRecordsMy: ArrayList<com.greenspot.app.responce.bookinginfohotel.RecordsItem>? = ArrayList()
+
     private var importantNote: String = ""
     private var termsandCondition: String = ""
     private lateinit var mView: View
+    private var checkOther: Int = 0
 
 
     var toursubeData: ArrayList<PlaceSubItem> = ArrayList()
@@ -32,12 +44,12 @@ class TourOthersFragment : Fragment() {
     private var helper: PreferenceHelper? = null
 
 
-    fun newInstance(): TourOthersFragment {
+    fun newInstance(checkflag: Int): TourOthersFragment {
 
-        val args = Bundle()
+        arguments = Bundle()
         val fragment = TourOthersFragment()
-
-        fragment.setArguments(args)
+        arguments!!.putInt(AppConfig.BUNDLE.CHECKTOUROTHER, checkflag)
+        fragment.setArguments(arguments)
         return fragment
     }
 
@@ -64,16 +76,95 @@ class TourOthersFragment : Fragment() {
 
         mView = view
 
+        if (checkOther == 1) {
 
-        val gson = Gson()
-        val tourdetails =
-            gson.fromJson(
-                helper!!.LoadStringPref(AppConfig.PREFERENCE.TOURDETAILSRESPONCE, ""),
-                ResponceTourDetails::class.java
-            )
+            val gson = Gson()
+            val tourdetails =
+                gson.fromJson(
+                    helper!!.LoadStringPref(AppConfig.PREFERENCE.TOURDETAILSRESPONCE, ""),
+                    ResponceTourDetails::class.java
+                )
+            txt_otheractivity.visibility = View.GONE
+            txt_labelother.visibility = View.GONE
+            importantNote = tourdetails.data.others.importantNote
+            termsandCondition = tourdetails.data.others.termAndCondition
 
-        importantNote = tourdetails.data.others.importantNote
-        termsandCondition = tourdetails.data.others.termAndCondition
+
+        } else if (checkOther == 2) {
+
+            val gson = Gson()
+            val hoteldetails =
+                gson.fromJson(
+                    helper!!.LoadStringPref(AppConfig.PREFERENCE.HOTELDETAILSRESPONCE, ""),
+                    ResponceHotelDetails::class.java
+                )
+
+
+            if(hoteldetails.data.policies.termAndPolicy.isNotEmpty()){
+
+                txt_labelother.visibility = View.GONE
+                txt_otheractivity.visibility = View.GONE
+
+                txt_labetermspolicy.visibility = View.VISIBLE
+                txt_termspolicy.visibility = View.VISIBLE
+
+                txt_labetermspolicy.text = getString(R.string.str_termsandpolicy)
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    txt_termspolicy.text = Html.fromHtml(
+                        hoteldetails.data.policies.termAndPolicy,
+                        Html.FROM_HTML_MODE_COMPACT
+                    )
+                } else {
+                    txt_termspolicy.text = Html.fromHtml(hoteldetails.data.policies.termAndPolicy)
+                }
+
+            }
+            policyRecordsMy!!.clear()
+            for (otherdata in hoteldetails.data.policies.records!!) {
+                if (otherdata.value != "") {
+                    policyRecordsMy!!.add(otherdata)
+                }
+
+            }
+        }else if (checkOther == 3) {
+
+            val gson = Gson()
+            val hoteldetails =
+                gson.fromJson(
+                    helper!!.LoadStringPref(AppConfig.PREFERENCE.HOTELBOOKINGINFO, ""),
+                    ResponceBookinginfoHotel::class.java
+                )
+
+
+            if(hoteldetails.data.policies.termAndPolicy.isNotEmpty()){
+
+                txt_labelother.visibility = View.GONE
+                txt_otheractivity.visibility = View.GONE
+
+                txt_labetermspolicy.visibility = View.VISIBLE
+                txt_termspolicy.visibility = View.VISIBLE
+
+                txt_labetermspolicy.text = getString(R.string.str_termsandpolicy)
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    txt_termspolicy.text = Html.fromHtml(
+                        hoteldetails.data.policies.termAndPolicy,
+                        Html.FROM_HTML_MODE_COMPACT
+                    )
+                } else {
+                    txt_termspolicy.text = Html.fromHtml(hoteldetails.data.policies.termAndPolicy)
+                }
+
+            }
+            bookpolicyRecordsMy!!.clear()
+            for (otherdata in hoteldetails.data.policies.records!!) {
+                if (otherdata.value != "") {
+                    bookpolicyRecordsMy!!.add(otherdata)
+                }
+
+            }
+        }
 
         initView()
 
@@ -82,25 +173,39 @@ class TourOthersFragment : Fragment() {
     private fun initView() {
 
 
-        toursubeData.clear()
+        if (checkOther == 1) {
 
+            toursubeData.clear()
+            setTourSubData()
+            val visiterPlaceAdapter = TourOtherAdapter(activity)
+            Common.setVerticalRecyclerView(context!!, mView.rv_placemenu)
+            visiterPlaceAdapter.swapData(toursubeData)
+            rv_placemenu.adapter = visiterPlaceAdapter
 
+        } else if (checkOther == 2) {
 
-        setTourSubData()
+            val hotelPolicyAdapter = HotelPolicyAdapter(activity)
+            Common.setVerticalRecyclerView(context!!, mView.rv_placemenu)
+            hotelPolicyAdapter.swapData(this.policyRecordsMy!!)
+            rv_placemenu.adapter = hotelPolicyAdapter
 
-        val visiterPlaceAdapter = TourOtherAdapter(activity)
+        }else if (checkOther == 3) {
 
-        Common.setVerticalRecyclerView(context!!, mView.rv_placemenu)
-        visiterPlaceAdapter.swapData(toursubeData)
-        rv_placemenu.adapter = visiterPlaceAdapter
+            val hotelPolicyAdapter = BookingHotelPolicyAdapter(activity)
+            Common.setVerticalRecyclerView(context!!, mView.rv_placemenu)
+            hotelPolicyAdapter.swapData(this.bookpolicyRecordsMy!!)
+            rv_placemenu.adapter = hotelPolicyAdapter
+
+        }
 
 
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
-
+        arguments?.getInt(AppConfig.BUNDLE.CHECKTOUROTHER)?.let {
+            checkOther = it
+        }
     }
 
     override fun onDetach() {
@@ -114,7 +219,7 @@ class TourOthersFragment : Fragment() {
             toursubeData.add(
                 PlaceSubItem(
                     "1",
-                    "Important Notes",
+                    getString(R.string.item_importantnote),
                     importantNote
                 )
             )
@@ -124,7 +229,7 @@ class TourOthersFragment : Fragment() {
             toursubeData.add(
                 PlaceSubItem(
                     "1",
-                    "Terms & Conditions",
+                    getString(R.string.res_terms_amp_conditions),
                     termsandCondition
                 )
             )

@@ -83,7 +83,7 @@ class PlaceFilterActivity : AppCompatActivity(), ItemClickListener {
 
         Log.e(TAG, "" + checkData)
 
-        if (checkData.isNullOrEmpty()) {
+            if (checkData.isNullOrEmpty()) {
 
             filterResponce = intent.getStringExtra(AppConfig.EXTRA.FILTERRESPONCE)
 
@@ -164,7 +164,7 @@ class PlaceFilterActivity : AppCompatActivity(), ItemClickListener {
                 DataItemFilterTitle(
                     filtersubdata,
                     1,
-                    "Price Per Person",
+                    getString(R.string.txt_priceperperson),
                     ""
                 )
             )
@@ -228,7 +228,7 @@ class PlaceFilterActivity : AppCompatActivity(), ItemClickListener {
             DataItemFilterTitle(
                 filtersubdata,
                 1,
-                "Price Per Person",
+                getString(R.string.item_priceperperson),
                 ""
             )
         )

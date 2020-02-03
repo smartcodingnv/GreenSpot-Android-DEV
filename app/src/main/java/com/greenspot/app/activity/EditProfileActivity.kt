@@ -44,6 +44,7 @@ class EditProfileActivity : AppCompatActivity() {
 
 
     private lateinit var helper: PreferenceHelper
+    private lateinit var helperlang: PreferenceHelper
     private lateinit var utils: Utils
     private lateinit var progress: Progress
     private lateinit var viewDilaog: ViewDialog
@@ -56,7 +57,7 @@ class EditProfileActivity : AppCompatActivity() {
         progress = Progress(this)
         viewDilaog = ViewDialog(this)
         helper = PreferenceHelper(this, AppConfig.PREFERENCE.PREF_FILE)
-
+        helperlang = PreferenceHelper(this, AppConfig.PREFERENCE.PREF_FILE_LANG)
 
         token = "Bearer " + helper.LoadStringPref(AppConfig.PREFERENCE.AUTHTOKEN, "")
 
@@ -90,7 +91,7 @@ class EditProfileActivity : AppCompatActivity() {
     private fun initdetails() {
 
 
-        getuserDetails(authToken = token, langCode = getString(R.string.default_language))
+        getuserDetails(authToken = token, langCode = helperlang.LoadStringPref(AppConfig.PREFERENCE.SELECTLANGCODE, "")!!)
 
     }
 
@@ -125,7 +126,7 @@ class EditProfileActivity : AppCompatActivity() {
 
             Toast.makeText(
                 applicationContext,
-                getString(R.string.enter_the_name),
+                getString(R.string.alert_firstname),
                 Toast.LENGTH_SHORT
             ).show()
             return
@@ -136,7 +137,7 @@ class EditProfileActivity : AppCompatActivity() {
 
             Toast.makeText(
                 applicationContext,
-                "Enter the last name",
+                getString(R.string.alert_lastname),
                 Toast.LENGTH_SHORT
             ).show()
             return
@@ -146,7 +147,7 @@ class EditProfileActivity : AppCompatActivity() {
 
             Toast.makeText(
                 applicationContext,
-                getString(R.string.res_enteremail),
+                getString(R.string.alert_email),
                 Toast.LENGTH_SHORT
             ).show()
             return
@@ -217,7 +218,7 @@ class EditProfileActivity : AppCompatActivity() {
 
         updateDetails(
             authToken = token, fname = name, lname = lastname, email = email, number = number,
-            langCode = getString(R.string.default_language)
+            langCode = helperlang.LoadStringPref(AppConfig.PREFERENCE.SELECTLANGCODE, "")!!
         )
 
 
@@ -230,30 +231,30 @@ class EditProfileActivity : AppCompatActivity() {
 
 
     private fun selectImage() {
-        val items = arrayOf<CharSequence>("Take Photo", "Choose from Library", "Cancel")
+        val items = arrayOf<CharSequence>(getString(R.string.str_takephoto), getString(R.string.str_chooselib), getString(R.string.res_cancel))
 
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Add Photo!")
+        builder.setTitle(getString(R.string.res_addphoto))
         builder.setItems(items) { dialog, item ->
             val result = Utility.checkPermission(this)
 
-            if (items[item] == "Take Photo") {
-                userChoosenTask = "Take Photo"
+            if (items[item] == getString(R.string.str_takephoto)) {
+                userChoosenTask = getString(R.string.str_takephoto)
                 if (result)
                     cameraIntent()
-            } else if (items[item] == "Choose from Library") {
-                userChoosenTask = "Choose from Library"
+            } else if (items[item] == getString(R.string.str_chooselib)) {
+                userChoosenTask = getString(R.string.str_chooselib)
                 if (result)
                     galleryIntent()
 
-            } else if (items[item] == "Cancel") {
+            } else if (items[item] == getString(R.string.res_cancel)) {
                 dialog.dismiss()
             }
         }
         builder.show()
     }
 
-    private fun cameraIntent() {
+        private fun cameraIntent() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         startActivityForResult(intent, REQUEST_CAMERA)
     }
@@ -357,18 +358,15 @@ class EditProfileActivity : AppCompatActivity() {
 //        progress.createDialog(false)
 //        progress.DialogMessage(getString(R.string.please_wait))
 //        progress.showDialog()
+
         viewDilaog.showDialog()
         utils.hideKeyboard()
-
         val apiService = ApiClient.client?.create(ApiInterface::class.java)
         val loginResponceCall = apiService?.USERDETAILS_CALL(authToken, langCode)
-
-
         loginResponceCall?.enqueue(object : Callback<UserDetailsResponce> {
             override fun onResponse(@NonNull call: Call<UserDetailsResponce>, @NonNull response: Response<UserDetailsResponce>) {
                 viewDilaog.hideDialog()
                 val userDetails = response.body()
-
 
                 if (response.code() == AppConfig.URL.SUCCESS) {
                     if (response.body()?.status == 1) {
@@ -470,7 +468,7 @@ class EditProfileActivity : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                         ).show()
 
-                        getuserDetails(token, langCode = getString(R.string.default_language))
+                        getuserDetails(token, langCode =helperlang.LoadStringPref(AppConfig.PREFERENCE.SELECTLANGCODE, "")!!)
 
 //
 //                        et_name.setText(userDetails!!.data.detail.firstName)

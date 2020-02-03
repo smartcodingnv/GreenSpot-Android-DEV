@@ -16,6 +16,119 @@
         android:orientation="vertical"
         android:padding="@dimen/_10sdp">
 
+        <LinearLayout
+            android:id="@+id/lay_moredesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/lable_hotelname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:text="@string/res_hotel_name"
+                android:textColor="@color/green"
+                android:textSize="@dimen/_12ssp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/txt_hotelname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:fontFamily="@font/open_sans"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp"
+                android:visibility="gone"
+                tools:text="Op het eiland " />
+
+            <TextView
+                android:id="@+id/lable_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:text="@string/res_address"
+                android:textColor="@color/green"
+                android:textSize="@dimen/_12ssp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/txt_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:fontFamily="@font/open_sans"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp"
+                android:visibility="gone"
+                tools:text="Op het eiland " />
+
+            <TextView
+                android:id="@+id/lable_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:text="@string/res_location"
+                android:textColor="@color/green"
+                android:textSize="@dimen/_12ssp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/txt_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:fontFamily="@font/open_sans"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp"
+                android:visibility="gone"
+                tools:text="Op het eiland " />
+
+            <TextView
+                android:id="@+id/lable_property"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:text="@string/res_property_type"
+                android:textColor="@color/green"
+                android:textSize="@dimen/_12ssp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/txt_proptype"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:fontFamily="@font/open_sans"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp"
+                android:visibility="gone"
+                tools:text="Op het eiland " />
+
+            <TextView
+                android:id="@+id/lable_suitable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:text="@string/txt_suitablefor"
+                android:textColor="@color/green"
+                android:textSize="@dimen/_12ssp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/txt_suitable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:fontFamily="@font/open_sans"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp"
+                android:visibility="gone"
+                tools:text="Op het eiland " />
+        </LinearLayout>
+
         <TextView
             android:id="@+id/txt_placedesc"
             android:layout_width="match_parent"
@@ -28,7 +141,6 @@ Vanaf het eiland Anaula kunt u zelfstandig de sula’s bezoeken en daar genieten
 \n\nAlleen bij erg hoge waterstand van de rivier is deze sula niet te bereiken. De Ferulasi sula, die op enkele minuten varen ligt, is standaard in het programma opgenomen en is vrijwel altijd toegankelijk. Boek een van onze tours voor een prachtige Sula ervaring"
             android:textColor="@color/black"
             android:textSize="@dimen/_12ssp" />
-
 
 
     </LinearLayout>

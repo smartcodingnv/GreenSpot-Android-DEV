@@ -1,30 +1,38 @@
 package com.greenspot.app.activity
 
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
 import android.view.View
+import android.view.WindowManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
 import com.greenspot.app.R
+import com.greenspot.app.adapter.TourDateAdapter
+import com.greenspot.app.adapter.TourMonthAdapter
 import com.greenspot.app.adapter.TourOtherServiceAdapter
+import com.greenspot.app.interfaces.ItemClickListener
 import com.greenspot.app.model.ItineraryImg
+import com.greenspot.app.responce.tourdetail.BookingDatesItem
 import com.greenspot.app.responce.tourdetail.IncludedInTourPackageItem
 import com.greenspot.app.responce.tourdetail.ResponceTourDetails
 import com.greenspot.app.utils.*
 import kotlinx.android.synthetic.main.activity_tour_booking.*
 import kotlinx.android.synthetic.main.content_tour_booking.*
-import java.text.SimpleDateFormat
+import kotlinx.android.synthetic.main.dialog_contry.*
+import java.math.RoundingMode
 import java.util.*
-import java.util.regex.Matcher
-import java.util.regex.Pattern
 
 
-class TourBookingActivity : AppCompatActivity() {
+class TourBookingActivity : AppCompatActivity(), ItemClickListener {
 
+    private var bookingDateData: List<String>? = null
+    private var bookingMonthdata: List<BookingDatesItem>? = null
     private var finalPrice: String = ""
     private var startPrice: String = ""
     private var otherServiceList: List<IncludedInTourPackageItem>? = null
@@ -41,6 +49,7 @@ class TourBookingActivity : AppCompatActivity() {
     private var currncyCode: String? = ""
     private var countryID: String? = ""
     private var langCode: String? = ""
+    private lateinit var dialog: Dialog
 
     var itineraryImg: ArrayList<ItineraryImg> = ArrayList()
 
@@ -68,13 +77,14 @@ class TourBookingActivity : AppCompatActivity() {
 
 
         txt_name.text = tourdetails.data.mainRecords.packageName
-        txt_depature.text = "Departure: " + tourdetails.data.mainRecords.depatureCity
-        txt_tourlocation.text = "Locations: " + tourdetails.data.mainRecords.locations
+        txt_depature.text = getString(R.string.txt_depature)+": " + tourdetails.data.mainRecords.depatureCity
+        txt_tourlocation.text = getString(R.string.txt_location)+": " + tourdetails.data.mainRecords.locations
         txt_duration.text =
-            "Duration: "+ tourdetails.data.mainRecords.nights.toString() + " Nights & " + tourdetails.data.mainRecords.days.toString() + " Days"
+            getString(R.string.txt_duration)+ ": " + tourdetails.data.mainRecords.nights.toString() + getString(R.string.str_night)+"  & " + tourdetails.data.mainRecords.days.toString() + " "+
+                    getString(R.string.str_day)
 
         rt_tourrating.rating = tourdetails.data.mainRecords.avgReviews.toFloat()
-        txt_riview.text = tourdetails.data.mainRecords.totalReviews.toString() +" REVIEWS"
+        txt_riview.text = tourdetails.data.mainRecords.totalReviews.toString() + " "+getString(R.string.str_reviews)
 
         startPrice = tourdetails.data.mainRecords.price
         val totalprice = startPrice.toFloat() * adultcount
@@ -84,6 +94,7 @@ class TourBookingActivity : AppCompatActivity() {
         Log.e("Tourbooking", "  " + tourdetails.data.mainRecords.includedInTourPackage!!.size)
 
         otherServiceList = tourdetails.data.mainRecords.includedInTourPackage
+        bookingMonthdata = tourdetails.data.bookingDates
 
         setTourOtherDetail()
 
@@ -92,23 +103,29 @@ class TourBookingActivity : AppCompatActivity() {
 //        sp_pass.setAdapter(adapter);
 
 
-        val c = Calendar.getInstance().time
-
-        val df = SimpleDateFormat("MM/dd/yyyy")
-        val formattedDate = df.format(c)
-
-        txt_date.setText(formattedDate)
+//        val c = Calendar.getInstance().time
+//
+//        val df = SimpleDateFormat("MM/dd/yyyy")
+//        val formattedDate = df.format(c)
+//
+//        txt_date.setText(formattedDate)
 
         txt_date.setOnClickListener(View.OnClickListener {
 
-            selectDate()
+            //            selectDate()
+            if (txt_month.text.isEmpty() || txt_month.text.equals("Month")) {
+                Toast.makeText(
+                    applicationContext,
+                    getString(R.string.alert_selectmonth),
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@OnClickListener
+            }
+            openDateDialog()
+        })
 
-//            datepicker.getDatePicker().setMinDate(myCalendar.getTimeInMillis());
-//           DatePickerDialog(
-//                this, date, myCalendar[Calendar.YEAR], myCalendar[Calendar.MONTH],
-//                myCalendar[Calendar.DAY_OF_MONTH]
-//            ).show()
-
+        txt_month.setOnClickListener(View.OnClickListener {
+            openMonthDialog()
 
         })
 
@@ -125,15 +142,16 @@ class TourBookingActivity : AppCompatActivity() {
             txt_adultcount.setText(adultcount.toString())
 
             val totalprice = startPrice.toFloat() * adultcount
-            finalPrice = String.format("%.2f", totalprice)
-            txt_startprice.text = currncyCode + " " + finalPrice
+//            finalPrice = String.format("%.2f", totalprice)
+            txt_startprice.text = currncyCode + " " + totalprice.toBigDecimal().setScale(2, RoundingMode.UP).toString()
         })
 
         ib_adultadd.setOnClickListener(View.OnClickListener {
             adultcount++
+
             val totalprice = startPrice.toFloat() * adultcount
-            finalPrice = String.format("%.2f", totalprice)
-            txt_startprice.text = currncyCode + " " + finalPrice
+//            finalPrice = String.format("%.2f", totalprice)
+            txt_startprice.text = currncyCode + " " + totalprice.toBigDecimal().setScale(2, RoundingMode.UP).toString()
 
             txt_adultcount.setText(adultcount.toString())
 
@@ -163,6 +181,75 @@ class TourBookingActivity : AppCompatActivity() {
 
     }
 
+    private fun openMonthDialog() {
+
+        dialog = Dialog(this)
+        dialog.setContentView(R.layout.dialog_contry)
+        dialog.window?.setBackgroundDrawableResource(R.color.colorIdolDetailDialogBackground)
+        dialog.window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+        dialog.window?.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT
+        )
+
+        dialog.txt_title.setText(getString(R.string.res_selectmonth))
+        val tourMonthAdapter = TourMonthAdapter(this, this)
+
+//        contryData.clear()
+//        setContryData()
+        Common.setVerticalRecyclerView(this, dialog.rv_bestseller)
+        tourMonthAdapter.swapData(this.bookingMonthdata!!)
+
+//        dialog.rv_bestseller.affectOnItemClicks() { position, view ->
+//
+//
+//
+//        }
+
+        dialog.rv_bestseller.adapter = tourMonthAdapter
+
+        dialog.lay_dialog.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
+    private fun openDateDialog() {
+
+        dialog = Dialog(this)
+        dialog.setContentView(R.layout.dialog_contry)
+        dialog.window?.setBackgroundDrawableResource(R.color.colorIdolDetailDialogBackground)
+        dialog.window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+        dialog.window?.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT
+        )
+
+        dialog.txt_title.setText(getString(R.string.res_selectmonth))
+        val tourDateAdapter = TourDateAdapter(this, this)
+
+//        contryData.clear()
+//        setContryData()
+        Common.setVerticalRecyclerView(this, dialog.rv_bestseller)
+        tourDateAdapter.swapData(this.bookingDateData!!)
+
+//        dialog.rv_bestseller.affectOnItemClicks() { position, view ->
+//
+//
+//
+//        }
+
+        dialog.rv_bestseller.adapter = tourDateAdapter
+
+        dialog.lay_dialog.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
+
     private fun selectDate() {
 
         val c = Calendar.getInstance()
@@ -189,58 +276,27 @@ class TourBookingActivity : AppCompatActivity() {
 
     private fun placeBooking() {
 
-//        val name = et_name.getText().toString()
-//        val email = et_email.getText().toString()
-//        val number = et_number.getText().toString()
-//        if (name.isEmpty()) {
-//
-//            Toast.makeText(
-//                applicationContext,
-//                getString(R.string.enter_the_name),
-//                Toast.LENGTH_SHORT
-//            ).show()
-//            return
-//
-//        }
-//        if (email.isEmpty()) {
-//
-//            Toast.makeText(
-//                applicationContext,
-//                getString(R.string.res_enteremail),
-//                Toast.LENGTH_SHORT
-//            ).show()
-//            return
-//        }
-//        if (number.isEmpty()) {
-//
-//            Toast.makeText(
-//                applicationContext,
-//                getString(R.string.enter_the_number),
-//                Toast.LENGTH_SHORT
-//            ).show()
-//
-//            return
-//        }
-//        if (!emailValidator(email)) {
-//            Toast.makeText(
-//                applicationContext,
-//                getString(R.string.res_validemail),
-//                Toast.LENGTH_SHORT
-//            ).show()
-//
-//            return
-//        }
-//
-////        if (isValidMobile(number)) {
-////            Toast.makeText(
-////                applicationContext,
-////                getString(R.string.res_validnumber),
-////                Toast.LENGTH_SHORT
-////            ).show()
-////
-////            return
-////
-////        }
+        if (txt_month.text.isEmpty() || txt_month.text.toString().equals("Month")) {
+            Toast.makeText(
+                applicationContext,
+                getString(R.string.alert_month),
+                Toast.LENGTH_SHORT
+            ).show()
+
+            return
+        }
+
+        if (txt_date.text.isEmpty() || txt_date.text.toString().equals("Date")) {
+            Toast.makeText(
+                applicationContext,
+                getString(R.string.alert_selectdate),
+                Toast.LENGTH_SHORT
+            ).show()
+
+            return
+        }
+
+        Log.e("dateeee","  "+txt_date.text.toString())
 
         val totalguest = adultcount + childcount
 
@@ -354,6 +410,35 @@ class TourBookingActivity : AppCompatActivity() {
         //use BuildConfig.APPLICATION_ID instead of R.class.getPackage().getName() if both are not same
         return Uri.parse("android.resource://" + com.greenspot.app.R::class.java!!.getPackage()!!.getName() + "/" + resourceId)
             .toString()
+    }
+
+    override fun recyclerViewListClicked(v: View, position: Int, flag: Int) {
+        if (flag == 1) {
+
+            helper!!.initPref()
+            helper!!.SaveStringPref(
+                AppConfig.PREFERENCE.SELECTTOURMONTH,
+                bookingMonthdata!!.get(position).title
+            )
+            helper!!.ApplyPref()
+
+            bookingDateData = bookingMonthdata!!.get(position).dates
+            dialog.dismiss()
+            txt_month.setText(bookingMonthdata!!.get(position).title)
+
+        } else if (flag == 2) {
+            helper!!.initPref()
+            helper!!.SaveStringPref(
+                AppConfig.PREFERENCE.SELECTTOURDATE,
+                bookingDateData!!.get(position).toString()
+            )
+            helper!!.ApplyPref()
+            dialog.dismiss()
+            txt_date.setText(bookingDateData!!.get(position).toString())
+
+        }
+
+
     }
 
 

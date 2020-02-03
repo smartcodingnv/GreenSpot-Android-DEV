@@ -106,11 +106,11 @@ class TourListAdapter(val context: FragmentActivity?) :
             itemView.findViewById<TextView>(R.id.txt_day).text = item.days.toString()
             itemView.findViewById<TextView>(R.id.txt_night).text = item.nights.toString()
             itemView.findViewById<TextView>(R.id.txt_price).text =
-                "From " + currency + " " + item.price + "*"
+                context.getString(R.string.txt_from)+" " + currency + " " + item.price + "*"
 
             val imgOtherServiceAdapter = TourImgOtherServiceAdapter(context)
             itineraryImg.clear()
-            setSubImgData(item.includedInTourPackage)
+            setSubImgData(item.includedInTourPackage,context)
             Common.setHorizontalRecyclerView(context, rv_otherservicetourimg)
             imgOtherServiceAdapter.swapData(itineraryImg)
             rv_otherservicetourimg.adapter = imgOtherServiceAdapter
@@ -119,7 +119,10 @@ class TourListAdapter(val context: FragmentActivity?) :
         }
 
 
-        private fun setSubImgData(includedInTourPackage: List<IncludedInTourPackageItem>?) {
+        private fun setSubImgData(
+            includedInTourPackage: List<IncludedInTourPackageItem>?,
+            context: FragmentActivity
+        ) {
             for (name in includedInTourPackage!!) {
 
                 if (name.masterId.equals("1")) {
@@ -127,7 +130,7 @@ class TourListAdapter(val context: FragmentActivity?) :
                     itineraryImg.add(
                         ItineraryImg(
                             "1",
-                            "Flight",
+                            context.getString(R.string.res_flight),
                             getURLForResource(R.drawable.ic_otherflight)
                         )
                     )
@@ -138,7 +141,7 @@ class TourListAdapter(val context: FragmentActivity?) :
                     itineraryImg.add(
                         ItineraryImg(
                             "2",
-                            "Hotel",
+                            context.getString(R.string.res_hotel),
                             getURLForResource(R.drawable.ic_ohterhotel)
                         )
                     )
@@ -149,7 +152,7 @@ class TourListAdapter(val context: FragmentActivity?) :
                     itineraryImg.add(
                         ItineraryImg(
                             "3",
-                            "Sightseeing",
+                            context.getString(R.string.res_sightseeing),
                             getURLForResource(R.drawable.ic_othersigghtsign)
                         )
                     )
@@ -159,7 +162,7 @@ class TourListAdapter(val context: FragmentActivity?) :
                     itineraryImg.add(
                         ItineraryImg(
                             "4",
-                            "Meals",
+                            context.getString(R.string.res_meals),
                             getURLForResource(R.drawable.ic_othermeal)
                         )
                     )
@@ -169,7 +172,7 @@ class TourListAdapter(val context: FragmentActivity?) :
                     itineraryImg.add(
                         ItineraryImg(
                             "5",
-                            "Transportation",
+                            context.getString(R.string.res_trasnportations),
                             getURLForResource(R.drawable.ic_othertransport)
                         )
                     )
@@ -179,7 +182,7 @@ class TourListAdapter(val context: FragmentActivity?) :
                     itineraryImg.add(
                         ItineraryImg(
                             "6",
-                            "Wifi",
+                            context.getString(R.string.res_wifi),
                             getURLForResource(R.drawable.ic_otherservicewifi)
                         )
                     )

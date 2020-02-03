@@ -99,7 +99,7 @@ class EventListActivity : AppCompatActivity(), ItemClickListener {
         currncyCode = helperlang!!.LoadStringPref(AppConfig.PREFERENCE.SELECTCURRENCYNAME, "")
         countryID = helperlang!!.LoadStringPref(AppConfig.PREFERENCE.SELECTCONTRYID, "")
         txt_title.setText(
-            "Events in " + helperlang!!.LoadStringPref(
+            getString(R.string.res_eventin)+" " + helperlang!!.LoadStringPref(
                 AppConfig.PREFERENCE.SELECTCONTRY,
                 ""
             )

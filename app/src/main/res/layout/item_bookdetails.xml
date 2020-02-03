@@ -42,7 +42,7 @@
                 android:checked="true"
                 android:fontFamily="@font/open_sans"
                 android:padding="@dimen/_10sdp"
-                android:text="Mr." />
+                android:text="@string/mr" />
 
             <RadioButton
                 android:id="@+id/rb_mrs"
@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans"
                 android:padding="@dimen/_10sdp"
-                android:text="Mrs." />
+                android:text="@string/res_mrs" />
 
             <RadioButton
                 android:id="@+id/rb_miss"
@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans"
                 android:padding="@dimen/_10sdp"
-                android:text="Miss" />
+                android:text="@string/res_miss" />
 
         </RadioGroup>
 

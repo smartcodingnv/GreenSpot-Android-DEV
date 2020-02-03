@@ -70,7 +70,7 @@ class VisiterPlaceAdapter(val context: FragmentActivity?) :
             context: FragmentActivity?
         ) = with(itemView) {
             var helperlang: PreferenceHelper? =
-                PreferenceHelper(this!!.context!!, AppConfig.PREFERENCE.PREF_FILE_LANG)
+                PreferenceHelper(this.context!!, AppConfig.PREFERENCE.PREF_FILE_LANG)
             var currency = helperlang!!.LoadStringPref(AppConfig.PREFERENCE.SELECTCURRENCYNAME, "")
 
             Glide.with(itemView)
@@ -84,15 +84,15 @@ class VisiterPlaceAdapter(val context: FragmentActivity?) :
 
             if (item.min_price_range.equals("0") ) {
                 itemView.findViewById<TextView>(R.id.txt_price).text =
-                    "From " + currency + " " + item.min_price_range
+                    context!!.getString(R.string.txt_from)+" " + currency + " " + item.min_price_range
                 itemView.findViewById<TextView>(R.id.txt_price).visibility = View.GONE
             }else if (item.min_price_range!!.isEmpty()) {
                 itemView.findViewById<TextView>(R.id.txt_price).text =
-                    "From " + currency + " " + item.min_price_range
+                    context!!.getString(R.string.txt_from)+" " + currency + " " + item.min_price_range
                 itemView.findViewById<TextView>(R.id.txt_price).visibility = View.GONE
             } else {
                 itemView.findViewById<TextView>(R.id.txt_price).text =
-                    "From " + currency + " " + item.min_price_range
+                    context!!.getString(R.string.txt_from)+" " + currency + " " + item.min_price_range
                 itemView.findViewById<TextView>(R.id.txt_price).visibility = View.VISIBLE
             }
 

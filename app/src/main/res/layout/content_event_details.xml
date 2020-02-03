@@ -209,7 +209,7 @@
                 android:drawablePadding="@dimen/_3sdp"
                 android:fontFamily="@font/open_sans_semibold"
                 android:paddingLeft="@dimen/_5sdp"
-                android:text="View On Map"
+                android:text="@string/view_on_map"
                 android:textColor="@color/green"
                 android:textSize="@dimen/_12ssp"
                 android:visibility="gone" />
@@ -453,8 +453,8 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:background="@drawable/yello_corner"
             android:fontFamily="@font/open_sans"
-            android:padding="@dimen/_3sdp"
-            android:text="  Organizer  "
+            android:padding="@dimen/_5sdp"
+            android:text="@string/organizer"
             android:textColor="@color/white"
             android:textSize="@dimen/_12ssp"
             android:visibility="visible" />
@@ -527,6 +527,7 @@
                 android:drawableRight="@drawable/ic_rightgreen"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/tab_overview"
+                android:textAllCaps="true"
                 android:layout_marginBottom="@dimen/_3sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:textColor="@color/green"
@@ -536,7 +537,6 @@
                 android:id="@+id/view_eoverview"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-
                 android:background="@color/black" />
 
 
@@ -546,6 +546,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_3sdp"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:textAllCaps="true"
                 android:drawableRight="@drawable/ic_rightgreen"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/tab_amenities"
@@ -556,28 +557,9 @@
                 android:id="@+id/view_eamenites"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-
                 android:background="@color/black" />
 
 
-            <TextView
-                android:id="@+id/txt_econtactus"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_3sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:drawableRight="@drawable/ic_rightgreen"
-                android:fontFamily="@font/open_sans_semibold"
-                android:text="@string/tab_contact_us"
-                android:textColor="@color/green"
-                android:textSize="@dimen/_12ssp" />
-
-            <View
-                android:id="@+id/view_econtactus"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-
-                android:background="@color/black" />
 
             <TextView
                 android:id="@+id/txt_ereview"
@@ -586,6 +568,7 @@
                 android:layout_marginBottom="@dimen/_3sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:drawableRight="@drawable/ic_rightgreen"
+                android:textAllCaps="true"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/tab_write_a_review"
                 android:textColor="@color/green"
@@ -595,7 +578,25 @@
                 android:id="@+id/view_ereivew"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
+                android:background="@color/black" />
 
+            <TextView
+                android:id="@+id/txt_econtactus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_3sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:drawableRight="@drawable/ic_rightgreen"
+                android:textAllCaps="true"
+                android:fontFamily="@font/open_sans_semibold"
+                android:text="@string/tab_contact_us"
+                android:textColor="@color/green"
+                android:textSize="@dimen/_12ssp" />
+
+            <View
+                android:id="@+id/view_econtactus"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
                 android:background="@color/black" />
 
 
@@ -637,7 +638,7 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:fontFamily="@font/open_sans_semibold"
             android:paddingLeft="@dimen/_10sdp"
-            android:text="Popular Events"
+            android:text="@string/res_popular_events"
             android:textColor="@color/black"
             android:textSize="@dimen/_14ssp" />
 

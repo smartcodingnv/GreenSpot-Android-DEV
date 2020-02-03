@@ -94,6 +94,8 @@
             android:background="@android:color/transparent"
             android:fontFamily="@font/open_sans_semibold"
             android:text="@string/res_book_now"
+            android:clickable="false"
+            android:textAllCaps="false"
             android:textColor="@color/white" />
 
     </LinearLayout>

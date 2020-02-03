@@ -77,7 +77,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans"
-                    android:text="Nights"
+                    android:text="@string/str_night"
                     android:textSize="@dimen/_11ssp" />
 
 
@@ -99,7 +99,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans"
-                    android:text="Days"
+                    android:text="@string/str_day"
                     android:textSize="@dimen/_11ssp" />
 
 
@@ -147,7 +147,7 @@
                     android:ellipsize="end"
                     android:fontFamily="@font/open_sans"
                     android:maxLines="2"
-                    android:text="Per person"
+                    android:text="@string/per_person"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/_9ssp" />
 

@@ -121,7 +121,8 @@
                     android:background="@drawable/btn_fillgreen"
                     android:fontFamily="@font/open_sans_semibold"
                     android:padding="@dimen/_10sdp"
-                    android:text="Apply"
+                    android:text="@string/res_apply"
+                    android:textAllCaps="true"
                     android:textColor="@color/white" />
             </LinearLayout>
         </LinearLayout>

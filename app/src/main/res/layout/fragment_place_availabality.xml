@@ -36,7 +36,7 @@
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_5sdp"
             android:fontFamily="@font/open_sans_semibold"
-            android:text="Know More"
+            android:text="@string/res_know_more"
             android:visibility="gone"
             android:textColor="@color/gray"
             android:textSize="@dimen/_12ssp" />

@@ -56,6 +56,7 @@
                         android:padding="@dimen/_10sdp"
                         android:text="dipen0709+u@gmail.com"
                         android:textSize="@dimen/_12ssp" />
+                    <!--android:text="dipen0709+u@gmail.com"-->
 
                     <EditText
                         android:id="@+id/et_lpassword"
@@ -69,6 +70,8 @@
                         android:padding="@dimen/_10sdp"
                         android:text="Admin@123"
                         android:textSize="@dimen/_12ssp" />
+
+                    <!--android:text="Admin@123"-->
 
                     <TextView
                         android:id="@+id/txt_forgotpwd"

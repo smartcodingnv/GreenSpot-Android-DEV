@@ -547,6 +547,7 @@
                 android:drawableRight="@drawable/ic_rightgreen"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/tab_overview"
+                android:textAllCaps="true"
                 android:textColor="@color/green"
                 android:textSize="@dimen/_12ssp" />
 
@@ -565,6 +566,7 @@
                 android:drawableRight="@drawable/ic_rightgreen"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/res_itinerary"
+                android:textAllCaps="true"
                 android:textColor="@color/green"
                 android:textSize="@dimen/_12ssp" />
 
@@ -583,6 +585,7 @@
                 android:drawableRight="@drawable/ic_rightgreen"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/tab_amenities"
+                android:textAllCaps="true"
                 android:textColor="@color/green"
                 android:textSize="@dimen/_12ssp" />
 
@@ -601,6 +604,7 @@
                 android:layout_marginBottom="@dimen/_3sdp"
                 android:drawableRight="@drawable/ic_rightgreen"
                 android:fontFamily="@font/open_sans_semibold"
+                android:textAllCaps="true"
                 android:text="@string/tab_others"
                 android:textColor="@color/green"
                 android:textSize="@dimen/_12ssp" />
@@ -619,6 +623,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_3sdp"
+                android:textAllCaps="true"
                 android:drawableRight="@drawable/ic_rightgreen"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/tab_write_a_review"
@@ -638,6 +643,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_3sdp"
+                android:textAllCaps="true"
                 android:drawableRight="@drawable/ic_rightgreen"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/tab_contact_us"

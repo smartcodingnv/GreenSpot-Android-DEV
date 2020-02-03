@@ -13,9 +13,11 @@ import com.greenspot.app.responce.bookinginfo.ResponceBookinginfo
 import com.greenspot.app.responce.bookinginfo.TourAmenitiesItem
 import com.greenspot.app.responce.bookinginfoevent.EventAmenitiesItem
 import com.greenspot.app.responce.bookinginfoevent.ResponceBookinginfoEvent
+import com.greenspot.app.responce.bookinginfohotel.ResponceBookinginfoHotel
 import com.greenspot.app.responce.bookinginforecreation.ResponceBookinginfoRecreation
 import com.greenspot.app.responce.eventdetails.AmenitiesItem
 import com.greenspot.app.responce.eventdetails.EvnetDetailsResponce
+import com.greenspot.app.responce.hoteldetails.ResponceHotelDetails
 import com.greenspot.app.responce.recreationdetails.AmenitiesRecordsItem
 import com.greenspot.app.responce.recreationdetails.RecordsItem
 import com.greenspot.app.responce.recreationdetails.ResponceRecDetails
@@ -30,6 +32,8 @@ class PlaceAnemitiesFragment : Fragment() {
     private var bookingrecreationAmenities: ArrayList<com.greenspot.app.responce.bookinginforecreation.AmenitiesItem>? =
         ArrayList()
 
+    private var bookinghotelAmintes: ArrayList<com.greenspot.app.responce.bookinginfohotel.AmenitiesItem>? = ArrayList()
+    private var hotelAmintes: ArrayList<com.greenspot.app.responce.hoteldetails.AmenitiesItem>? = ArrayList()
     private var bookingeventAmintes: ArrayList<EventAmenitiesItem>? = ArrayList()
     private var bookingTourAmintes: ArrayList<TourAmenitiesItem>? = ArrayList()
     private var otherActivity: String = ""
@@ -210,6 +214,44 @@ class PlaceAnemitiesFragment : Fragment() {
                 }
             }
 
+        }else if (checkAnimatities == 7) {
+            //hotel amenintes
+
+            val gson = Gson()
+            val hotelinfo = gson.fromJson(
+                helper!!.LoadStringPref(AppConfig.PREFERENCE.HOTELDETAILSRESPONCE, ""),
+                ResponceHotelDetails::class.java
+            )
+
+            hotelAmintes!!.clear()
+
+            for (aminate in hotelinfo.data.amenities!!) {
+                if (aminate.value != "") {
+                    hotelAmintes!!.add(aminate)
+                }
+
+            }
+
+
+        }else if (checkAnimatities == 8) {
+            //hotel amenintes
+
+            val gson = Gson()
+            val hotelinfo = gson.fromJson(
+                helper!!.LoadStringPref(AppConfig.PREFERENCE.HOTELBOOKINGINFO, ""),
+                ResponceBookinginfoHotel::class.java
+            )
+
+            bookinghotelAmintes!!.clear()
+
+            for (aminate in hotelinfo.data.amenities!!) {
+                if (aminate.value != "") {
+                    bookinghotelAmintes!!.add(aminate)
+                }
+
+            }
+
+
         }
 
 
@@ -303,6 +345,28 @@ class PlaceAnemitiesFragment : Fragment() {
             visiterPlaceAdapter.swapData(this.bookingrecreationAmenities!!)
             rv_placemenu.adapter = visiterPlaceAdapter
 
+        }else if (checkAnimatities == 7) {
+
+            txt_otheractivity.visibility = View.GONE
+            txt_labelother.visibility = View.GONE
+
+
+            val hotelAminitesTitleAdapter = HotelAminitesTitleAdapter(activity)
+
+            Common.setVerticalRecyclerView(context!!, mView.rv_placemenu)
+            hotelAminitesTitleAdapter.swapData(this.hotelAmintes!!)
+            rv_placemenu.adapter = hotelAminitesTitleAdapter
+        }else if (checkAnimatities == 8) {
+
+            txt_otheractivity.visibility = View.GONE
+            txt_labelother.visibility = View.GONE
+
+
+            val hotelAminitesTitleAdapter = BookingHotelAminitesTitleAdapter(activity)
+
+            Common.setVerticalRecyclerView(context!!, mView.rv_placemenu)
+            hotelAminitesTitleAdapter.swapData(this.bookinghotelAmintes!!)
+            rv_placemenu.adapter = hotelAminitesTitleAdapter
         }
 
 

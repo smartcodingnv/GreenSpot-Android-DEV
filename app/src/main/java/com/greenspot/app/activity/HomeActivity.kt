@@ -4,7 +4,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.greenspot.app.R
@@ -24,6 +23,7 @@ class HomeActivity : AppCompatActivity() {
     private var helper: PreferenceHelper? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_home)
 
         progress = Progress(this@HomeActivity)
@@ -33,8 +33,11 @@ class HomeActivity : AppCompatActivity() {
         bottom_navigation.getMenu().getItem(0).setChecked(true)
         setHomeFragmnet(HomeFragment().newInstance())
 
-        Log.e("checkkk "," onCreate  checkkk" )
-        Log.e("checkkk "," onCreate  checkkk"+helper!!.LoadIntPref(AppConfig.PREFERENCE.CHECKPAYMENT,0) )
+        Log.e("checkkk ", " onCreate  checkkk")
+        Log.e(
+            "checkkk ",
+            " onCreate  checkkk" + helper!!.LoadIntPref(AppConfig.PREFERENCE.CHECKPAYMENT, 0)
+        )
 
 
 
@@ -43,9 +46,9 @@ class HomeActivity : AppCompatActivity() {
             when (id) {
                 R.id.action_home -> setHomeFragmnet(HomeFragment().newInstance())
                 R.id.action_booking ->
-                    if(helper!!.LoadIntPref(AppConfig.PREFERENCE.CHECK_LOGINAS,0)==2){
+                    if (helper!!.LoadIntPref(AppConfig.PREFERENCE.CHECK_LOGINAS, 0) == 2) {
                         setBookingFragmnet(BookingFragment().newInstance())
-                    }else{
+                    } else {
                         alertLogin()
                     }
 
@@ -58,11 +61,11 @@ class HomeActivity : AppCompatActivity() {
 
     private fun alertLogin() {
         val builder1 = AlertDialog.Builder(this)
-        builder1.setMessage("Please login to use this feature")
+        builder1.setMessage(getString(R.string.alert_loginmsg))
         builder1.setCancelable(true)
 
         builder1.setPositiveButton(
-            "OK",
+            getString(R.string.res_ok),
             DialogInterface.OnClickListener { dialog, id ->
                 dialog.cancel()
                 helper!!.clearAllPrefs()
@@ -75,7 +78,7 @@ class HomeActivity : AppCompatActivity() {
             })
 
         builder1.setNegativeButton(
-            "CANCEL",
+            getString(R.string.res_cancel),
             DialogInterface.OnClickListener { dialog, id -> dialog.cancel() })
 
         val alert11 = builder1.create()

@@ -13,8 +13,10 @@ import com.greenspot.app.adapter.PlaceOtherAdapter
 import com.greenspot.app.model.PlaceSubItem
 import com.greenspot.app.responce.bookinginfo.ResponceBookinginfo
 import com.greenspot.app.responce.bookinginfoevent.ResponceBookinginfoEvent
+import com.greenspot.app.responce.bookinginfohotel.ResponceBookinginfoHotel
 
 import com.greenspot.app.responce.eventdetails.EvnetDetailsResponce
+import com.greenspot.app.responce.hoteldetails.ResponceHotelDetails
 import com.greenspot.app.responce.recreationdetails.OtherItem
 import com.greenspot.app.responce.recreationdetails.ResponceRecDetails
 import com.greenspot.app.responce.tourdetail.ResponceTourDetails
@@ -28,6 +30,7 @@ class PlaceOthersFragment : Fragment() {
     private lateinit var mView: View
     private var checkOther: Int = 0
 
+    var hotelcontactusdata: ArrayList<PlaceSubItem> = ArrayList()
     var eventcontactusdata: ArrayList<PlaceSubItem> = ArrayList()
     var tourcontactusdata: ArrayList<PlaceSubItem> = ArrayList()
     private var bookingContactus: ArrayList<PlaceSubItem> = ArrayList()
@@ -39,10 +42,14 @@ class PlaceOthersFragment : Fragment() {
     private var helper: PreferenceHelper? = null
 
     private var addrss: String = ""
+    private var contactperon: String = ""
     private var office_open_time: String = ""
     private var office_close_time: String = ""
     private var phone: String = ""
+    private var mobileno: String = ""
+    private var faxno: String = ""
     private var email: String = ""
+    private var whatsuppno: String = ""
     private var spName: String = ""
     private var spAddress: String = ""
     private var spPhone: String = ""
@@ -159,6 +166,48 @@ class PlaceOthersFragment : Fragment() {
             email = bookinginfo.data.eventData.email
 
 
+        }else if(checkOther==6){
+            val gson = Gson()
+            val hoteldetal = gson.fromJson(
+                helper!!.LoadStringPref(AppConfig.PREFERENCE.HOTELDETAILSRESPONCE, ""),
+                ResponceHotelDetails::class.java
+            )
+
+            contactperon = hoteldetal.data.contactUs.contactPersonName
+            addrss = hoteldetal.data.contactUs.address
+            email = hoteldetal.data.contactUs.email
+            whatsuppno = hoteldetal.data.contactUs.whatsappNumber
+
+            if(hoteldetal.data.contactUs.landline2.isNotEmpty()){
+                phone = hoteldetal.data.contactUs.landline + ", "+hoteldetal.data.contactUs.landline2
+            }else{
+                phone = hoteldetal.data.contactUs.landline
+            }
+
+            if(hoteldetal.data.contactUs.mobile2.isNotEmpty()){
+                mobileno = hoteldetal.data.contactUs.mobile + ", "+hoteldetal.data.contactUs.mobile2
+            }else{
+                mobileno = hoteldetal.data.contactUs.mobile
+            }
+            faxno = hoteldetal.data.contactUs.fax
+
+        }else if(checkOther==7){
+            val gson = Gson()
+            val hoteldetal = gson.fromJson(
+                helper!!.LoadStringPref(AppConfig.PREFERENCE.HOTELBOOKINGINFO, ""),
+                ResponceBookinginfoHotel::class.java
+            )
+
+
+            contactperon = hoteldetal.data.hotelData.contactPersonName
+            addrss = hoteldetal.data.hotelData.address
+            email = hoteldetal.data.hotelData.email
+            whatsuppno = hoteldetal.data.hotelData.whatsappNumber
+            phone = hoteldetal.data.hotelData.landline
+            mobileno = hoteldetal.data.hotelData.mobile
+
+            faxno = hoteldetal.data.hotelData.fax
+
         }
 
         initView()
@@ -221,6 +270,22 @@ class PlaceOthersFragment : Fragment() {
             placedetailsAdapter.swapData(eventcontactusdata)
             rv_placemenu.adapter = placedetailsAdapter
 
+        }else if(checkOther == 6){
+
+            hotelcontactusdata.clear()
+            setUpHotelContactusData()
+            val placedetailsAdapter = PlaceDetailsAdapter(activity)
+            Common.setVerticalRecyclerView(context!!, mView.rv_placemenu)
+            placedetailsAdapter.swapData(hotelcontactusdata)
+            rv_placemenu.adapter = placedetailsAdapter
+        }else if(checkOther == 7){
+
+            hotelcontactusdata.clear()
+            setUpHotelContactusData()
+            val placedetailsAdapter = PlaceDetailsAdapter(activity)
+            Common.setVerticalRecyclerView(context!!, mView.rv_placemenu)
+            placedetailsAdapter.swapData(hotelcontactusdata)
+            rv_placemenu.adapter = placedetailsAdapter
         }
 
     }
@@ -238,13 +303,76 @@ class PlaceOthersFragment : Fragment() {
     }
 
 
+    private fun setUpHotelContactusData() {
+
+        if (contactperon.isNotEmpty()) {
+            hotelcontactusdata.add(
+                PlaceSubItem(
+                    "1",
+                    getString(R.string.rcontact_person)+" :",
+                    contactperon
+                )
+            )
+        }
+        if (addrss.isNotEmpty()) {
+            hotelcontactusdata.add(
+                PlaceSubItem(
+                    "2",
+                    getString(R.string.item_address)+" :",
+                    addrss
+                )
+            )
+        }
+        if (mobileno.isNotEmpty()) {
+            hotelcontactusdata.add(
+                PlaceSubItem(
+                    "3",
+                   getString(R.string.res_phone_no) +" :",
+                    mobileno
+                )
+            )
+        }
+
+        if (phone.isNotEmpty()) {
+            hotelcontactusdata.add(
+                PlaceSubItem(
+                    "4",
+                    getString(R.string.item_phoneno)+" :",
+                    phone
+                )
+            )
+        }
+        if (email.isNotEmpty()) {
+            hotelcontactusdata.add(
+                PlaceSubItem(
+                    "5",
+                    getString(R.string.res_email)+" :",
+                    email
+                )
+            )
+        }
+
+        if (faxno.isNotEmpty()) {
+            hotelcontactusdata.add(
+                PlaceSubItem(
+                    "6",
+                    getString(R.string.str_fax)+" :",
+                    faxno
+                )
+            )
+        }
+
+
+    }
+
+
     private fun setUpEventContactusData() {
 
         if (addrss.isNotEmpty()) {
             eventcontactusdata.add(
                 PlaceSubItem(
                     "1",
-                    "Address :",
+                    getString(R.string.item_address)+" :",
                     addrss
                 )
             )
@@ -253,7 +381,7 @@ class PlaceOthersFragment : Fragment() {
             eventcontactusdata.add(
                 PlaceSubItem(
                     "2",
-                    "Office Open Time :",
+                   getString(R.string.item_officeopentime) +" :",
                     office_open_time
                 )
             )
@@ -262,7 +390,7 @@ class PlaceOthersFragment : Fragment() {
             eventcontactusdata.add(
                 PlaceSubItem(
                     "3",
-                    "Office Close Time :",
+                    getString(R.string.item_officeclosttime)+" :",
                     office_close_time
                 )
             )
@@ -272,7 +400,7 @@ class PlaceOthersFragment : Fragment() {
             eventcontactusdata.add(
                 PlaceSubItem(
                     "4",
-                    "Phone :",
+                    getString(R.string.item_phoneno)+" :",
                     phone
                 )
             )
@@ -281,7 +409,7 @@ class PlaceOthersFragment : Fragment() {
             eventcontactusdata.add(
                 PlaceSubItem(
                     "4",
-                    "Email :",
+                    getString(R.string.res_email)+" :",
                     email
                 )
             )
@@ -300,7 +428,7 @@ class PlaceOthersFragment : Fragment() {
             tourcontactusdata.add(
                 PlaceSubItem(
                     "1",
-                    "Address :",
+                    getString(R.string.item_address)+" :",
                     addrss
                 )
             )
@@ -310,7 +438,7 @@ class PlaceOthersFragment : Fragment() {
             tourcontactusdata.add(
                 PlaceSubItem(
                     "4",
-                    "Phone :",
+                    getString(R.string.item_phoneno)+" :",
                     phone
                 )
             )
@@ -319,7 +447,7 @@ class PlaceOthersFragment : Fragment() {
             tourcontactusdata.add(
                 PlaceSubItem(
                     "4",
-                    "Email :",
+                    getString(R.string.res_email)+" :",
                     email
                 )
             )
@@ -335,7 +463,7 @@ class PlaceOthersFragment : Fragment() {
             bookingContactus.add(
                 PlaceSubItem(
                     "1",
-                    "Name :",
+                    getString(R.string.res_name)+" :",
                     spName
                 )
             )
@@ -345,7 +473,7 @@ class PlaceOthersFragment : Fragment() {
             bookingContactus.add(
                 PlaceSubItem(
                     "2",
-                    "Address :",
+                    getString(R.string.item_address)+" :",
                     spAddress
                 )
             )
@@ -354,7 +482,7 @@ class PlaceOthersFragment : Fragment() {
             bookingContactus.add(
                 PlaceSubItem(
                     "3",
-                    "Phone :",
+                    getString(R.string.item_phoneno)+" :",
                     spPhone
                 )
             )
@@ -364,7 +492,7 @@ class PlaceOthersFragment : Fragment() {
             bookingContactus.add(
                 PlaceSubItem(
                     "3",
-                    "Email :",
+                    getString(R.string.res_email)+" :",
                     spEmail
                 )
             )

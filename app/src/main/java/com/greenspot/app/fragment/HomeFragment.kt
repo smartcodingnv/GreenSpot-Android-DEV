@@ -18,10 +18,9 @@ import androidx.annotation.NonNull
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.greenspot.app.MyApp
 import com.greenspot.app.R
-import com.greenspot.app.activity.EventListActivity
-import com.greenspot.app.activity.ListPlaceActivity
-import com.greenspot.app.activity.TourListActivity
+import com.greenspot.app.activity.*
 import com.greenspot.app.adapter.*
 import com.greenspot.app.interfaces.ItemClickListener
 import com.greenspot.app.network.ApiClient
@@ -156,11 +155,10 @@ class HomeFragment : Fragment(), ItemClickListener {
 
         val username = helper!!.LoadStringPref(AppConfig.PREFERENCE.USER_FNAME, "")
          if(username!!.isEmpty()){
-             txt_username.text = "Hey Guest" + ", \nWhere you want to go?"
+             txt_username.text = getString(R.string.res_hey)+" "+ getString(R.string.res_guest) + ", \n" + getString(R.string.res_wereyougo)
          }else{
-             txt_username.text = "Hey " + username + ", \nWhere you want to go?"
+             txt_username.text = getString(R.string.res_hey)+" " + username + ", \n"+ getString(R.string.res_wereyougo)
          }
-
 
         langCode = helperlang!!.LoadStringPref(AppConfig.PREFERENCE.SELECTLANGCODE, "")
         currncyCode = helperlang!!.LoadStringPref(AppConfig.PREFERENCE.SELECTCURRENCYNAME, "")
@@ -250,6 +248,12 @@ class HomeFragment : Fragment(), ItemClickListener {
 
         })
 
+        lay_hotel.setOnClickListener(View.OnClickListener {
+
+            startActivity(Intent(activity, HotelListActivity::class.java))
+
+        })
+
         lay_evenview.setOnClickListener(View.OnClickListener {
 
             startActivity(Intent(activity, EventListActivity::class.java))
@@ -299,7 +303,6 @@ class HomeFragment : Fragment(), ItemClickListener {
                 AppConfig.PREFERENCE.SELECTLANGNAME,
                 languageData!!.get(position).languageName
             )
-
             helperlang!!.SaveStringPref(
                 AppConfig.PREFERENCE.SELECTLANGCODE,
                 languageData!!.get(position).languageCode
@@ -308,7 +311,12 @@ class HomeFragment : Fragment(), ItemClickListener {
             dialog.dismiss()
             txtLanguage.setText(languageData!!.get(position).languageName)
             langCode = languageData!!.get(position).languageCode
-            initviews()
+            MyApp.Companion.updateLanguage(activity!!)
+            val intent = Intent(activity, HomeActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
         }
 
 
@@ -337,7 +345,7 @@ class HomeFragment : Fragment(), ItemClickListener {
 
     private fun openContryDialog() {
 
-        dialog = Dialog(this!!.activity!!)
+        dialog = Dialog(this.activity!!)
         dialog.setContentView(R.layout.dialog_contry)
         dialog.window?.setBackgroundDrawableResource(R.color.colorIdolDetailDialogBackground)
         dialog.window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
@@ -372,7 +380,7 @@ class HomeFragment : Fragment(), ItemClickListener {
 
     private fun openCurrencyDialog() {
 
-        dialog = Dialog(this!!.activity!!)
+        dialog = Dialog(this.activity!!)
         dialog.setContentView(R.layout.dialog_contry)
         dialog.window?.setBackgroundDrawableResource(R.color.colorIdolDetailDialogBackground)
         dialog.window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
@@ -406,7 +414,7 @@ class HomeFragment : Fragment(), ItemClickListener {
 
     private fun openLanguageDialog() {
 
-        dialog = Dialog(this!!.activity!!)
+        dialog = Dialog(this.activity!!)
         dialog.setContentView(R.layout.dialog_contry)
         dialog.window?.setBackgroundDrawableResource(R.color.colorIdolDetailDialogBackground)
         dialog.window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
@@ -751,6 +759,9 @@ class HomeFragment : Fragment(), ItemClickListener {
 
                     }
                 } else {
+                    viewDialog!!.hideDialog()
+                    Log.e("responce home"," "+location.toString())
+                    Log.e("responce home"," "+response.code())
                     Toast.makeText(
                         activity,
                         getString(R.string.msg_unexpected_error),
@@ -866,6 +877,10 @@ class HomeFragment : Fragment(), ItemClickListener {
 
                     }
                 } else {
+
+                    Log.e("responce home"," "+responcelistmaster.toString())
+
+
                     Toast.makeText(
                         activity,
                         getString(R.string.msg_unexpected_error),

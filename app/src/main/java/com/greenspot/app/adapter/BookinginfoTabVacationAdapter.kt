@@ -18,7 +18,7 @@ class BookinginfoTabVacationAdapter(
         when (position) {
             0 -> {
                 //  val homeFragment: HomeFragment = HomeFragment()
-                return BookingTourDetailsFragment().newInstance(3)  //vacationdetails
+                return PlaceDescriptionFragment().newInstance(5)  //vacationdetails
             }
             1 -> {
                 // val movieFragment = MovieFragment()

@@ -22,6 +22,7 @@ class ChangePasswordActivity : AppCompatActivity() {
 
     private lateinit var token: String
     private lateinit var helper: PreferenceHelper
+    private lateinit var helperlang: PreferenceHelper
     private lateinit var utils: Utils
     private lateinit var progress: Progress
     private lateinit var viewDialog: ViewDialog
@@ -34,6 +35,7 @@ class ChangePasswordActivity : AppCompatActivity() {
         progress = Progress(this)
         viewDialog = ViewDialog(this)
         helper = PreferenceHelper(this, AppConfig.PREFERENCE.PREF_FILE)
+        helperlang = PreferenceHelper(this, AppConfig.PREFERENCE.PREF_FILE_LANG)
 
         token = "Bearer " + helper.LoadStringPref(AppConfig.PREFERENCE.AUTHTOKEN, "")
 
@@ -57,7 +59,7 @@ class ChangePasswordActivity : AppCompatActivity() {
 
             Toast.makeText(
                 applicationContext,
-                "Enter the current password",
+                getString(R.string.alert_currentpwd),
                 Toast.LENGTH_SHORT
             ).show()
             return
@@ -67,7 +69,7 @@ class ChangePasswordActivity : AppCompatActivity() {
 
             Toast.makeText(
                 applicationContext,
-                "Enter the new password",
+                getString(R.string.alert_newpwd),
                 Toast.LENGTH_SHORT
             ).show()
             return
@@ -76,7 +78,7 @@ class ChangePasswordActivity : AppCompatActivity() {
 
             Toast.makeText(
                 applicationContext,
-                "enter the confirm passwor",
+                getString(R.string.alert_confpwd),
                 Toast.LENGTH_SHORT
             ).show()
 
@@ -98,7 +100,7 @@ class ChangePasswordActivity : AppCompatActivity() {
 //            password mismatch
             Toast.makeText(
                 applicationContext,
-                "password mismatch",
+                getString(R.string.alert_pwdmismatch),
                 Toast.LENGTH_SHORT
             ).show()
             return
@@ -108,7 +110,7 @@ class ChangePasswordActivity : AppCompatActivity() {
             token = token,
             oldpwd = currentpwd,
             newPwd = newpwd,
-            langCode = getString(R.string.default_language)
+            langCode = helperlang.LoadStringPref(AppConfig.PREFERENCE.SELECTLANGCODE, "")!!
         )
 
 
@@ -153,6 +155,7 @@ class ChangePasswordActivity : AppCompatActivity() {
                     login()
 
                 }else {
+
                     Toast.makeText(
                         applicationContext,
                         getString(R.string.msg_unexpected_error),

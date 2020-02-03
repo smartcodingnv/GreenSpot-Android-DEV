@@ -11,6 +11,7 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
+import com.greenspot.app.MyApp
 import com.greenspot.app.R
 import com.greenspot.app.adapter.LanguageAdapter
 import com.greenspot.app.interfaces.ItemClickListener
@@ -54,6 +55,7 @@ class LoginActivity : AppCompatActivity(), ItemClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        MyApp.updateLanguage(this)
         setContentView(com.greenspot.app.R.layout.activity_login)
 
         askPermissions()
@@ -66,9 +68,9 @@ class LoginActivity : AppCompatActivity(), ItemClickListener {
         val intent = getIntent();
         checkLogin = intent.getIntExtra(AppConfig.EXTRA.CHECKLOGINSIGNUP, 0)
         langCode = helperlang!!.LoadStringPref(AppConfig.PREFERENCE.SELECTLANGCODE, "")
-        if(langCode!!.isEmpty()){
+        if (langCode!!.isEmpty()) {
             getLocationDate(langCode!!)
-        }else{
+        } else {
             getLocationDate(getString(R.string.default_language))
         }
 
@@ -182,7 +184,7 @@ class LoginActivity : AppCompatActivity(), ItemClickListener {
 
             Toast.makeText(
                 applicationContext,
-                getString(R.string.res_enteremail),
+                getString(R.string.alert_email),
                 Toast.LENGTH_SHORT
             ).show()
             return
@@ -212,7 +214,7 @@ class LoginActivity : AppCompatActivity(), ItemClickListener {
 
             Toast.makeText(
                 applicationContext,
-                getString(R.string.res_enterfname),
+                getString(R.string.alert_firstname),
                 Toast.LENGTH_SHORT
             ).show()
             return
@@ -222,7 +224,7 @@ class LoginActivity : AppCompatActivity(), ItemClickListener {
 
             Toast.makeText(
                 applicationContext,
-                getString(R.string.res_enterlname),
+                getString(R.string.alert_lastname),
                 Toast.LENGTH_SHORT
             ).show()
             return
@@ -242,7 +244,7 @@ class LoginActivity : AppCompatActivity(), ItemClickListener {
 
             Toast.makeText(
                 applicationContext,
-                getString(R.string.res_enteremail),
+                getString(R.string.alert_email),
                 Toast.LENGTH_SHORT
             ).show()
             return
@@ -280,7 +282,7 @@ class LoginActivity : AppCompatActivity(), ItemClickListener {
 
             Toast.makeText(
                 applicationContext,
-                getString(R.string.res_enteremail),
+                getString(R.string.alert_email),
                 Toast.LENGTH_SHORT
             ).show()
             return
@@ -614,7 +616,11 @@ class LoginActivity : AppCompatActivity(), ItemClickListener {
                             helperlang.LoadStringPref(AppConfig.PREFERENCE.SELECTLANGNAME, "")
                         if (selectLanguageName.isNullOrEmpty()) {
                             txt_languagelogin.setText(languageData!!.get(0).languageName)
-                            if (helperlang.LoadStringPref(AppConfig.PREFERENCE.SELECTLANGCODE, "")!!.isEmpty()) {
+                            if (helperlang.LoadStringPref(
+                                    AppConfig.PREFERENCE.SELECTLANGCODE,
+                                    ""
+                                )!!.isEmpty()
+                            ) {
                                 helperlang.initPref()
                                 helperlang.SaveStringPref(
                                     AppConfig.PREFERENCE.SELECTLANGNAME,
@@ -683,6 +689,12 @@ class LoginActivity : AppCompatActivity(), ItemClickListener {
             helperlang.ApplyPref()
             dialog.dismiss()
             txt_languagelogin.setText(languageData!!.get(position).languageName)
+            MyApp.Companion.updateLanguage(this)
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
         }
 
     }

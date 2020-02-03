@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans_semibold"
         android:padding="@dimen/_10sdp"
-        android:text="My Booking"
+        android:text="@string/res_my_booking"
         android:textColor="@color/black"
         android:textSize="@dimen/_14ssp"></TextView>
 

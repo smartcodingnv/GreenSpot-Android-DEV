@@ -19,6 +19,7 @@ import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.google.gson.Gson
+import com.greenspot.app.MyApp
 import com.greenspot.app.R
 import com.greenspot.app.adapter.EventPopularAdapter
 import com.greenspot.app.adapter.SliderEventAdapter
@@ -39,6 +40,8 @@ import kotlinx.android.synthetic.main.activity_event_details.*
 import kotlinx.android.synthetic.main.content_event_details.*
 import kotlinx.android.synthetic.main.content_event_details.lay_next
 import kotlinx.android.synthetic.main.content_event_details.lay_prev
+import kotlinx.android.synthetic.main.content_event_details.txt_viewonmap
+import kotlinx.android.synthetic.main.content_hotel_details.*
 import kotlinx.android.synthetic.main.content_tour_details.*
 import org.jetbrains.anko.imageBitmap
 import org.jetbrains.anko.layoutInflater
@@ -312,7 +315,7 @@ class EventDetailsActivity : AppCompatActivity() {
         if (!SClick.check(SClick.BUTTON_CLICK)) return
         startActivity(
             Intent(this, EventTabActivity::class.java)
-                .putExtra(AppConfig.EXTRA.TABCHECK, 3)
+                .putExtra(AppConfig.EXTRA.TABCHECK, 2)
 
         )
 
@@ -322,7 +325,7 @@ class EventDetailsActivity : AppCompatActivity() {
         if (!SClick.check(SClick.BUTTON_CLICK)) return
         startActivity(
             Intent(this, EventTabActivity::class.java)
-                .putExtra(AppConfig.EXTRA.TABCHECK, 2)
+                .putExtra(AppConfig.EXTRA.TABCHECK, 3)
 
         )
 
@@ -411,6 +414,15 @@ class EventDetailsActivity : AppCompatActivity() {
                            it.orderId
                         }
 
+                        if(gallaryImageList.size==1){
+                            lay_next.visibility = View.GONE
+                            lay_prev.visibility = View.GONE
+
+                        }else{
+                            lay_next.visibility = View.VISIBLE
+                            lay_prev.visibility = View.VISIBLE
+
+                        }
                         imgURl = gallaryImageList.get(0).imageName
                         Glide.with(this@EventDetailsActivity)
                             .load(imgURl)
@@ -477,10 +489,10 @@ class EventDetailsActivity : AppCompatActivity() {
 
                         if (eventDataResponce.data.mainRecords.bookingRequiredId.equals("1")) {
 
-                            txt_bookingna.text = "Booking: Booking Required"
+                            txt_bookingna.text = getString(R.string.res_bookings)+": "+ getString(R.string.txt_bookingreq)
 
                         } else {
-                            txt_bookingna.text = "Booking: Booking Not Required"
+                            txt_bookingna.text = getString(R.string.res_bookings)+": "+getString(R.string.txt_bookingnotreq)
                         }
 
 
@@ -490,7 +502,7 @@ class EventDetailsActivity : AppCompatActivity() {
 
                         } else {
                             txt_eventytype.text =
-                                "Event Type: " + eventDataResponce.data.mainRecords.eventTypes
+                                getString(R.string.str_eventtype) + eventDataResponce.data.mainRecords.eventTypes
                         }
 
                         if (eventDataResponce.data.mainRecords.suitableFor.isEmpty()) {
@@ -498,7 +510,7 @@ class EventDetailsActivity : AppCompatActivity() {
 
                         } else {
                             txt_suitablefor.text =
-                                "Suitable For: " + eventDataResponce.data.mainRecords.suitableFor
+                                getString(R.string.txt_suitablefor)+ " " + eventDataResponce.data.mainRecords.suitableFor
                         }
 
 
@@ -533,7 +545,7 @@ class EventDetailsActivity : AppCompatActivity() {
 
                         if (eventDataResponce.data.mainRecords.paidEvent.equals("1")) {
                             txt_eventsperperson.visibility = View.VISIBLE
-                            txt_eventstartprice.text = "Starting from " +  currncyCode + " " + eventDataResponce.data.mainRecords.finalPrice.toString()
+                            txt_eventstartprice.text = getString(R.string.res_startingfrom) +" "+  currncyCode + " " + eventDataResponce.data.mainRecords.finalPrice.toString()
 
                         } else {
 
@@ -550,6 +562,10 @@ class EventDetailsActivity : AppCompatActivity() {
                         helper!!.SaveStringPref(
                             AppConfig.PREFERENCE.EVENTDETAILSRESPONCE,
                             eventDetailsResponce
+                        )
+                        helper?.SaveStringPref(
+                            AppConfig.PREFERENCE.SERVICEPROVIDERID,
+                            eventDataResponce.data.mainRecords.createdBy
                         )
                         helper!!.ApplyPref()
 
@@ -665,11 +681,13 @@ class EventDetailsActivity : AppCompatActivity() {
 
         btnClose.setOnClickListener {
             dialog.dismiss()
+            MyApp.updateLanguage(context)
         }
 
         dialog.setOnDismissListener {
             youTubePlayer?.pause()
             youTubePlayer = null
+            MyApp.updateLanguage(context)
         }
 
         dialog.show()

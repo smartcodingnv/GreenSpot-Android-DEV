@@ -60,13 +60,19 @@ class MyBookingAdapter(val context: FragmentActivity?) :
             context: FragmentActivity?
         ) = with(itemView) {
 
-
+            if(item.type.equals("Hotel")){
+                itemView.findViewById<TextView>(R.id.label_noofroom).text = context!!.getString(R.string.str_no_of_rooms)
+                itemView.findViewById<TextView>(R.id.txt_noofperson).text = item.noOfRooms
+            }else{
+                itemView.findViewById<TextView>(R.id.label_noofroom).text = context!!.getString(R.string.res_no_of_person)
+                itemView.findViewById<TextView>(R.id.txt_noofperson).text = item.noOfPerson
+            }
             itemView.findViewById<TextView>(R.id.txt_itemname).text = item.title
-            itemView.findViewById<TextView>(R.id.txt_location).text = item.type + " In "+ item.locations
-            itemView.findViewById<TextView>(R.id.txt_noofperson).text = item.noOfPerson
+            itemView.findViewById<TextView>(R.id.txt_location).text = item.type + " " + context!!.getString(
+                            R.string.res_in) + " "+ item.locations
             itemView.findViewById<TextView>(R.id.txt_personname).text = item.personFullName
             itemView.findViewById<TextView>(R.id.txt_date).text =
-                item.fromDate + " To " + item.toDate
+                item.fromDate +" " + context!!.getString(R.string.res_to)+ " " + item.toDate
             itemView.findViewById<TextView>(R.id.txt_price).text =
                 item.originalPaymentCurrency + " " + item.originalPaymentPrice.toString()
 
@@ -75,7 +81,6 @@ class MyBookingAdapter(val context: FragmentActivity?) :
                 .placeholder(R.drawable.travel)
                 .centerCrop()
                 .into(itemView.img_itemimg)
-
 
         }
     }

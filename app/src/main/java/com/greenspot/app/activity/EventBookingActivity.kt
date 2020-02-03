@@ -60,19 +60,17 @@ class EventBookingActivity : AppCompatActivity() {
         txt_address.text = eventdetails.data.mainRecords.address
 
         if (eventdetails.data.mainRecords.startDate.isEmpty()) {
-            txt_eventdate.text = "Date: Every Day"
+            txt_eventdate.text =  getString(R.string.res_date)+ " : Every Day"
             txt_schdule.visibility = View.VISIBLE
             lay_date.visibility = View.VISIBLE
 
         } else {
             txt_schdule.visibility = View.GONE
             lay_date.visibility = View.GONE
-            txt_eventdate.text =
-                "Date: " + eventdetails.data.mainRecords.startDate + " To " + eventdetails.data.mainRecords.endDate
+            txt_eventdate.text = getString(R.string.res_date) +": " + eventdetails.data.mainRecords.startDate + " "+   getString(R.string.res_to) + " " + eventdetails.data.mainRecords.endDate
         }
 
-        txt_eventtime.text =
-            "Time: " + eventdetails.data.mainRecords.startTime + " To " + eventdetails.data.mainRecords.endTime
+        txt_eventtime.text = getString(R.string.res_time)+": " + eventdetails.data.mainRecords.startTime +  " "+   getString(R.string.res_to) + " "  + eventdetails.data.mainRecords.endTime
 
         if (eventdetails.data.mainRecords.finalPrice.equals("0")) {
             startPrice = ""
@@ -107,8 +105,8 @@ class EventBookingActivity : AppCompatActivity() {
 
             if (startPrice.isNotEmpty()) {
                 val totalprice = startPrice.toFloat() * adultcount
-                finalPrice = String.format("%.2f", totalprice)
-                txt_price.text = currncyCode + " " + finalPrice
+//                finalPrice = String.format("%.2f", totalprice)
+                txt_price.text = currncyCode + " " + totalprice
             }
 
         })
@@ -118,8 +116,8 @@ class EventBookingActivity : AppCompatActivity() {
             txt_adultcount.setText(adultcount.toString())
             if (startPrice.isNotEmpty()) {
                 val totalprice = startPrice.toFloat() * adultcount
-                finalPrice = String.format("%.2f", totalprice)
-                txt_price.text = currncyCode + " " + finalPrice
+//                finalPrice = String.format("%.2f", totalprice)
+                txt_price.text = currncyCode + " " + totalprice
             }
 
 
@@ -142,7 +140,7 @@ class EventBookingActivity : AppCompatActivity() {
                 if(txt_date.text.toString().isEmpty()){
                     Toast.makeText(
                         applicationContext,
-                        "Booking",
+                        getString(R.string.res_bookings),
                         Toast.LENGTH_SHORT
                     ).show()
 

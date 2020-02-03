@@ -254,11 +254,11 @@ class PlaceReviewFragment : Fragment() {
 
     private fun alertLogin() {
         val builder1 = AlertDialog.Builder(this.activity!!)
-        builder1.setMessage("Please login to use submit a review.")
+        builder1.setMessage(getString(R.string.alert_reviewlogin))
         builder1.setCancelable(true)
 
         builder1.setPositiveButton(
-            "OK",
+            getString(R.string.res_ok),
             DialogInterface.OnClickListener { dialog, id ->
                 dialog.cancel()
                 helper!!.clearAllPrefs()
@@ -270,7 +270,7 @@ class PlaceReviewFragment : Fragment() {
             })
 
         builder1.setNegativeButton(
-            "CANCEL",
+            getString(R.string.res_cancel),
             DialogInterface.OnClickListener { dialog, id -> dialog.cancel() })
 
         val alert11 = builder1.create()

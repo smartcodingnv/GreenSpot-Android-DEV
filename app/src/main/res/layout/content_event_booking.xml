@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:fontFamily="@font/open_sans_semibold"
-            android:text="Schedule"
+            android:text="@string/res_schedule"
             android:textColor="@color/black"
             android:textSize="@dimen/_14ssp" />
 
@@ -80,7 +80,7 @@
                 android:layout_marginRight="@dimen/_10sdp"
                 android:layout_weight="1"
                 android:fontFamily="@font/open_sans_semibold"
-                android:text="Date"
+                android:text="@string/res_date"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/_14ssp" />
 
@@ -159,7 +159,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:fontFamily="@font/open_sans_semibold"
-            android:text="Guest"
+            android:text="@string/res_guest"
             android:textColor="@color/black"
             android:textSize="@dimen/_14ssp" />
 
@@ -178,7 +178,7 @@
                 android:layout_marginRight="@dimen/_10sdp"
                 android:layout_weight="1"
                 android:fontFamily="@font/open_sans_semibold"
-                android:text="Adult"
+                android:text="@string/txt_adults"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/_14ssp" />
 

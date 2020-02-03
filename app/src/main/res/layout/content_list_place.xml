@@ -11,73 +11,7 @@
     tools:context=".activity.ListPlaceActivity"
     tools:showIn="@layout/activity_list_place">
 
-    <!--  <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:background="@color/white"
-          android:gravity="center"
-          android:orientation="horizontal"
-          android:padding="@dimen/_5sdp">
 
-          <LinearLayout
-              android:layout_width="0dp"
-              android:layout_height="wrap_content"
-              android:layout_weight="1"
-              android:gravity="center">
-
-
-              <CheckBox
-                  android:id="@+id/chk_popularity"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:button="@drawable/drawable_check"
-                  android:paddingLeft="@dimen/_7sdp"
-                  android:text="Premium"
-                  android:textSize="@dimen/_14ssp" />
-
-
-          </LinearLayout>
-
-          <LinearLayout
-              android:id="@+id/lay_placefilter"
-              android:layout_width="0dp"
-              android:layout_height="wrap_content"
-              android:layout_weight="1"
-              android:gravity="center">
-
-              <TextView
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:drawableLeft="@drawable/ic_fillter"
-                  android:drawablePadding="@dimen/_5sdp"
-                  android:fontFamily="@font/open_sans"
-                  android:gravity="center"
-                  android:text="Filter"
-                  android:textColor="@color/black"
-                  android:textSize="@dimen/_14ssp" />
-
-          </LinearLayout>
-
-          <LinearLayout
-              android:id="@+id/lay_sort"
-              android:layout_width="0dp"
-              android:layout_height="wrap_content"
-              android:layout_weight="1"
-              android:gravity="center">
-
-              <TextView
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:drawableLeft="@drawable/drawable_sort"
-                  android:drawablePadding="@dimen/_5sdp"
-                  android:fontFamily="@font/open_sans"
-                  android:text="Sort"
-                  android:textColor="@color/black"
-                  android:textSize="@dimen/_12ssp" />
-
-          </LinearLayout>
-
-      </LinearLayout>-->
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"

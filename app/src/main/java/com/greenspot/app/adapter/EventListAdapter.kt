@@ -105,7 +105,7 @@ class EventListAdapter(val context: FragmentActivity?) :
 
             if(item.startDate.isEmpty()){
 
-                itemView.findViewById<TextView>(R.id.txt_eventstartdate).text = "Every Day"
+                itemView.findViewById<TextView>(R.id.txt_eventstartdate).text = context.getString(R.string.txt_everyday)
                 itemView.findViewById<TextView>(R.id.txt_eventenddate).visibility = View.GONE
 
             }else{
@@ -115,7 +115,7 @@ class EventListAdapter(val context: FragmentActivity?) :
             }
             if(item.finalPrice.equals("0")){
 
-                itemView.findViewById<TextView>(R.id.txt_eventprice).text = "Free"
+                itemView.findViewById<TextView>(R.id.txt_eventprice).text = context.getString(R.string.txt_free)
                 itemView.findViewById<TextView>(R.id.txt_eventoffer).visibility = View.GONE
 
             }else{
@@ -127,7 +127,7 @@ class EventListAdapter(val context: FragmentActivity?) :
                     itemView.findViewById<TextView>(R.id.txt_eventoffer).visibility = View.VISIBLE
                 }
 
-                itemView.findViewById<TextView>(R.id.txt_eventprice).text = "From " + currency + " " + item.finalPrice
+                itemView.findViewById<TextView>(R.id.txt_eventprice).text = context.getString(R.string.txt_from)+" "  + currency + " " + item.finalPrice
             }
 
             itemView.findViewById<TextView>(R.id.txt_eventtitle).text = item.title

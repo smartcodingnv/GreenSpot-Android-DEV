@@ -46,10 +46,10 @@ class AccountFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        progress = Progress(this!!.activity!!)
-        utils = Utils(this!!.activity!!)
+        progress = Progress(this.activity!!)
+        utils = Utils(this.activity!!)
         helper = PreferenceHelper(
-            this!!.activity!!,
+            this.activity!!,
             AppConfig.PREFERENCE.PREF_FILE
         )     // Inflate the layout for this
         return inflater.inflate(R.layout.fragment_setting, container, false)
@@ -126,11 +126,11 @@ class AccountFragment : Fragment() {
 
     private fun signout() {
         val builder1 = AlertDialog.Builder(this!!.activity!!)
-        builder1.setMessage("Are you sure you want to sign out?")
+        builder1.setMessage(getString(R.string.alert_logout))
         builder1.setCancelable(true)
 
         builder1.setPositiveButton(
-            "OK",
+            getString(R.string.res_ok),
             DialogInterface.OnClickListener { dialog, id ->
                 dialog.cancel()
                 helper!!.clearAllPrefs()
@@ -143,7 +143,7 @@ class AccountFragment : Fragment() {
             })
 
         builder1.setNegativeButton(
-            "CANCEL",
+            getString(R.string.res_cancel),
             DialogInterface.OnClickListener { dialog, id -> dialog.cancel() })
 
         val alert11 = builder1.create()
